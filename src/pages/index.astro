@@ -1,17 +1,229 @@
 ---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
+// Get all published stations sorted by order
+const stations = await getCollection('stations', ({ data }) => data.published);
+const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Home">
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero-title">Pinocchio Bicentenario</h1>
+      <p class="hero-subtitle">Un viaggio in 12 stazioni attraverso il mondo di Pinocchio</p>
+      <p class="hero-intro">
+        Benvenuti nel percorso del Bicentenario di Pinocchio a Sesto Fiorentino.
+        Scoprite le 12 stazioni che ripercorrono la storia del burattino più famoso del mondo,
+        accompagnati dal nostro podcast accessibile a tutti.
+      </p>
+      <div class="hero-actions">
+        <a href="/stazioni" class="btn btn-primary">Esplora le stazioni</a>
+        <a href="/chi-siamo" class="btn btn-outline">Chi siamo</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="stations-preview" aria-labelledby="stations-heading">
+    <div class="container">
+      <h2 id="stations-heading">Le 12 Stazioni</h2>
+      <p class="section-intro">
+        Ogni stazione racconta un capitolo della storia di Pinocchio, con podcast,
+        immagini e trascrizioni accessibili.
+      </p>
+
+      <div class="stations-grid">
+        {sortedStations.map((station) => (
+          <article class="station-card card">
+            <a href={`/stazioni/${station.slug}`} class="station-card-link">
+              <div class="station-number" aria-hidden="true">{station.data.order}</div>
+              <div class="card-body">
+                <h3 class="station-title">{station.data.title}</h3>
+                <p class="station-description">{station.data.description}</p>
+                {station.data.podcast?.duration && (
+                  <p class="station-meta">
+                    <span class="sr-only">Durata podcast:</span>
+                    {station.data.podcast.duration}
+                  </p>
+                )}
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+
+      <div class="section-action">
+        <a href="/stazioni" class="btn btn-secondary">
+          Vedi tutte le stazioni
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="podcast-cta" aria-labelledby="podcast-heading">
+    <div class="container">
+      <h2 id="podcast-heading">Ascolta il Podcast</h2>
+      <p>
+        12 episodi che ti accompagnano attraverso il mondo di Pinocchio.
+        Disponibile su tutte le principali piattaforme.
+      </p>
+      <div class="podcast-links">
+        <a href="#" class="podcast-link" rel="noopener noreferrer" target="_blank">
+          <span>Spotify</span>
+        </a>
+        <a href="#" class="podcast-link" rel="noopener noreferrer" target="_blank">
+          <span>Apple Podcasts</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100));
+    padding: var(--space-16) 0;
+    text-align: center;
+  }
+
+  .hero-title {
+    font-size: var(--font-size-5xl);
+    color: var(--color-primary-700);
+    margin-bottom: var(--space-4);
+  }
+
+  .hero-subtitle {
+    font-size: var(--font-size-xl);
+    color: var(--color-neutral-700);
+    margin-bottom: var(--space-6);
+  }
+
+  .hero-intro {
+    max-width: 600px;
+    margin: 0 auto var(--space-8);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-relaxed);
+    color: var(--color-neutral-600);
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* Stations Preview */
+  .stations-preview {
+    padding: var(--space-16) 0;
+  }
+
+  .section-intro {
+    max-width: 600px;
+    margin: 0 auto var(--space-8);
+    text-align: center;
+    color: var(--color-neutral-600);
+  }
+
+  .stations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+  }
+
+  .station-card {
+    position: relative;
+    transition: transform var(--transition-fast);
+  }
+
+  .station-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .station-card-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    height: 100%;
+  }
+
+  .station-card-link:focus {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+
+  .station-number {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    width: 40px;
+    height: 40px;
+    background: var(--color-primary-500);
+    color: white;
+    border-radius: var(--border-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-lg);
+  }
+
+  .station-title {
+    color: var(--color-neutral-900);
+  }
+
+  .station-card:hover .station-title {
+    color: var(--color-primary-600);
+  }
+
+  .station-description {
+    color: var(--color-neutral-600);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-3);
+  }
+
+  .station-meta {
+    font-size: var(--font-size-xs);
+    color: var(--color-neutral-500);
+  }
+
+  .section-action {
+    text-align: center;
+  }
+
+  /* Podcast CTA */
+  .podcast-cta {
+    background: var(--color-accent-50);
+    padding: var(--space-12) 0;
+    text-align: center;
+  }
+
+  .podcast-cta h2 {
+    color: var(--color-accent-700);
+  }
+
+  .podcast-cta p {
+    max-width: 500px;
+    margin: 0 auto var(--space-6);
+    color: var(--color-neutral-600);
+  }
+
+  .podcast-links {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .hero-title {
+      font-size: var(--font-size-3xl);
+    }
+
+    .hero-subtitle {
+      font-size: var(--font-size-lg);
+    }
+  }
+</style>

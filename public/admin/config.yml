@@ -1,0 +1,123 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Quando lavori in locale, decommenta questa riga per usare il server locale
+# local_backend: true
+
+media_folder: public/images
+public_folder: /images
+
+locale: it
+
+collections:
+  # Stazioni
+  - name: "stations"
+    label: "Stazioni"
+    label_singular: "Stazione"
+    folder: "src/content/stations"
+    create: true
+    slug: "{{slug}}"
+    sortable_fields: ["order", "title"]
+    fields:
+      - { label: "Titolo", name: "title", widget: "string", hint: "Nome della stazione" }
+      - { label: "Ordine", name: "order", widget: "number", min: 1, max: 12, hint: "Numero della stazione (1-12)" }
+      - { label: "Descrizione breve", name: "description", widget: "text", hint: "Breve descrizione per la lista" }
+      - { label: "Immagine principale", name: "heroImage", widget: "image", required: false, hint: "Immagine di copertina" }
+      - label: "Galleria"
+        name: "gallery"
+        widget: "list"
+        required: false
+        hint: "Immagini aggiuntive della stazione"
+        fields:
+          - { label: "Immagine", name: "image", widget: "image" }
+          - { label: "Didascalia", name: "caption", widget: "string" }
+          - { label: "Alt text", name: "alt", widget: "string", hint: "Descrizione per screen reader" }
+      - label: "Podcast"
+        name: "podcast"
+        widget: "object"
+        fields:
+          - { label: "Titolo episodio", name: "episodeTitle", widget: "string", required: false }
+          - { label: "Spotify URL", name: "spotifyUrl", widget: "string", required: false }
+          - { label: "Apple Podcasts URL", name: "applePodcastsUrl", widget: "string", required: false }
+          - { label: "File MP3", name: "mp3File", widget: "file", required: false, hint: "File audio diretto (opzionale)" }
+          - { label: "Durata", name: "duration", widget: "string", required: false, hint: "Es: 15:30" }
+      - label: "Dettagli stazione"
+        name: "details"
+        widget: "markdown"
+        hint: "Informazioni dettagliate sulla stazione"
+      - label: "Come arrivarci"
+        name: "directions"
+        widget: "object"
+        fields:
+          - { label: "Indirizzo", name: "address", widget: "string" }
+          - { label: "Coordinate GPS", name: "coordinates", widget: "string", required: false, hint: "Formato: 43.1234, 11.5678" }
+          - { label: "Indicazioni", name: "instructions", widget: "markdown", required: false }
+          - { label: "Link Google Maps", name: "mapsUrl", widget: "string", required: false }
+      - label: "Trascrizione"
+        name: "transcript"
+        widget: "markdown"
+        hint: "Trascrizione completa del podcast con testo e immagini"
+      - { label: "Pubblicato", name: "published", widget: "boolean", default: true }
+
+  # Pagine statiche
+  - name: "pages"
+    label: "Pagine"
+    files:
+      - label: "Chi siamo"
+        name: "about"
+        file: "src/content/pages/about.md"
+        fields:
+          - { label: "Titolo", name: "title", widget: "string" }
+          - { label: "Sottotitolo", name: "subtitle", widget: "string", required: false }
+          - { label: "Contenuto", name: "body", widget: "markdown" }
+          - label: "Team / Associazione"
+            name: "team"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Nome", name: "name", widget: "string" }
+              - { label: "Ruolo", name: "role", widget: "string", required: false }
+              - { label: "Foto", name: "photo", widget: "image", required: false }
+              - { label: "Bio", name: "bio", widget: "text", required: false }
+          - label: "Contatti"
+            name: "contacts"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Email", name: "email", widget: "string", required: false }
+              - { label: "Telefono", name: "phone", widget: "string", required: false }
+              - { label: "Indirizzo", name: "address", widget: "text", required: false }
+              - { label: "Social Media", name: "social", widget: "list", required: false, fields: [
+                  { label: "Piattaforma", name: "platform", widget: "select", options: ["Facebook", "Instagram", "Twitter", "LinkedIn", "YouTube"] },
+                  { label: "URL", name: "url", widget: "string" }
+                ]}
+
+      - label: "Homepage"
+        name: "home"
+        file: "src/content/pages/home.md"
+        fields:
+          - { label: "Titolo", name: "title", widget: "string" }
+          - { label: "Sottotitolo", name: "subtitle", widget: "string", required: false }
+          - { label: "Introduzione", name: "intro", widget: "markdown" }
+          - { label: "Immagine hero", name: "heroImage", widget: "image", required: false }
+
+  # Impostazioni globali
+  - name: "settings"
+    label: "Impostazioni"
+    files:
+      - label: "Sito"
+        name: "site"
+        file: "src/content/settings/site.json"
+        fields:
+          - { label: "Nome sito", name: "siteName", widget: "string" }
+          - { label: "Descrizione SEO", name: "siteDescription", widget: "text" }
+          - { label: "Logo", name: "logo", widget: "image", required: false }
+          - { label: "Favicon", name: "favicon", widget: "image", required: false }
+          - label: "Link podcast principale"
+            name: "podcastLinks"
+            widget: "object"
+            fields:
+              - { label: "Spotify", name: "spotify", widget: "string", required: false }
+              - { label: "Apple Podcasts", name: "apple", widget: "string", required: false }
+              - { label: "RSS Feed", name: "rss", widget: "string", required: false }

@@ -1,0 +1,310 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Un viaggio in 12 stazioni attraverso il mondo di Pinocchio a Sesto Fiorentino" } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#9a6b35" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="it_IT" />
+
+    <title>{title} | Pinocchio Bicentenario</title>
+
+    <!-- Preload critical CSS -->
+    <link rel="preload" href="/styles/global.css" as="style" />
+  </head>
+  <body>
+    <!-- Skip link for keyboard/screen reader users -->
+    <a href="#main-content" class="skip-link">
+      Vai al contenuto principale
+    </a>
+
+    <header class="site-header" role="banner">
+      <nav class="nav container" aria-label="Navigazione principale">
+        <a href="/" class="nav-logo" aria-label="Pinocchio Bicentenario - Torna alla home">
+          <span class="logo-text">Pinocchio Bicentenario</span>
+        </a>
+
+        <ul class="nav-menu" role="list">
+          <li>
+            <a
+              href="/"
+              class:list={["nav-link", { active: currentPath === "/" }]}
+              aria-current={currentPath === "/" ? "page" : undefined}
+            >
+              Home
+            </a>
+          </li>
+          <li>
+            <a
+              href="/stazioni"
+              class:list={["nav-link", { active: currentPath.startsWith("/stazioni") }]}
+              aria-current={currentPath.startsWith("/stazioni") ? "page" : undefined}
+            >
+              Le Stazioni
+            </a>
+          </li>
+          <li>
+            <a
+              href="/chi-siamo"
+              class:list={["nav-link", { active: currentPath === "/chi-siamo" }]}
+              aria-current={currentPath === "/chi-siamo" ? "page" : undefined}
+            >
+              Chi siamo
+            </a>
+          </li>
+        </ul>
+
+        <!-- Mobile menu button -->
+        <button
+          class="nav-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Apri menu di navigazione"
+        >
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="site-footer" role="contentinfo">
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h2 class="footer-title">Pinocchio Bicentenario</h2>
+            <p class="footer-description">
+              Un progetto del Comune di Sesto Fiorentino per celebrare
+              i 200 anni di Pinocchio.
+            </p>
+          </div>
+
+          <div class="footer-section">
+            <h3 class="footer-subtitle">Link rapidi</h3>
+            <ul class="footer-links" role="list">
+              <li><a href="/stazioni">Tutte le stazioni</a></li>
+              <li><a href="/chi-siamo">Chi siamo</a></li>
+              <li><a href="/accessibilita">Accessibilità</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h3 class="footer-subtitle">Ascolta il podcast</h3>
+            <ul class="footer-links" role="list">
+              <li><a href="#" rel="noopener noreferrer" target="_blank">Spotify</a></li>
+              <li><a href="#" rel="noopener noreferrer" target="_blank">Apple Podcasts</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; {new Date().getFullYear()} Comune di Sesto Fiorentino. Tutti i diritti riservati.</p>
+          <p class="footer-a11y">
+            Questo sito è stato realizzato con particolare attenzione all'accessibilità.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <style is:global>
+      @import '../styles/global.css';
+    </style>
+
+    <style>
+      /* Header */
+      .site-header {
+        background: white;
+        box-shadow: var(--shadow-sm);
+        position: sticky;
+        top: 0;
+        z-index: var(--z-sticky);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: var(--space-4);
+        padding-bottom: var(--space-4);
+      }
+
+      .nav-logo {
+        text-decoration: none;
+        color: var(--color-primary-600);
+        font-weight: var(--font-weight-bold);
+        font-size: var(--font-size-lg);
+      }
+
+      .nav-menu {
+        display: flex;
+        gap: var(--space-6);
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .nav-link {
+        color: var(--color-neutral-700);
+        text-decoration: none;
+        font-weight: var(--font-weight-medium);
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--border-radius-md);
+        transition: all var(--transition-fast);
+      }
+
+      .nav-link:hover {
+        color: var(--color-primary-600);
+        background: var(--color-primary-50);
+      }
+
+      .nav-link.active {
+        color: var(--color-primary-600);
+        background: var(--color-primary-100);
+      }
+
+      .nav-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        padding: var(--space-2);
+      }
+
+      .hamburger-line {
+        width: 24px;
+        height: 2px;
+        background: var(--color-neutral-700);
+        transition: all var(--transition-fast);
+      }
+
+      /* Footer */
+      .site-footer {
+        background: var(--color-neutral-900);
+        color: var(--color-neutral-200);
+        padding: var(--space-12) 0 var(--space-6);
+        margin-top: var(--space-16);
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: var(--space-8);
+        margin-bottom: var(--space-8);
+      }
+
+      .footer-title {
+        color: white;
+        font-size: var(--font-size-xl);
+        margin-bottom: var(--space-3);
+      }
+
+      .footer-subtitle {
+        color: white;
+        font-size: var(--font-size-base);
+        margin-bottom: var(--space-3);
+      }
+
+      .footer-description {
+        color: var(--color-neutral-400);
+        font-size: var(--font-size-sm);
+        line-height: var(--line-height-relaxed);
+      }
+
+      .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: var(--space-2);
+      }
+
+      .footer-links a {
+        color: var(--color-neutral-300);
+        text-decoration: none;
+        font-size: var(--font-size-sm);
+        transition: color var(--transition-fast);
+      }
+
+      .footer-links a:hover {
+        color: white;
+      }
+
+      .footer-bottom {
+        border-top: 1px solid var(--color-neutral-700);
+        padding-top: var(--space-6);
+        text-align: center;
+        font-size: var(--font-size-sm);
+        color: var(--color-neutral-400);
+      }
+
+      .footer-a11y {
+        margin-top: var(--space-2);
+        font-size: var(--font-size-xs);
+      }
+
+      /* Mobile styles */
+      @media (max-width: 768px) {
+        .nav-menu {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: white;
+          flex-direction: column;
+          padding: var(--space-4);
+          box-shadow: var(--shadow-md);
+        }
+
+        .nav-menu.open {
+          display: flex;
+        }
+
+        .nav-toggle {
+          display: flex;
+        }
+      }
+    </style>
+
+    <!-- Mobile menu toggle script -->
+    <script>
+      const navToggle = document.querySelector('.nav-toggle');
+      const navMenu = document.querySelector('.nav-menu');
+
+      navToggle?.addEventListener('click', () => {
+        const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+        navToggle.setAttribute('aria-expanded', (!isExpanded).toString());
+        navMenu?.classList.toggle('open');
+
+        // Update aria-label
+        navToggle.setAttribute(
+          'aria-label',
+          isExpanded ? 'Apri menu di navigazione' : 'Chiudi menu di navigazione'
+        );
+      });
+    </script>
+  </body>
+</html>

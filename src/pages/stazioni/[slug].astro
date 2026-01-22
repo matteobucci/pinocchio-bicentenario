@@ -1,0 +1,1045 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { marked } from 'marked';
+
+export async function getStaticPaths() {
+  const stations = await getCollection('stations');
+  return stations.map((station) => ({
+    params: { slug: station.slug },
+    props: { station },
+  }));
+}
+
+const { station } = Astro.props;
+const { Content } = await station.render();
+
+// Get all stations for navigation
+const allStations = await getCollection('stations', ({ data }) => data.published);
+const sortedStations = allStations.sort((a, b) => a.data.order - b.data.order);
+const currentIndex = sortedStations.findIndex((s) => s.slug === station.slug);
+const prevStation = currentIndex > 0 ? sortedStations[currentIndex - 1] : null;
+const nextStation = currentIndex < sortedStations.length - 1 ? sortedStations[currentIndex + 1] : null;
+
+const { data } = station;
+
+// Parse markdown in directions.instructions
+const directionsHtml = data.directions?.instructions ? await marked.parse(data.directions.instructions) : null;
+
+// Parse markdown in transcript
+const transcriptHtml = data.transcript ? await marked.parse(data.transcript) : null;
+
+// Prepare gallery data for client-side script
+const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.description}
+>
+  <article class="station-page">
+    <!-- Hero / Gallery -->
+    <header class="station-header">
+      <div class="container">
+        {data.gallery && data.gallery.length > 0 ? (
+          <div class="gallery-hero" role="region" aria-label="Galleria immagini" data-gallery={galleryJson}>
+            <div class="gallery-main">
+              <button
+                class="gallery-fullscreen-trigger"
+                aria-label="Apri immagine a schermo intero"
+                type="button"
+              >
+                <img
+                  src={data.gallery[0].image}
+                  alt={data.gallery[0].alt}
+                  class="gallery-current-image"
+                  id="gallery-main-image"
+                />
+              </button>
+              <p class="gallery-caption" id="gallery-caption">
+                {data.gallery[0].caption}
+              </p>
+            </div>
+            {data.gallery.length > 1 && (
+              <div class="gallery-nav">
+                <button
+                  class="gallery-btn gallery-prev"
+                  aria-label="Immagine precedente"
+                  data-direction="prev"
+                  type="button"
+                >
+                  &#8592;
+                </button>
+                <span class="gallery-counter" aria-live="polite">
+                  <span id="gallery-current">1</span> / {data.gallery.length}
+                </span>
+                <button
+                  class="gallery-btn gallery-next"
+                  aria-label="Immagine successiva"
+                  data-direction="next"
+                  type="button"
+                >
+                  &#8594;
+                </button>
+              </div>
+            )}
+            <div class="gallery-thumbnails" role="list">
+              {data.gallery.map((img, index) => (
+                <button
+                  class:list={["gallery-thumb", { active: index === 0 }]}
+                  data-index={index}
+                  aria-label={`Vai all'immagine ${index + 1}: ${img.alt}`}
+                  type="button"
+                >
+                  <img src={img.image} alt="" aria-hidden="true" />
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : data.heroImage ? (
+          <img
+            src={data.heroImage}
+            alt=""
+            class="hero-image"
+          />
+        ) : null}
+
+        <!-- Station navigation (prev/next) -->
+        <nav class="station-nav" aria-label="Navigazione tra stazioni">
+          {prevStation ? (
+            <a href={`/stazioni/${prevStation.slug}`} class="station-nav-link prev">
+              <span aria-hidden="true">&#8592;</span>
+              <span class="nav-label">
+                <span class="nav-direction">Stazione precedente</span>
+                <span class="nav-title">{prevStation.data.title}</span>
+              </span>
+            </a>
+          ) : <div></div>}
+          {nextStation ? (
+            <a href={`/stazioni/${nextStation.slug}`} class="station-nav-link next">
+              <span class="nav-label">
+                <span class="nav-direction">Prossima stazione</span>
+                <span class="nav-title">{nextStation.data.title}</span>
+              </span>
+              <span aria-hidden="true">&#8594;</span>
+            </a>
+          ) : <div></div>}
+        </nav>
+
+        <div class="station-title-section">
+          <span class="station-number" aria-label={`Stazione numero ${data.order}`}>
+            {data.order}
+          </span>
+          <h1>{data.title}</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- Podcast Player -->
+    {data.podcast && (
+      <section class="podcast-section" aria-labelledby="podcast-heading">
+        <div class="container">
+          <h2 id="podcast-heading" class="sr-only">Ascolta il podcast</h2>
+          <div class="podcast-player">
+            <div class="podcast-info">
+              {data.podcast.episodeTitle && (
+                <p class="podcast-title">{data.podcast.episodeTitle}</p>
+              )}
+              {data.podcast.duration && (
+                <p class="podcast-duration">Durata: {data.podcast.duration}</p>
+              )}
+            </div>
+
+            {/* MP3 Player */}
+            {data.podcast.mp3File && (
+              <div class="audio-player">
+                <audio
+                  controls
+                  preload="metadata"
+                  aria-label={`Audio: ${data.podcast.episodeTitle || 'Episodio podcast'}`}
+                >
+                  <source src={data.podcast.mp3File} type="audio/mpeg" />
+                  Il tuo browser non supporta l'elemento audio.
+                </audio>
+              </div>
+            )}
+
+            <div class="podcast-links">
+              <span class="podcast-links-label">Ascolta su:</span>
+              {data.podcast.spotifyUrl && (
+                <a
+                  href={data.podcast.spotifyUrl}
+                  class="podcast-link spotify"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Spotify
+                  <span class="sr-only">(apre in nuova finestra)</span>
+                </a>
+              )}
+              {data.podcast.applePodcastsUrl && (
+                <a
+                  href={data.podcast.applePodcastsUrl}
+                  class="podcast-link apple"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Apple Podcasts
+                  <span class="sr-only">(apre in nuova finestra)</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- Tabs: Details / Transcript -->
+    <div class="tabs-section">
+      <div class="container">
+        <div class="tabs" role="tablist" aria-label="Contenuti della stazione">
+          <button
+            role="tab"
+            id="tab-details"
+            aria-selected="true"
+            aria-controls="panel-details"
+            class="tab-button active"
+          >
+            Dettagli
+          </button>
+          <button
+            role="tab"
+            id="tab-transcript"
+            aria-selected="false"
+            aria-controls="panel-transcript"
+            class="tab-button"
+            tabindex="-1"
+          >
+            Trascrizione
+          </button>
+        </div>
+
+        <!-- Details Tab -->
+        <div
+          role="tabpanel"
+          id="panel-details"
+          aria-labelledby="tab-details"
+          class="tab-panel"
+        >
+          <div class="prose">
+            <Content />
+          </div>
+
+          {data.directions && (
+            <section class="directions-section" aria-labelledby="directions-heading">
+              <h2 id="directions-heading">Come arrivarci</h2>
+              <address class="directions-address">
+                <strong>{data.directions.address}</strong>
+              </address>
+
+              {directionsHtml && (
+                <div class="directions-instructions prose">
+                  <Fragment set:html={directionsHtml} />
+                </div>
+              )}
+
+              {data.directions.mapsUrl && (
+                <a
+                  href={data.directions.mapsUrl}
+                  class="btn btn-secondary"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Apri in Google Maps
+                  <span class="sr-only">(nuova finestra)</span>
+                </a>
+              )}
+            </section>
+          )}
+        </div>
+
+        <!-- Transcript Tab -->
+        <div
+          role="tabpanel"
+          id="panel-transcript"
+          aria-labelledby="tab-transcript"
+          class="tab-panel"
+          hidden
+        >
+          <div class="transcript-content prose">
+            <h2>Trascrizione del podcast</h2>
+            <p class="transcript-intro">
+              Questa trascrizione è stata creata per garantire l'accessibilità
+              del contenuto audio a tutti gli utenti.
+            </p>
+            {/* Transcript content will come from the markdown body with specific section */}
+            <Fragment set:html={transcriptHtml || '<p>Trascrizione in arrivo...</p>'} />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back to all stations -->
+    <footer class="station-footer">
+      <div class="container">
+        <a href="/stazioni" class="btn btn-outline">
+          &#8592; Tutte le stazioni
+        </a>
+      </div>
+    </footer>
+  </article>
+
+  <!-- Lightbox Modal -->
+  {data.gallery && data.gallery.length > 0 && (
+    <div
+      class="lightbox"
+      id="lightbox"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Galleria a schermo intero"
+      hidden
+    >
+      <div class="lightbox-backdrop"></div>
+      <div class="lightbox-content">
+        <button
+          class="lightbox-close"
+          aria-label="Chiudi galleria"
+          type="button"
+        >
+          &#10005;
+        </button>
+        <button
+          class="lightbox-nav lightbox-prev"
+          aria-label="Immagine precedente"
+          data-direction="prev"
+          type="button"
+        >
+          &#8592;
+        </button>
+        <figure class="lightbox-figure">
+          <img
+            src={data.gallery[0].image}
+            alt={data.gallery[0].alt}
+            class="lightbox-image"
+            id="lightbox-image"
+          />
+          <figcaption class="lightbox-caption" id="lightbox-caption">
+            {data.gallery[0].caption}
+          </figcaption>
+        </figure>
+        <button
+          class="lightbox-nav lightbox-next"
+          aria-label="Immagine successiva"
+          data-direction="next"
+          type="button"
+        >
+          &#8594;
+        </button>
+        <span class="lightbox-counter" aria-live="polite">
+          <span id="lightbox-current">1</span> / {data.gallery.length}
+        </span>
+      </div>
+    </div>
+  )}
+</BaseLayout>
+
+<script>
+  // Tab functionality
+  const tabs = document.querySelectorAll('[role="tab"]');
+  const panels = document.querySelectorAll('[role="tabpanel"]');
+
+  function activateTab(tab: Element) {
+    // Deactivate all tabs
+    tabs.forEach((t) => {
+      t.setAttribute('aria-selected', 'false');
+      t.setAttribute('tabindex', '-1');
+      t.classList.remove('active');
+    });
+
+    // Hide all panels
+    panels.forEach((p) => {
+      p.setAttribute('hidden', '');
+    });
+
+    // Activate selected tab
+    tab.setAttribute('aria-selected', 'true');
+    tab.removeAttribute('tabindex');
+    tab.classList.add('active');
+
+    // Show associated panel
+    const panelId = tab.getAttribute('aria-controls');
+    const panel = document.getElementById(panelId!);
+    panel?.removeAttribute('hidden');
+
+    // Focus management
+    (tab as HTMLElement).focus();
+  }
+
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => activateTab(tab));
+
+    // Keyboard navigation
+    tab.addEventListener('keydown', (e) => {
+      const key = (e as KeyboardEvent).key;
+      let newTab: Element | null = null;
+
+      if (key === 'ArrowRight' || key === 'ArrowDown') {
+        const currentIndex = Array.from(tabs).indexOf(tab);
+        newTab = tabs[(currentIndex + 1) % tabs.length];
+      } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+        const currentIndex = Array.from(tabs).indexOf(tab);
+        newTab = tabs[(currentIndex - 1 + tabs.length) % tabs.length];
+      } else if (key === 'Home') {
+        newTab = tabs[0];
+      } else if (key === 'End') {
+        newTab = tabs[tabs.length - 1];
+      }
+
+      if (newTab) {
+        e.preventDefault();
+        activateTab(newTab);
+      }
+    });
+  });
+
+  // Gallery functionality
+  const galleryElement = document.querySelector('[data-gallery]');
+  const galleryData = galleryElement
+    ? JSON.parse(galleryElement.getAttribute('data-gallery') || '[]')
+    : [];
+  let currentImageIndex = 0;
+
+  function updateGallery(index: number, updateLightbox = false) {
+    const mainImage = document.getElementById('gallery-main-image') as HTMLImageElement;
+    const caption = document.getElementById('gallery-caption');
+    const counter = document.getElementById('gallery-current');
+    const thumbs = document.querySelectorAll('.gallery-thumb');
+
+    if (mainImage && galleryData[index]) {
+      mainImage.src = galleryData[index].image;
+      mainImage.alt = galleryData[index].alt;
+      if (caption) caption.textContent = galleryData[index].caption;
+      if (counter) counter.textContent = String(index + 1);
+
+      thumbs.forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === index);
+      });
+
+      currentImageIndex = index;
+
+      // Also update lightbox if open
+      if (updateLightbox) {
+        updateLightboxImage(index);
+      }
+    }
+  }
+
+  function updateLightboxImage(index: number) {
+    const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement;
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxCounter = document.getElementById('lightbox-current');
+
+    if (lightboxImage && galleryData[index]) {
+      lightboxImage.src = galleryData[index].image;
+      lightboxImage.alt = galleryData[index].alt;
+      if (lightboxCaption) lightboxCaption.textContent = galleryData[index].caption;
+      if (lightboxCounter) lightboxCounter.textContent = String(index + 1);
+    }
+  }
+
+  // Gallery navigation buttons
+  document.querySelectorAll('.gallery-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const direction = btn.getAttribute('data-direction');
+      const total = galleryData.length;
+
+      if (direction === 'next') {
+        updateGallery((currentImageIndex + 1) % total);
+      } else {
+        updateGallery((currentImageIndex - 1 + total) % total);
+      }
+    });
+  });
+
+  // Gallery thumbnails
+  document.querySelectorAll('.gallery-thumb').forEach((thumb) => {
+    thumb.addEventListener('click', () => {
+      const index = parseInt(thumb.getAttribute('data-index') || '0', 10);
+      updateGallery(index);
+    });
+  });
+
+  // Lightbox functionality
+  const lightbox = document.getElementById('lightbox');
+  const lightboxTrigger = document.querySelector('.gallery-fullscreen-trigger');
+
+  function openLightbox() {
+    if (lightbox) {
+      lightbox.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+      updateLightboxImage(currentImageIndex);
+      // Focus the close button for accessibility
+      const closeBtn = lightbox.querySelector('.lightbox-close') as HTMLElement;
+      closeBtn?.focus();
+    }
+  }
+
+  function closeLightbox() {
+    if (lightbox) {
+      lightbox.setAttribute('hidden', '');
+      document.body.style.overflow = '';
+      // Return focus to the trigger
+      (lightboxTrigger as HTMLElement)?.focus();
+    }
+  }
+
+  // Open lightbox when clicking on main image
+  lightboxTrigger?.addEventListener('click', openLightbox);
+
+  // Close lightbox
+  document.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
+  document.querySelector('.lightbox-backdrop')?.addEventListener('click', closeLightbox);
+
+  // Lightbox navigation
+  document.querySelectorAll('.lightbox-nav').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const direction = btn.getAttribute('data-direction');
+      const total = galleryData.length;
+
+      if (direction === 'next') {
+        currentImageIndex = (currentImageIndex + 1) % total;
+      } else {
+        currentImageIndex = (currentImageIndex - 1 + total) % total;
+      }
+      updateGallery(currentImageIndex);
+      updateLightboxImage(currentImageIndex);
+    });
+  });
+
+  // Keyboard navigation for lightbox
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox || lightbox.hasAttribute('hidden')) return;
+
+    if (e.key === 'Escape') {
+      closeLightbox();
+    } else if (e.key === 'ArrowRight') {
+      currentImageIndex = (currentImageIndex + 1) % galleryData.length;
+      updateGallery(currentImageIndex);
+      updateLightboxImage(currentImageIndex);
+    } else if (e.key === 'ArrowLeft') {
+      currentImageIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length;
+      updateGallery(currentImageIndex);
+      updateLightboxImage(currentImageIndex);
+    }
+  });
+</script>
+
+<style>
+  .station-page {
+    padding-bottom: var(--space-12);
+  }
+
+  /* Header */
+  .station-header {
+    background: var(--color-neutral-100);
+    padding-bottom: var(--space-8);
+  }
+
+  .hero-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: var(--border-radius-lg);
+  }
+
+  /* Gallery */
+  .gallery-hero {
+    margin-bottom: var(--space-6);
+  }
+
+  .gallery-main {
+    position: relative;
+  }
+
+  .gallery-current-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: var(--border-radius-lg);
+  }
+
+  .gallery-caption {
+    text-align: center;
+    padding: var(--space-3);
+    background: var(--color-neutral-800);
+    color: white;
+    font-size: var(--font-size-sm);
+    margin: 0;
+    border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+    margin-top: -8px;
+  }
+
+  .gallery-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+  }
+
+  .gallery-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--border-radius-full);
+    background: var(--color-primary-500);
+    color: white;
+    font-size: var(--font-size-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+  }
+
+  .gallery-btn:hover {
+    background: var(--color-primary-600);
+  }
+
+  .gallery-counter {
+    font-weight: var(--font-weight-medium);
+  }
+
+  .gallery-thumbnails {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: center;
+    margin-top: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .gallery-thumb {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    border: 2px solid transparent;
+    padding: 0;
+    transition: all var(--transition-fast);
+  }
+
+  .gallery-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gallery-thumb.active,
+  .gallery-thumb:hover {
+    border-color: var(--color-primary-500);
+  }
+
+  /* Station navigation */
+  .station-nav {
+    display: flex;
+    justify-content: space-between;
+    margin: var(--space-6) 0;
+  }
+
+  .station-nav-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-decoration: none;
+    color: var(--color-neutral-700);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-fast);
+  }
+
+  .station-nav-link:hover {
+    background: var(--color-primary-50);
+    color: var(--color-primary-700);
+  }
+
+  .nav-label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-direction {
+    font-size: var(--font-size-xs);
+    color: var(--color-neutral-500);
+  }
+
+  .nav-title {
+    font-weight: var(--font-weight-medium);
+  }
+
+  .station-nav-link.next {
+    text-align: right;
+  }
+
+  /* Title section */
+  .station-title-section {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .station-number {
+    width: 60px;
+    height: 60px;
+    background: var(--color-primary-500);
+    color: white;
+    border-radius: var(--border-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    flex-shrink: 0;
+  }
+
+  /* Podcast section */
+  .podcast-section {
+    padding: var(--space-6) 0;
+    background: var(--color-accent-50);
+  }
+
+  .podcast-player {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .podcast-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: baseline;
+  }
+
+  .podcast-title {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent-700);
+    margin: 0;
+  }
+
+  .podcast-duration {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
+    margin: 0;
+  }
+
+  .audio-player {
+    width: 100%;
+  }
+
+  .audio-player audio {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .podcast-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .podcast-links-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
+  }
+
+  .podcast-link {
+    padding: var(--space-2) var(--space-4);
+    background: white;
+    border-radius: var(--border-radius-md);
+    text-decoration: none;
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-700);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-fast);
+  }
+
+  .podcast-link:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
+  }
+
+  /* Tabs */
+  .tabs-section {
+    padding: var(--space-8) 0;
+  }
+
+  .tabs {
+    display: flex;
+    gap: var(--space-1);
+    border-bottom: 2px solid var(--color-neutral-200);
+    margin-bottom: var(--space-6);
+  }
+
+  .tab-button {
+    padding: var(--space-3) var(--space-6);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-600);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .tab-button:hover {
+    color: var(--color-neutral-900);
+  }
+
+  .tab-button.active {
+    color: var(--color-primary-600);
+    border-bottom-color: var(--color-primary-600);
+  }
+
+  .tab-panel {
+    animation: fadeIn var(--transition-base);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Directions */
+  .directions-section {
+    margin-top: var(--space-10);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-neutral-200);
+  }
+
+  .directions-address {
+    font-style: normal;
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-4);
+  }
+
+  .directions-instructions {
+    margin-bottom: var(--space-4);
+  }
+
+  /* Transcript */
+  .transcript-intro {
+    background: var(--color-neutral-100);
+    padding: var(--space-4);
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
+    margin-bottom: var(--space-6);
+  }
+
+  /* Footer */
+  .station-footer {
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-neutral-200);
+    margin-top: var(--space-8);
+  }
+
+  /* Fullscreen trigger */
+  .gallery-fullscreen-trigger {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: zoom-in;
+    position: relative;
+  }
+
+  .gallery-fullscreen-trigger::after {
+    content: '⛶';
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--border-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-lg);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+  }
+
+  .gallery-fullscreen-trigger:hover::after,
+  .gallery-fullscreen-trigger:focus::after {
+    opacity: 1;
+  }
+
+  .gallery-fullscreen-trigger:focus {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox[hidden] {
+    display: none;
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+  }
+
+  .lightbox-content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: var(--space-8);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    width: 44px;
+    height: 44px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: var(--border-radius-full);
+    color: white;
+    font-size: var(--font-size-xl);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    z-index: 10;
+  }
+
+  .lightbox-close:hover,
+  .lightbox-close:focus {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .lightbox-close:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: var(--border-radius-full);
+    color: white;
+    font-size: var(--font-size-2xl);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    z-index: 10;
+  }
+
+  .lightbox-nav:hover,
+  .lightbox-nav:focus {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .lightbox-nav:focus {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  .lightbox-prev {
+    left: var(--space-4);
+  }
+
+  .lightbox-next {
+    right: var(--space-4);
+  }
+
+  .lightbox-figure {
+    max-width: 90vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+  }
+
+  .lightbox-image {
+    max-width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: var(--border-radius-md);
+  }
+
+  .lightbox-caption {
+    color: white;
+    text-align: center;
+    padding: var(--space-4);
+    font-size: var(--font-size-md);
+    max-width: 600px;
+  }
+
+  .lightbox-counter {
+    position: absolute;
+    bottom: var(--space-4);
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: var(--font-size-sm);
+    background: rgba(0, 0, 0, 0.5);
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--border-radius-md);
+  }
+
+  @media (max-width: 768px) {
+    .station-nav {
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .station-title-section {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .station-number {
+      width: 50px;
+      height: 50px;
+      font-size: var(--font-size-xl);
+    }
+
+    .lightbox-nav {
+      width: 44px;
+      height: 44px;
+      font-size: var(--font-size-lg);
+    }
+
+    .lightbox-content {
+      padding: var(--space-4);
+    }
+  }
+</style>

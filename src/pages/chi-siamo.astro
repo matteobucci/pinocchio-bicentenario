@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getEntry } from 'astro:content';
+
+const aboutPage = await getEntry('pages', 'about');
+const { Content } = await aboutPage.render();
+const { data } = aboutPage;
+---
+
+<BaseLayout
+  title="Chi siamo"
+  description="Scopri l'associazione e il progetto Pinocchio Bicentenario a Sesto Fiorentino"
+>
+  <div class="page-header">
+    <div class="container">
+      <h1>{data.title}</h1>
+      {data.subtitle && <p class="page-subtitle">{data.subtitle}</p>}
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="container">
+      <div class="content-wrapper">
+        <article class="prose">
+          <Content />
+        </article>
+
+        {data.team && data.team.length > 0 && (
+          <section class="team-section" aria-labelledby="team-heading">
+            <h2 id="team-heading">Il nostro team</h2>
+            <ul class="team-grid" role="list">
+              {data.team.map((member) => (
+                <li class="team-member card">
+                  {member.photo && (
+                    <img
+                      src={member.photo}
+                      alt={`Foto di ${member.name}`}
+                      class="team-photo"
+                    />
+                  )}
+                  <div class="card-body">
+                    <h3 class="team-name">{member.name}</h3>
+                    {member.role && <p class="team-role">{member.role}</p>}
+                    {member.bio && <p class="team-bio">{member.bio}</p>}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
+        {data.contacts && (
+          <section class="contacts-section" aria-labelledby="contacts-heading">
+            <h2 id="contacts-heading">Contatti</h2>
+            <address class="contacts-info">
+              {data.contacts.email && (
+                <p>
+                  <strong>Email:</strong>
+                  <a href={`mailto:${data.contacts.email}`}>{data.contacts.email}</a>
+                </p>
+              )}
+              {data.contacts.phone && (
+                <p>
+                  <strong>Telefono:</strong>
+                  <a href={`tel:${data.contacts.phone.replace(/\s/g, '')}`}>
+                    {data.contacts.phone}
+                  </a>
+                </p>
+              )}
+              {data.contacts.address && (
+                <p>
+                  <strong>Indirizzo:</strong><br />
+                  {data.contacts.address}
+                </p>
+              )}
+            </address>
+
+            {data.contacts.social && data.contacts.social.length > 0 && (
+              <div class="social-links">
+                <h3>Seguici</h3>
+                <ul class="social-list" role="list">
+                  {data.contacts.social.map((social) => (
+                    <li>
+                      <a
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="social-link"
+                      >
+                        {social.platform}
+                        <span class="sr-only">(apre in nuova finestra)</span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </section>
+        )}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    background: var(--color-secondary-50);
+    padding: var(--space-12) 0;
+    text-align: center;
+  }
+
+  .page-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-600);
+    max-width: 600px;
+    margin: var(--space-4) auto 0;
+  }
+
+  .page-content {
+    padding: var(--space-12) 0;
+  }
+
+  .content-wrapper {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+  }
+
+  /* Team */
+  .team-section {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-neutral-200);
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-6);
+    list-style: none;
+    padding: 0;
+    margin: var(--space-6) 0 0;
+  }
+
+  .team-member {
+    text-align: center;
+  }
+
+  .team-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--border-radius-full);
+    object-fit: cover;
+    margin: var(--space-4) auto;
+  }
+
+  .team-name {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-1);
+  }
+
+  .team-role {
+    color: var(--color-primary-600);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-2);
+  }
+
+  .team-bio {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
+  }
+
+  /* Contacts */
+  .contacts-section {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-neutral-200);
+  }
+
+  .contacts-info {
+    font-style: normal;
+    margin-bottom: var(--space-6);
+  }
+
+  .contacts-info p {
+    margin-bottom: var(--space-3);
+  }
+
+  .contacts-info a {
+    color: var(--color-accent-600);
+  }
+
+  .social-links h3 {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-3);
+  }
+
+  .social-list {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+  }
+
+  .social-link {
+    display: inline-block;
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-neutral-100);
+    border-radius: var(--border-radius-md);
+    text-decoration: none;
+    color: var(--color-neutral-700);
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+  }
+
+  .social-link:hover {
+    background: var(--color-primary-100);
+    color: var(--color-primary-700);
+  }
+</style>
