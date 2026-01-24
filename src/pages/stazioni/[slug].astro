@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import { marked } from 'marked';
 
 export async function getStaticPaths() {
@@ -12,7 +12,7 @@ export async function getStaticPaths() {
 }
 
 const { station } = Astro.props;
-const { Content } = await station.render();
+const { Content } = await render(station);
 
 // Get all stations for navigation
 const allStations = await getCollection('stations', ({ data }) => data.published);

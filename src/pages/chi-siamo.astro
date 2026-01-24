@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { getEntry } from 'astro:content';
+import { getEntry, render } from 'astro:content';
 
 const aboutPage = await getEntry('pages', 'about');
-const { Content } = await aboutPage.render();
+const { Content } = await render(aboutPage);
 const { data } = aboutPage;
 ---
 
