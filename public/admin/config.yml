@@ -2,8 +2,9 @@ backend:
   name: github
   repo: matteobucci/pinocchio-bicentenario
   branch: main
-  auth_type: pkce
-  app_id: Ov23liwFtYVUmUSIkVxo
+  site_domain: pinocchio-bicentenario.vercel.app
+  base_url: https://pinocchio-bicentenario.vercel.app
+  auth_endpoint: oauth
 
 # Quando lavori in locale, decommenta questa riga per usare il server locale
 # local_backend: true
