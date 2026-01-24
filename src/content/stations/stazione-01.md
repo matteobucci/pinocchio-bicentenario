@@ -1,46 +1,59 @@
 ---
-title: "La Bottega di Geppetto"
+title: La Bottega di Geppetto Il folle!
 order: 1
-description: "Il viaggio inizia dalla bottega del falegname Geppetto, dove tutto ebbe inizio con un pezzo di legno parlante."
-heroImage: "https://picsum.photos/seed/stazione1/1200/600"
+description: Il viaggio inizia dalla bottega del falegname Geppetto, dove tutto
+  ebbe inizio con un pezzo di legno parlante.
+heroImage: https://picsum.photos/seed/stazione1/1200/600
 gallery:
-  - image: "https://picsum.photos/seed/stazione1a/800/600"
-    caption: "La bottega ricostruita"
-    alt: "Interno della bottega di Geppetto con attrezzi da falegname e un banco da lavoro in legno"
-  - image: "https://picsum.photos/seed/stazione1b/800/600"
-    caption: "Gli attrezzi del mestiere"
-    alt: "Primo piano degli attrezzi da falegname storici: pialle, scalpelli e seghe"
-  - image: "https://picsum.photos/seed/stazione1c/800/600"
-    caption: "Il ceppo di legno"
-    alt: "Riproduzione del famoso ceppo di legno da cui nacque Pinocchio"
+  - image: https://picsum.photos/seed/stazione1a/800/600
+    caption: La bottega ricostruita
+    alt: Interno della bottega di Geppetto con attrezzi da falegname e un banco da
+      lavoro in legno
+  - image: https://picsum.photos/seed/stazione1b/800/600
+    caption: Gli attrezzi del mestiere
+    alt: "Primo piano degli attrezzi da falegname storici: pialle, scalpelli e
+      seghe"
+  - image: https://picsum.photos/seed/stazione1c/800/600
+    caption: Il ceppo di legno
+    alt: Riproduzione del famoso ceppo di legno da cui nacque Pinocchio
 podcast:
-  episodeTitle: "Episodio 1 - C'era una volta un pezzo di legno"
-  spotifyUrl: "https://open.spotify.com/episode/example1"
-  applePodcastsUrl: "https://podcasts.apple.com/episode/example1"
-  mp3File: "/audio/episodio-01.mp3"
-  duration: "18:45"
+  episodeTitle: Episodio 1 - C'era una volta un pezzo di legno
+  spotifyUrl: https://open.spotify.com/episode/example1
+  applePodcastsUrl: https://podcasts.apple.com/episode/example1
+  mp3File: /audio/episodio-01.mp3
+  duration: 18:45
+details: Questa e' una stazione fenomenale
 directions:
-  address: "Via Gramsci 42, Sesto Fiorentino (FI)"
-  coordinates: "43.8456, 11.1987"
-  mapsUrl: "https://maps.google.com/?q=43.8456,11.1987"
-  instructions: |
-    **In auto:** Dalla A1 uscita Firenze Nord, seguire indicazioni per Sesto Fiorentino centro.
+  address: Via Gramsci 42, Sesto Fiorentino (FI)
+  coordinates: 43.8456, 11.1987
+  mapsUrl: https://maps.google.com/?q=43.8456,11.1987
+  instructions: >
+    **In auto:** Dalla A1 uscita Firenze Nord, seguire indicazioni per Sesto
+    Fiorentino centro.
+
 
     **Con i mezzi:** Tramvia T2 fermata "Sesto Fiorentino", poi 5 minuti a piedi.
 
+
     **A piedi:** Dal centro di Sesto, percorrere Via Roma per 500 metri, girare a destra in Via Gramsci.
-transcript: |
+transcript: >
   ## Trascrizione Episodio 1
+
 
   **Narratore:** C'era una volta... Un re! - diranno subito i miei piccoli lettori. No, ragazzi, avete sbagliato. C'era una volta un pezzo di legno.
 
+
   Non era un legno di lusso, ma un semplice pezzo da catasta, di quelli che d'inverno si mettono nelle stufe e nei caminetti per accendere il fuoco e per riscaldare le stanze.
+
 
   **Geppetto:** Questo legno è capitato a tempo: voglio servirmene per fare una gamba di tavolino.
 
+
   Ma in quel momento sentì una vocina sottile che disse:
 
+
   **Il Legno:** Non mi picchiar tanto forte!
+
 
   [Continua la trascrizione...]
 published: true
