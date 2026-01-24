@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: matteobucci/pinocchio-bicentenario
   branch: main
 
 # Quando lavori in locale, decommenta questa riga per usare il server locale
