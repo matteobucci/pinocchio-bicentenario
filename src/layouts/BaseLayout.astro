@@ -1,5 +1,6 @@
 ---
 import SpeedInsights from "@vercel/speed-insights/astro";
+import Analytics from "@vercel/analytics/astro";
 
 interface Props {
   title: string;
@@ -31,6 +32,8 @@ const currentPath = Astro.url.pathname;
 
     <!-- Preload critical CSS -->
     <link rel="preload" href="/styles/global.css" as="style" />
+    
+    <Analytics />
   </head>
   <body>
     <!-- Skip link for keyboard/screen reader users -->
