@@ -1,4 +1,6 @@
 ---
+import SpeedInsights from "@vercel/speed-insights/astro";
+
 interface Props {
   title: string;
   description?: string;
@@ -306,5 +308,7 @@ const currentPath = Astro.url.pathname;
         );
       });
     </script>
+
+    <SpeedInsights />
   </body>
 </html>
