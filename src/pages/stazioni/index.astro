@@ -39,7 +39,7 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
               )}
               <div class="card-body">
                 <h2 class="timeline-title">
-                  <a href={`/stazioni/${station.slug}`}>
+                  <a href={`/stazioni/${station.id.replace(/\.md$/, '')}`}>
                     {station.data.title}
                   </a>
                 </h2>
@@ -69,7 +69,7 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
                 )}
 
                 <div class="timeline-actions">
-                  <a href={`/stazioni/${station.slug}`} class="btn btn-primary">
+                  <a href={`/stazioni/${station.id.replace(/\.md$/, '')}`} class="btn btn-primary">
                     Scopri la stazione
                   </a>
                   {station.data.directions?.mapsUrl && (

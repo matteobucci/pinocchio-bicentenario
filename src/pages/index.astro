@@ -35,7 +35,7 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
       <div class="stations-grid">
         {sortedStations.map((station) => (
           <article class="station-card card">
-            <a href={`/stazioni/${station.slug}`} class="station-card-link">
+            <a href={`/stazioni/${station.id.replace(/\.md$/, '')}`} class="station-card-link">
               <div class="station-number" aria-hidden="true">{station.data.order}</div>
               <div class="card-body">
                 <h3 class="station-title">{station.data.title}</h3>

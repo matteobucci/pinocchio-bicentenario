@@ -3,10 +3,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { marked } from 'marked';
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const stations = await getCollection('stations');
   return stations.map((station) => ({
-    params: { slug: station.slug },
+    params: { slug: station.id.replace(/\.md$/, '') },
     props: { station },
   }));
 }
@@ -17,7 +19,7 @@ const { Content } = await render(station);
 // Get all stations for navigation
 const allStations = await getCollection('stations', ({ data }) => data.published);
 const sortedStations = allStations.sort((a, b) => a.data.order - b.data.order);
-const currentIndex = sortedStations.findIndex((s) => s.slug === station.slug);
+const currentIndex = sortedStations.findIndex((s) => s.id === station.id);
 const prevStation = currentIndex > 0 ? sortedStations[currentIndex - 1] : null;
 const nextStation = currentIndex < sortedStations.length - 1 ? sortedStations[currentIndex + 1] : null;
 
@@ -107,7 +109,7 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
         <!-- Station navigation (prev/next) -->
         <nav class="station-nav" aria-label="Navigazione tra stazioni">
           {prevStation ? (
-            <a href={`/stazioni/${prevStation.slug}`} class="station-nav-link prev">
+            <a href={`/stazioni/${prevStation.id.replace(/\.md$/, '')}`} class="station-nav-link prev">
               <span aria-hidden="true">&#8592;</span>
               <span class="nav-label">
                 <span class="nav-direction">Stazione precedente</span>
@@ -116,7 +118,7 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
             </a>
           ) : <div></div>}
           {nextStation ? (
-            <a href={`/stazioni/${nextStation.slug}`} class="station-nav-link next">
+            <a href={`/stazioni/${nextStation.id.replace(/\.md$/, '')}`} class="station-nav-link next">
               <span class="nav-label">
                 <span class="nav-direction">Prossima stazione</span>
                 <span class="nav-title">{nextStation.data.title}</span>
