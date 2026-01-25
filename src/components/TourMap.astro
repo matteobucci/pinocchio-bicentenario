@@ -1,0 +1,331 @@
+---
+/**
+ * TourMap - Interactive Leaflet map showing all 12 stations
+ *
+ * Displays stations as numbered markers with a walking path connecting them.
+ * Fully accessible with text alternative and keyboard support.
+ */
+
+interface Station {
+  id: string;
+  data: {
+    title: string;
+    order: number;
+    directions?: {
+      coordinates?: string;
+      address: string;
+    };
+  };
+}
+
+interface Props {
+  stations: Station[];
+  currentStation?: number;
+  height?: string;
+}
+
+const { stations, currentStation, height = "400px" } = Astro.props;
+
+// Sort stations by order and extract coordinate data
+const sortedStations = [...stations]
+  .sort((a, b) => a.data.order - b.data.order)
+  .filter(s => s.data.directions?.coordinates);
+
+// Parse coordinates for each station
+const stationData = sortedStations.map(station => {
+  const coords = station.data.directions?.coordinates?.split(',').map(c => parseFloat(c.trim())) || [0, 0];
+  const slug = station.id.replace(/\.md$/, '');
+  return {
+    id: station.id,
+    slug: slug,
+    title: station.data.title,
+    order: station.data.order,
+    lat: coords[0],
+    lng: coords[1],
+    address: station.data.directions?.address || '',
+    isCurrent: station.data.order === currentStation
+  };
+});
+
+// Calculate center point
+const avgLat = stationData.reduce((sum, s) => sum + s.lat, 0) / stationData.length;
+const avgLng = stationData.reduce((sum, s) => sum + s.lng, 0) / stationData.length;
+---
+
+<!-- Leaflet CSS -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+/>
+
+<div class="tour-map-container">
+  <div
+    id="tour-map"
+    class="tour-map"
+    style={`height: ${height};`}
+    role="application"
+    aria-label="Mappa interattiva del percorso con le 12 stazioni"
+    tabindex="0"
+  ></div>
+
+  <!-- Text alternative for screen readers -->
+  <details class="map-text-alternative">
+    <summary>Elenco testuale delle stazioni</summary>
+    <ol class="station-list">
+      {stationData.map(station => (
+        <li>
+          <a href={`/stazioni/${station.slug}`}>
+            <strong>Stazione {station.order}:</strong> {station.title}
+          </a>
+          <br />
+          <span class="station-address">{station.address}</span>
+        </li>
+      ))}
+    </ol>
+  </details>
+</div>
+
+<style>
+  .tour-map-container {
+    width: 100%;
+  }
+
+  .tour-map {
+    width: 100%;
+    border-radius: var(--border-radius-lg);
+    border: var(--border-width) solid var(--color-neutral-200);
+  }
+
+  .tour-map:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .map-text-alternative {
+    margin-top: var(--space-4);
+    padding: var(--space-3);
+    background: var(--color-neutral-50);
+    border-radius: var(--border-radius-md);
+  }
+
+  .map-text-alternative summary {
+    cursor: pointer;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-neutral-700);
+    padding: var(--space-2);
+  }
+
+  .map-text-alternative summary:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .station-list {
+    margin-top: var(--space-3);
+    padding-left: var(--space-6);
+  }
+
+  .station-list li {
+    margin-bottom: var(--space-3);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .station-list a {
+    color: var(--color-primary-600);
+    text-decoration: none;
+  }
+
+  .station-list a:hover {
+    text-decoration: underline;
+  }
+
+  .station-address {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-500);
+  }
+
+  /* Custom marker styles */
+  :global(.station-marker) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50%;
+    background: var(--color-primary-500);
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    border: 3px solid white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    line-height: 1;
+  }
+
+  :global(.station-marker span) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  :global(.station-marker.current) {
+    width: 36px !important;
+    height: 36px !important;
+    background: var(--color-secondary-500);
+    font-size: 14px;
+    border-width: 4px;
+    z-index: 1000 !important;
+  }
+
+  :global(.station-marker:hover) {
+    transform: scale(1.1);
+  }
+
+  :global(.leaflet-popup-content-wrapper) {
+    border-radius: var(--border-radius-md);
+  }
+
+  :global(.leaflet-popup-content) {
+    margin: var(--space-3);
+    font-family: var(--font-family-base);
+  }
+
+  :global(.popup-content) {
+    text-align: center;
+  }
+
+  :global(.popup-title) {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-800);
+    margin-bottom: var(--space-2);
+  }
+
+  :global(.leaflet-popup-content .popup-link),
+  :global(.popup-link) {
+    display: inline-block;
+    margin-top: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-primary-500) !important;
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+  }
+
+  :global(.leaflet-popup-content .popup-link:hover),
+  :global(.popup-link:hover) {
+    background: var(--color-primary-600) !important;
+    color: white !important;
+  }
+</style>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script define:vars={{ stationData, avgLat, avgLng, currentStation }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize map centered on the stations
+    const map = L.map('tour-map', {
+      center: [avgLat, avgLng],
+      zoom: 14,
+      scrollWheelZoom: false  // Prevent accidental zoom while scrolling
+    });
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19
+    }).addTo(map);
+
+    // Create custom icon for each station
+    function createMarkerIcon(order, isCurrent) {
+      return L.divIcon({
+        className: `station-marker ${isCurrent ? 'current' : ''}`,
+        html: `<span>${order}</span>`,
+        iconSize: isCurrent ? [36, 36] : [28, 28],
+        iconAnchor: isCurrent ? [18, 18] : [14, 14],
+        popupAnchor: [0, isCurrent ? -20 : -16]
+      });
+    }
+
+    // Add markers for each station
+    const markers = [];
+    const pathCoords = [];
+
+    stationData.forEach(station => {
+      if (station.lat && station.lng) {
+        pathCoords.push([station.lat, station.lng]);
+
+        const marker = L.marker([station.lat, station.lng], {
+          icon: createMarkerIcon(station.order, station.isCurrent),
+          title: `Stazione ${station.order}: ${station.title}`,
+          alt: `Stazione ${station.order}: ${station.title}`,
+          keyboard: true
+        }).addTo(map);
+
+        // Create popup content
+        const popupContent = `
+          <div class="popup-content">
+            <div class="popup-title">Stazione ${station.order}</div>
+            <div>${station.title}</div>
+            <a href="/stazioni/${station.slug}" class="popup-link">Vai alla stazione</a>
+          </div>
+        `;
+
+        marker.bindPopup(popupContent);
+        markers.push(marker);
+      }
+    });
+
+    // Draw path connecting stations
+    if (pathCoords.length > 1) {
+      L.polyline(pathCoords, {
+        color: '#3d7d66',  // secondary-500
+        weight: 3,
+        opacity: 0.7,
+        dashArray: '10, 10',
+        lineCap: 'round',
+        lineJoin: 'round'
+      }).addTo(map);
+    }
+
+    // Fit map to show all markers with padding
+    if (markers.length > 0) {
+      const group = L.featureGroup(markers);
+      map.fitBounds(group.getBounds().pad(0.1));
+    }
+
+    // Enable scroll wheel zoom when map is focused
+    const mapElement = document.getElementById('tour-map');
+    mapElement.addEventListener('focus', () => {
+      map.scrollWheelZoom.enable();
+    });
+    mapElement.addEventListener('blur', () => {
+      map.scrollWheelZoom.disable();
+    });
+
+    // Keyboard navigation for markers
+    let currentMarkerIndex = 0;
+    mapElement.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') return; // Allow normal tab behavior
+
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        currentMarkerIndex = (currentMarkerIndex + 1) % markers.length;
+        map.setView(markers[currentMarkerIndex].getLatLng(), map.getZoom());
+        markers[currentMarkerIndex].openPopup();
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        currentMarkerIndex = (currentMarkerIndex - 1 + markers.length) % markers.length;
+        map.setView(markers[currentMarkerIndex].getLatLng(), map.getZoom());
+        markers[currentMarkerIndex].openPopup();
+      } else if (e.key === 'Enter') {
+        markers[currentMarkerIndex].openPopup();
+      }
+    });
+  });
+</script>

@@ -1,0 +1,631 @@
+---
+/**
+ * StationDrawer - Google Maps-style bottom sheet for station navigation
+ *
+ * A persistent drawer at the bottom of the screen with three states:
+ * - Peek: Just handle visible (48px)
+ * - Partial: Current station + prev/next nav (~200px)
+ * - Full: Scrollable list of all stations (~70vh)
+ *
+ * Fully accessible with keyboard navigation and screen reader support.
+ */
+
+interface Station {
+  id: string;
+  data: {
+    title: string;
+    order: number;
+    published?: boolean;
+  };
+}
+
+interface Props {
+  stations: Station[];
+  currentStation: number;
+}
+
+const { stations, currentStation } = Astro.props;
+
+// Sort stations by order
+const sortedStations = [...stations].sort((a, b) => a.data.order - b.data.order);
+
+// Find current, previous, and next stations
+const currentIndex = sortedStations.findIndex(s => s.data.order === currentStation);
+const prevStation = currentIndex > 0 ? sortedStations[currentIndex - 1] : null;
+const nextStation = currentIndex < sortedStations.length - 1 ? sortedStations[currentIndex + 1] : null;
+const currentStationData = sortedStations[currentIndex];
+
+// Generate station URLs
+function getStationUrl(station: Station): string {
+  return `/stazioni/${station.id.replace(/\.md$/, '')}`;
+}
+---
+
+<div
+  class="station-drawer"
+  id="station-drawer"
+  role="region"
+  aria-label="Navigazione stazioni"
+  data-state="peek"
+  data-current={currentStation}
+>
+  <!-- Handle / Header -->
+  <button
+    class="drawer-handle"
+    id="drawer-handle"
+    type="button"
+    aria-expanded="false"
+    aria-controls="drawer-content"
+    aria-label="Apri navigazione stazioni"
+  >
+    <span class="handle-bar" aria-hidden="true"></span>
+    <span class="sr-only">Tocca per espandere la navigazione tra le stazioni</span>
+  </button>
+
+  <!-- Drawer Content -->
+  <div class="drawer-content" id="drawer-content">
+    <!-- Partial State: Quick Navigation -->
+    <div class="drawer-partial">
+      <!-- Progress dots -->
+      <nav class="progress-nav" aria-label="Progresso nel percorso">
+        <a
+          href={prevStation ? getStationUrl(prevStation) : '#'}
+          class:list={["nav-arrow", "nav-prev", { disabled: !prevStation }]}
+          aria-label={prevStation ? `Vai alla stazione precedente: ${prevStation.data.title}` : "Nessuna stazione precedente"}
+          aria-disabled={!prevStation}
+        >
+          <span aria-hidden="true">&#8592;</span>
+        </a>
+
+        <div class="progress-dots" role="list" aria-label="Stazioni del percorso">
+          {sortedStations.map((station, index) => (
+            <a
+              href={getStationUrl(station)}
+              class:list={["progress-dot", { current: station.data.order === currentStation }]}
+              role="listitem"
+              aria-label={`Stazione ${station.data.order}: ${station.data.title}${station.data.order === currentStation ? ' (attuale)' : ''}`}
+              aria-current={station.data.order === currentStation ? "step" : undefined}
+            >
+              <span class="sr-only">{station.data.order}</span>
+            </a>
+          ))}
+        </div>
+
+        <a
+          href={nextStation ? getStationUrl(nextStation) : '#'}
+          class:list={["nav-arrow", "nav-next", { disabled: !nextStation }]}
+          aria-label={nextStation ? `Vai alla stazione successiva: ${nextStation.data.title}` : "Nessuna stazione successiva"}
+          aria-disabled={!nextStation}
+        >
+          <span aria-hidden="true">&#8594;</span>
+        </a>
+      </nav>
+
+      <!-- Current station title -->
+      <div class="current-station">
+        <span class="station-label">Stazione {currentStation}</span>
+        <span class="station-title">{currentStationData?.data.title}</span>
+      </div>
+
+      <!-- Expand hint -->
+      <button
+        class="expand-hint"
+        type="button"
+        aria-label="Espandi per vedere tutte le stazioni"
+      >
+        <span aria-hidden="true">&#8593;</span>
+        Tutte le stazioni
+      </button>
+    </div>
+
+    <!-- Full State: All Stations List -->
+    <div class="drawer-full" aria-hidden="true">
+      <h2 class="drawer-full-title">Tutte le stazioni</h2>
+      <nav class="stations-list" aria-label="Elenco completo delle stazioni">
+        <ul role="list">
+          {sortedStations.map((station) => (
+            <li>
+              <a
+                href={getStationUrl(station)}
+                class:list={["station-item", { current: station.data.order === currentStation }]}
+                aria-current={station.data.order === currentStation ? "page" : undefined}
+              >
+                <span class="station-order">{station.data.order}</span>
+                <span class="station-name">{station.data.title}</span>
+                {station.data.order === currentStation && (
+                  <span class="current-badge" aria-hidden="true">Attuale</span>
+                )}
+                <span class="station-arrow" aria-hidden="true">&#8594;</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<style>
+  .station-drawer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--color-neutral-50);
+    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+    z-index: var(--z-sticky);
+    transform: translateY(calc(100% - 48px));
+    transition: transform var(--transition-slow);
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* States */
+  .station-drawer[data-state="peek"] {
+    transform: translateY(calc(100% - 48px));
+  }
+
+  .station-drawer[data-state="partial"] {
+    transform: translateY(calc(100% - 200px));
+  }
+
+  .station-drawer[data-state="full"] {
+    transform: translateY(0);
+  }
+
+  /* Handle */
+  .drawer-handle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 48px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--space-3);
+    touch-action: none;
+  }
+
+  .drawer-handle:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: calc(-1 * var(--focus-ring-width));
+    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+  }
+
+  .handle-bar {
+    width: 40px;
+    height: 4px;
+    background: var(--color-neutral-300);
+    border-radius: var(--border-radius-full);
+    transition: background var(--transition-fast);
+  }
+
+  .drawer-handle:hover .handle-bar,
+  .drawer-handle:focus .handle-bar {
+    background: var(--color-neutral-400);
+  }
+
+  /* Content container */
+  .drawer-content {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Partial state content */
+  .drawer-partial {
+    padding: 0 var(--space-4) var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Progress navigation */
+  .progress-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+  }
+
+  .nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--color-primary-500);
+    color: white;
+    border-radius: var(--border-radius-full);
+    text-decoration: none;
+    font-size: var(--font-size-lg);
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+  }
+
+  .nav-arrow:hover:not(.disabled) {
+    background: var(--color-primary-600);
+    transform: scale(1.05);
+  }
+
+  .nav-arrow:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .nav-arrow.disabled {
+    background: var(--color-neutral-200);
+    color: var(--color-neutral-400);
+    pointer-events: none;
+  }
+
+  /* Progress dots */
+  .progress-dots {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .progress-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--border-radius-full);
+    background: var(--color-neutral-300);
+    border: 2px solid transparent;
+    transition: all var(--transition-fast);
+  }
+
+  .progress-dot:hover {
+    background: var(--color-primary-300);
+    transform: scale(1.2);
+  }
+
+  .progress-dot:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  .progress-dot.current {
+    background: var(--color-primary-500);
+    width: 14px;
+    height: 14px;
+    border-color: var(--color-primary-200);
+  }
+
+  /* Current station display */
+  .current-station {
+    text-align: center;
+  }
+
+  .station-label {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-neutral-500);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-1);
+  }
+
+  .station-title {
+    display: block;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-800);
+  }
+
+  /* Expand hint */
+  .expand-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: transparent;
+    border: 1px solid var(--color-neutral-200);
+    border-radius: var(--border-radius-md);
+    color: var(--color-neutral-600);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    margin: 0 auto;
+  }
+
+  .expand-hint:hover {
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-800);
+  }
+
+  .expand-hint:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* Full state content */
+  .drawer-full {
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0 var(--space-4) var(--space-4);
+  }
+
+  .station-drawer[data-state="full"] .drawer-partial {
+    display: none;
+  }
+
+  .station-drawer[data-state="full"] .drawer-full {
+    display: flex;
+  }
+
+  .drawer-full-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-neutral-800);
+    margin: 0 0 var(--space-4);
+    text-align: center;
+  }
+
+  /* Stations list */
+  .stations-list {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .stations-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .station-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    text-decoration: none;
+    color: var(--color-neutral-700);
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-fast);
+    margin-bottom: var(--space-1);
+  }
+
+  .station-item:hover {
+    background: var(--color-neutral-100);
+    color: var(--color-neutral-900);
+  }
+
+  .station-item:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: calc(-1 * var(--focus-ring-offset));
+  }
+
+  .station-item.current {
+    background: var(--color-primary-50);
+    color: var(--color-primary-700);
+  }
+
+  .station-order {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--color-primary-500);
+    color: white;
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    border-radius: var(--border-radius-full);
+    flex-shrink: 0;
+  }
+
+  .station-item.current .station-order {
+    background: var(--color-primary-600);
+  }
+
+  .station-name {
+    flex: 1;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .current-badge {
+    font-size: var(--font-size-xs);
+    background: var(--color-primary-100);
+    color: var(--color-primary-700);
+    padding: var(--space-1) var(--space-2);
+    border-radius: var(--border-radius-sm);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .station-arrow {
+    color: var(--color-neutral-400);
+    transition: transform var(--transition-fast);
+  }
+
+  .station-item:hover .station-arrow {
+    transform: translateX(4px);
+    color: var(--color-primary-500);
+  }
+
+  /* Body padding when drawer is visible */
+  :global(body:has(.station-drawer)) {
+    padding-bottom: 60px;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .station-drawer {
+      transition: none;
+    }
+  }
+
+  /* Desktop adjustments */
+  @media (min-width: 768px) {
+    .station-drawer {
+      max-width: 500px;
+      left: 50%;
+      transform: translateX(-50%) translateY(calc(100% - 48px));
+      border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
+    }
+
+    .station-drawer[data-state="peek"] {
+      transform: translateX(-50%) translateY(calc(100% - 48px));
+    }
+
+    .station-drawer[data-state="partial"] {
+      transform: translateX(-50%) translateY(calc(100% - 200px));
+    }
+
+    .station-drawer[data-state="full"] {
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+</style>
+
+<script>
+  // StationDrawer state management
+  const drawer = document.getElementById('station-drawer');
+  const handle = document.getElementById('drawer-handle');
+  const expandHint = document.querySelector('.expand-hint');
+  const drawerFull = document.querySelector('.drawer-full');
+
+  const STATES = ['peek', 'partial', 'full'] as const;
+  type DrawerState = typeof STATES[number];
+
+  let currentState: DrawerState = 'peek';
+  let startY = 0;
+  let currentY = 0;
+  let isDragging = false;
+
+  function setState(newState: DrawerState) {
+    if (!drawer || !handle || !drawerFull) return;
+
+    currentState = newState;
+    drawer.setAttribute('data-state', newState);
+
+    // Update ARIA
+    handle.setAttribute('aria-expanded', newState !== 'peek' ? 'true' : 'false');
+    handle.setAttribute('aria-label',
+      newState === 'peek' ? 'Apri navigazione stazioni' :
+      newState === 'partial' ? 'Espandi a schermo intero o riduci' :
+      'Riduci navigazione stazioni'
+    );
+
+    // Update hidden state for full list
+    drawerFull.setAttribute('aria-hidden', newState !== 'full' ? 'true' : 'false');
+
+    // Announce state change for screen readers
+    announceStateChange(newState);
+  }
+
+  function announceStateChange(state: DrawerState) {
+    const announcement = document.createElement('div');
+    announcement.setAttribute('role', 'status');
+    announcement.setAttribute('aria-live', 'polite');
+    announcement.className = 'sr-only';
+
+    const messages: Record<DrawerState, string> = {
+      peek: 'Navigazione stazioni ridotta',
+      partial: 'Navigazione stazioni aperta con stazione corrente',
+      full: 'Elenco completo delle stazioni visibile'
+    };
+
+    announcement.textContent = messages[state];
+    document.body.appendChild(announcement);
+    setTimeout(() => announcement.remove(), 1000);
+  }
+
+  function cycleState() {
+    const currentIndex = STATES.indexOf(currentState);
+    const nextIndex = (currentIndex + 1) % STATES.length;
+    setState(STATES[nextIndex]);
+  }
+
+  // Handle click
+  handle?.addEventListener('click', () => {
+    if (currentState === 'peek') {
+      setState('partial');
+    } else if (currentState === 'full') {
+      setState('partial');
+    } else {
+      setState('peek');
+    }
+  });
+
+  // Expand hint click
+  expandHint?.addEventListener('click', () => {
+    setState('full');
+  });
+
+  // Touch/swipe handling
+  function handleTouchStart(e: TouchEvent) {
+    if (!drawer) return;
+    startY = e.touches[0].clientY;
+    isDragging = true;
+    drawer.style.transition = 'none';
+  }
+
+  function handleTouchMove(e: TouchEvent) {
+    if (!isDragging || !drawer) return;
+    currentY = e.touches[0].clientY;
+  }
+
+  function handleTouchEnd() {
+    if (!isDragging || !drawer) return;
+
+    isDragging = false;
+    drawer.style.transition = '';
+
+    const deltaY = startY - currentY;
+    const threshold = 50;
+
+    if (Math.abs(deltaY) > threshold) {
+      if (deltaY > 0) {
+        // Swipe up
+        if (currentState === 'peek') setState('partial');
+        else if (currentState === 'partial') setState('full');
+      } else {
+        // Swipe down
+        if (currentState === 'full') setState('partial');
+        else if (currentState === 'partial') setState('peek');
+      }
+    }
+  }
+
+  handle?.addEventListener('touchstart', handleTouchStart, { passive: true });
+  handle?.addEventListener('touchmove', handleTouchMove, { passive: true });
+  handle?.addEventListener('touchend', handleTouchEnd);
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (!drawer) return;
+
+    // Only handle when drawer has focus or is expanded
+    const drawerHasFocus = drawer.contains(document.activeElement);
+
+    if (e.key === 'Escape' && currentState !== 'peek') {
+      setState('peek');
+      handle?.focus();
+    }
+  });
+
+  // Click outside to minimize (when full)
+  document.addEventListener('click', (e) => {
+    if (!drawer) return;
+
+    if (currentState === 'full' && !drawer.contains(e.target as Node)) {
+      setState('partial');
+    }
+  });
+
+  // Initialize to partial state after a short delay for better UX
+  setTimeout(() => {
+    setState('partial');
+  }, 500);
+</script>

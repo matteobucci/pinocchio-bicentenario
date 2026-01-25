@@ -85,7 +85,7 @@ Questa stazione segna la fine del viaggio attraverso il mondo di Pinocchio. Qui 
 
 ## Ringraziamenti
 
-Grazie per aver seguito il nostro percorso! Il progetto "Pinocchio Bicentenario" è stato realizzato grazie alla collaborazione tra il Comune di Sesto Fiorentino, l'associazione e tutti i volontari che hanno reso possibile questa celebrazione.
+Grazie per aver seguito il nostro percorso! Il progetto "Pinocchio Bicentenario" è stato realizzato grazie all'associazione e a tutti i volontari che hanno reso possibile questa celebrazione.
 
 ---
 

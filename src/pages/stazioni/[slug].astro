@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import StationDrawer from '../../components/StationDrawer.astro';
 import { getCollection, render } from 'astro:content';
 import { marked } from 'marked';
 
@@ -19,9 +20,6 @@ const { Content } = await render(station);
 // Get all stations for navigation
 const allStations = await getCollection('stations', ({ data }) => data.published);
 const sortedStations = allStations.sort((a, b) => a.data.order - b.data.order);
-const currentIndex = sortedStations.findIndex((s) => s.id === station.id);
-const prevStation = currentIndex > 0 ? sortedStations[currentIndex - 1] : null;
-const nextStation = currentIndex < sortedStations.length - 1 ? sortedStations[currentIndex + 1] : null;
 
 const { data } = station;
 
@@ -105,28 +103,6 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
             class="hero-image"
           />
         ) : null}
-
-        <!-- Station navigation (prev/next) -->
-        <nav class="station-nav" aria-label="Navigazione tra stazioni">
-          {prevStation ? (
-            <a href={`/stazioni/${prevStation.id.replace(/\.md$/, '')}`} class="station-nav-link prev">
-              <span aria-hidden="true">&#8592;</span>
-              <span class="nav-label">
-                <span class="nav-direction">Stazione precedente</span>
-                <span class="nav-title">{prevStation.data.title}</span>
-              </span>
-            </a>
-          ) : <div></div>}
-          {nextStation ? (
-            <a href={`/stazioni/${nextStation.id.replace(/\.md$/, '')}`} class="station-nav-link next">
-              <span class="nav-label">
-                <span class="nav-direction">Prossima stazione</span>
-                <span class="nav-title">{nextStation.data.title}</span>
-              </span>
-              <span aria-hidden="true">&#8594;</span>
-            </a>
-          ) : <div></div>}
-        </nav>
 
         <div class="station-title-section">
           <span class="station-number" aria-label={`Stazione numero ${data.order}`}>
@@ -290,6 +266,9 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
       </div>
     </footer>
   </article>
+
+  <!-- Station Navigation Drawer -->
+  <StationDrawer stations={sortedStations} currentStation={data.order} />
 
   <!-- Lightbox Modal -->
   {data.gallery && data.gallery.length > 0 && (
@@ -639,47 +618,6 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
     border-color: var(--color-primary-500);
   }
 
-  /* Station navigation */
-  .station-nav {
-    display: flex;
-    justify-content: space-between;
-    margin: var(--space-6) 0;
-  }
-
-  .station-nav-link {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    text-decoration: none;
-    color: var(--color-neutral-700);
-    padding: var(--space-2) var(--space-4);
-    border-radius: var(--border-radius-md);
-    transition: all var(--transition-fast);
-  }
-
-  .station-nav-link:hover {
-    background: var(--color-primary-50);
-    color: var(--color-primary-700);
-  }
-
-  .nav-label {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .nav-direction {
-    font-size: var(--font-size-xs);
-    color: var(--color-neutral-500);
-  }
-
-  .nav-title {
-    font-weight: var(--font-weight-medium);
-  }
-
-  .station-nav-link.next {
-    text-align: right;
-  }
-
   /* Title section */
   .station-title-section {
     display: flex;
@@ -1018,11 +956,6 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
   }
 
   @media (max-width: 768px) {
-    .station-nav {
-      flex-direction: column;
-      gap: var(--space-3);
-    }
-
     .station-title-section {
       flex-direction: column;
       text-align: center;

@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import TourMap from '../../components/TourMap.astro';
 import { getCollection } from 'astro:content';
 
 const stations = await getCollection('stations', ({ data }) => data.published);
@@ -19,6 +20,14 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
       </p>
     </div>
   </div>
+
+  <!-- Interactive Map -->
+  <section class="map-section" aria-labelledby="map-heading">
+    <div class="container">
+      <h2 id="map-heading" class="sr-only">Mappa del percorso</h2>
+      <TourMap stations={sortedStations} height="350px" />
+    </div>
+  </section>
 
   <section class="stations-section" aria-label="Lista delle stazioni">
     <div class="container">
@@ -107,6 +116,11 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
     background: var(--color-primary-50);
     padding: var(--space-12) 0;
     text-align: center;
+  }
+
+  .map-section {
+    padding: var(--space-8) 0;
+    background: var(--color-neutral-100);
   }
 
   .page-intro {

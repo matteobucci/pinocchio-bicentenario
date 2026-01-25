@@ -21,7 +21,7 @@ contacts:
 
 ## Il Progetto
 
-Il **Pinocchio Bicentenario** è un'iniziativa del Comune di Sesto Fiorentino in collaborazione con la nostra associazione per celebrare i 200 anni dalla nascita di Carlo Collodi e della sua opera immortale.
+Il **Pinocchio Bicentenario** è un'iniziativa della nostra associazione per celebrare i 200 anni dalla nascita di Carlo Collodi e della sua opera immortale.
 
 ## L'Associazione
 
@@ -39,7 +39,4 @@ Abbiamo realizzato un podcast in 12 puntate che accompagna i visitatori attraver
 
 ## Ringraziamenti
 
-Questo progetto è stato possibile grazie al supporto di:
-- Comune di Sesto Fiorentino
-- Regione Toscana
-- Tutti i volontari dell'associazione
+Questo progetto è stato possibile grazie al supporto di tutti i volontari dell'associazione.

@@ -1,6 +1,6 @@
 # Pinocchio Bicentenario - Sesto Fiorentino
 
-Sito web per il bicentenario di Pinocchio, realizzato in collaborazione con un'associazione a tutela delle disabilità del Comune di Sesto Fiorentino.
+Sito web per il bicentenario di Pinocchio, realizzato da un'associazione a tutela delle disabilità di Sesto Fiorentino.
 
 ## Panoramica del Progetto
 
@@ -244,4 +244,4 @@ Per ogni stazione servono:
 
 ## Licenza
 
-© 2026 Comune di Sesto Fiorentino. Tutti i diritti riservati.
+© 2026 Pinocchio Bicentenario. Tutti i diritti riservati.
