@@ -82,26 +82,26 @@ const allStationsForList = [...stations]
       class="tour-map"
       style={`height: ${height};`}
       role="application"
-      aria-label="Mappa interattiva del percorso con le 12 stazioni"
+      aria-label="Mappa interattiva del percorso con le 12 tappe"
       tabindex="0"
     ></div>
   ) : (
     <div class="tour-map-placeholder" style={`min-height: ${height};`}>
       <p>
         🗺️ <strong>Mappa interattiva in arrivo.</strong><br />
-        Nel frattempo, ecco l'elenco delle stazioni con i relativi indirizzi.
+        Nel frattempo, ecco l'elenco delle tappe con i relativi indirizzi.
       </p>
     </div>
   )}
 
   <!-- Text alternative — always shown, also acts as fallback if map fails -->
   <details class="map-text-alternative" open={!hasCoordinates}>
-    <summary>Elenco testuale delle stazioni</summary>
+    <summary>Elenco testuale delle tappe</summary>
     <ol class="station-list">
       {allStationsForList.map(station => (
         <li>
-          <a href={`/stazioni/${station.slug}`}>
-            <strong>Stazione {station.order}:</strong> {station.title}
+          <a href={`/tappe/${station.slug}`}>
+            <strong>Tappa {station.order}:</strong> {station.title}
           </a>
           {station.address && (
             <>
@@ -290,17 +290,17 @@ const allStationsForList = [...stations]
 
         const marker = L.marker([station.lat, station.lng], {
           icon: createMarkerIcon(station.order, station.isCurrent),
-          title: `Stazione ${station.order}: ${station.title}`,
-          alt: `Stazione ${station.order}: ${station.title}`,
+          title: `Tappa ${station.order}: ${station.title}`,
+          alt: `Tappa ${station.order}: ${station.title}`,
           keyboard: true
         }).addTo(map);
 
         // Create popup content
         const popupContent = `
           <div class="popup-content">
-            <div class="popup-title">Stazione ${station.order}</div>
+            <div class="popup-title">Tappa ${station.order}</div>
             <div>${station.title}</div>
-            <a href="/stazioni/${station.slug}" class="popup-link">Vai alla stazione</a>
+            <a href="/tappe/${station.slug}" class="popup-link">Vai alla tappa</a>
           </div>
         `;
 

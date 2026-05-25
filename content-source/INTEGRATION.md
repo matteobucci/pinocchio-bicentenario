@@ -7,9 +7,9 @@ Mappa di come i materiali consegnati (4 docx + 12 file audio) sono stati distrib
 - `podcast.videoFile` — path al video mp4 (tappe 10-12)
 - `transcript` — campo top-level con la trascrizione dell'episodio
 
-## Modifiche al player (`src/pages/stazioni/[slug].astro`)
+## Modifiche al player (`src/pages/tappe/[slug].astro`)
 
-- Se la stazione ha `videoFile` → `<video controls playsinline>`
+- Se la tappa ha `videoFile` → `<video controls playsinline>`
 - Altrimenti, se ha `mp3File` → `<audio controls>`
 
 ## TourMap (`src/components/TourMap.astro`)
@@ -20,7 +20,7 @@ Aggiunto fallback per quando non ci sono coordinate: mostra placeholder + lista 
 
 Creata `src/pages/accessibilita.astro` con il contenuto di `accessibilita.docx` (lavori in corso lungo l'itinerario, bagni pubblici, fontanelli, accessibilità del sito web).
 
-## Dati integrati nelle 12 stazioni
+## Dati integrati nelle 12 tappe
 
 Tutte e 12 le tappe hanno ora:
 
@@ -78,7 +78,7 @@ Tutte CC BY 3.0 / CC BY-SA 3.0. Autore prevalente: **Sailko**. Crediti pubblicat
 
 ## Ricerca online che NON ha trovato risultati
 
-- **Spotify / Apple Podcasts**: il podcast non è pubblicato su queste piattaforme. Un progetto correlato esiste su [erbacanta.it/pinocchio/](https://erbacanta.it/pinocchio/) (audioguide della Fondazione CR Firenze, struttura diversa). Per il sito attuale, i link rotti `href="#"` in `index.astro` e `BaseLayout.astro` sono stati **rimossi** e sostituiti con un CTA che porta alla lista stazioni.
+- **Spotify / Apple Podcasts**: il podcast non è pubblicato su queste piattaforme. Un progetto correlato esiste su [erbacanta.it/pinocchio/](https://erbacanta.it/pinocchio/) (audioguide della Fondazione CR Firenze, struttura diversa). Per il sito attuale, i link rotti `href="#"` in `index.astro` e `BaseLayout.astro` sono stati **rimossi** e sostituiti con un CTA che porta alla lista tappe.
 - **Durata episodi**: non pubblicata. Si può ricavare dai file audio in fase successiva (richiede ffprobe o lib audio).
 - **Foto Via Giulio Bechi (tappa 4)** e **Via Lucchese (tappa 8)**: nessuna foto libera trovata. Usati fallback (Villa Medicea della Petraia per la 4, Osmannoro per la 8).
 

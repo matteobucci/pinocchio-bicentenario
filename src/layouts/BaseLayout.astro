@@ -7,7 +7,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = "Un viaggio in 12 stazioni attraverso il mondo di Pinocchio a Sesto Fiorentino" } = Astro.props;
+const { title, description = "Un viaggio in 12 tappe attraverso il mondo di Pinocchio, tra Firenze e Sesto Fiorentino" } = Astro.props;
 const currentPath = Astro.url.pathname;
 ---
 
@@ -59,11 +59,11 @@ const currentPath = Astro.url.pathname;
           </li>
           <li>
             <a
-              href="/stazioni"
-              class:list={["nav-link", { active: currentPath.startsWith("/stazioni") }]}
-              aria-current={currentPath.startsWith("/stazioni") ? "page" : undefined}
+              href="/tappe"
+              class:list={["nav-link", { active: currentPath.startsWith("/tappe") }]}
+              aria-current={currentPath.startsWith("/tappe") ? "page" : undefined}
             >
-              Le Stazioni
+              Le Tappe
             </a>
           </li>
           <li>
@@ -101,15 +101,15 @@ const currentPath = Astro.url.pathname;
           <div class="footer-section">
             <h2 class="footer-title">Pinocchio Bicentenario</h2>
             <p class="footer-description">
-              Un percorso accessibile per celebrare
-              i 200 anni di Pinocchio a Sesto Fiorentino.
+              Un percorso accessibile per celebrare i 200 anni dalla nascita
+              di Carlo Collodi, tra Firenze e Sesto Fiorentino.
             </p>
           </div>
 
           <div class="footer-section">
             <h3 class="footer-subtitle">Link rapidi</h3>
             <ul class="footer-links" role="list">
-              <li><a href="/stazioni">Tutte le stazioni</a></li>
+              <li><a href="/tappe">Tutte le tappe</a></li>
               <li><a href="/chi-siamo">Chi siamo</a></li>
               <li><a href="/accessibilita">Accessibilità</a></li>
             </ul>
@@ -118,7 +118,7 @@ const currentPath = Astro.url.pathname;
           <div class="footer-section">
             <h3 class="footer-subtitle">Il podcast</h3>
             <p class="footer-description">
-              12 episodi con trascrizione completa, disponibili in ogni stazione del percorso.
+              12 episodi con trascrizione completa, disponibili in ogni tappa del percorso.
             </p>
           </div>
         </div>

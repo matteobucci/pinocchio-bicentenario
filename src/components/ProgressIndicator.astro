@@ -2,7 +2,7 @@
 /**
  * ProgressIndicator - Visual progress through the 12 stations
  *
- * Displays "Stazione X di 12" with clickable dots for navigation.
+ * Displays "Tappa X di 12" with clickable dots for navigation.
  * Fully accessible with keyboard navigation and screen reader support.
  */
 
@@ -33,24 +33,24 @@ const totalStations = sortedStations.length;
 >
   <div class="progress-label">
     <span class="visually-hidden">Sei alla </span>
-    <span class="progress-current">Stazione {currentStation}</span>
+    <span class="progress-current">Tappa {currentStation}</span>
     <span class="progress-total"> di {totalStations}</span>
   </div>
 
   <div
     class="progress-dots"
     role="list"
-    aria-label="Vai a una stazione specifica"
+    aria-label="Vai a una tappa specifica"
   >
     {sortedStations.map((station) => {
       const isCurrent = station.data.order === currentStation;
       const slug = station.id.replace(/\.md$/, '');
       return (
         <a
-          href={`/stazioni/${slug}`}
+          href={`/tappe/${slug}`}
           class:list={["progress-dot", { current: isCurrent }]}
           role="listitem"
-          aria-label={`Vai alla stazione ${station.data.order}: ${station.data.title}`}
+          aria-label={`Vai alla tappa ${station.data.order}: ${station.data.title}`}
           aria-current={isCurrent ? "step" : undefined}
           data-order={station.data.order}
         >

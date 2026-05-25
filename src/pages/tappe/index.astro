@@ -3,19 +3,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import TourMap from '../../components/TourMap.astro';
 import { getCollection } from 'astro:content';
 
-const stations = await getCollection('stations', ({ data }) => data.published);
-const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
+const tappe = await getCollection('tappe', ({ data }) => data.published);
+const sortedTappe = tappe.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout
-  title="Tutte le Stazioni"
-  description="Esplora le 12 stazioni del percorso Pinocchio Bicentenario a Sesto Fiorentino"
+  title="Tutte le Tappe"
+  description="Esplora le 12 tappe del percorso Pinocchio Bicentenario tra Firenze e Sesto Fiorentino"
 >
   <div class="page-header">
     <div class="container">
-      <h1>Le 12 Stazioni</h1>
+      <h1>Le 12 Tappe</h1>
       <p class="page-intro">
-        Un percorso attraverso il mondo di Pinocchio. Ogni stazione racconta
+        Un percorso attraverso il mondo di Pinocchio. Ogni tappa racconta
         un capitolo della storia, accompagnato da un episodio del podcast.
       </p>
     </div>
@@ -25,22 +25,22 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
   <section class="map-section" aria-labelledby="map-heading">
     <div class="container">
       <h2 id="map-heading" class="sr-only">Mappa del percorso</h2>
-      <TourMap stations={sortedStations} height="350px" />
+      <TourMap stations={sortedTappe} height="350px" />
     </div>
   </section>
 
-  <section class="stations-section" aria-label="Lista delle stazioni">
+  <section class="stations-section" aria-label="Lista delle tappe">
     <div class="container">
-      <ol class="timeline" role="list" aria-label="Timeline delle stazioni">
-        {sortedStations.map((station, index) => (
+      <ol class="timeline" role="list" aria-label="Timeline delle tappe">
+        {sortedTappe.map((tappa, index) => (
           <li class="timeline-item">
             <div class="timeline-marker" aria-hidden="true">
-              <span>{station.data.order}</span>
+              <span>{tappa.data.order}</span>
             </div>
             <article class="timeline-content card">
-              {station.data.heroImage && (
+              {tappa.data.heroImage && (
                 <img
-                  src={station.data.heroImage}
+                  src={tappa.data.heroImage}
                   alt=""
                   class="timeline-image"
                   loading={index < 3 ? "eager" : "lazy"}
@@ -48,42 +48,42 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
               )}
               <div class="card-body">
                 <h2 class="timeline-title">
-                  <a href={`/stazioni/${station.id.replace(/\.md$/, '')}`}>
-                    {station.data.title}
+                  <a href={`/tappe/${tappa.id.replace(/\.md$/, '')}`}>
+                    {tappa.data.title}
                   </a>
                 </h2>
-                <p class="timeline-description">{station.data.description}</p>
+                <p class="timeline-description">{tappa.data.description}</p>
 
-                {station.data.podcast && (
+                {tappa.data.podcast && (
                   <div class="timeline-meta">
-                    {station.data.podcast.episodeTitle && (
+                    {tappa.data.podcast.episodeTitle && (
                       <span class="episode-title">
-                        {station.data.podcast.episodeTitle}
+                        {tappa.data.podcast.episodeTitle}
                       </span>
                     )}
-                    {station.data.podcast.duration && (
+                    {tappa.data.podcast.duration && (
                       <span class="episode-duration">
                         <span class="sr-only">Durata:</span>
-                        {station.data.podcast.duration}
+                        {tappa.data.podcast.duration}
                       </span>
                     )}
                   </div>
                 )}
 
-                {station.data.directions?.address && (
+                {tappa.data.directions?.address && (
                   <p class="timeline-location">
                     <span class="sr-only">Indirizzo:</span>
-                    {station.data.directions.address}
+                    {tappa.data.directions.address}
                   </p>
                 )}
 
                 <div class="timeline-actions">
-                  <a href={`/stazioni/${station.id.replace(/\.md$/, '')}`} class="btn btn-primary">
-                    Scopri la stazione
+                  <a href={`/tappe/${tappa.id.replace(/\.md$/, '')}`} class="btn btn-primary">
+                    Scopri la tappa
                   </a>
-                  {station.data.directions?.mapsUrl && (
+                  {tappa.data.directions?.mapsUrl && (
                     <a
-                      href={station.data.directions.mapsUrl}
+                      href={tappa.data.directions.mapsUrl}
                       class="btn btn-outline"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -96,11 +96,11 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
               </div>
             </article>
 
-            {/* Connection hint to next station */}
-            {index < sortedStations.length - 1 && (
+            {/* Connection hint to next tappa */}
+            {index < sortedTappe.length - 1 && (
               <div class="timeline-connector" aria-hidden="true">
                 <span class="connector-text">
-                  Prosegui verso la stazione {sortedStations[index + 1].data.order}
+                  Prosegui verso la tappa {sortedTappe[index + 1].data.order}
                 </span>
               </div>
             )}

@@ -7,21 +7,21 @@ import { marked } from 'marked';
 export const prerender = true;
 
 export async function getStaticPaths() {
-  const stations = await getCollection('stations');
-  return stations.map((station) => ({
-    params: { slug: station.id.replace(/\.md$/, '') },
-    props: { station },
+  const tappe = await getCollection('tappe');
+  return tappe.map((tappa) => ({
+    params: { slug: tappa.id.replace(/\.md$/, '') },
+    props: { tappa },
   }));
 }
 
-const { station } = Astro.props;
-const { Content } = await render(station);
+const { tappa } = Astro.props;
+const { Content } = await render(tappa);
 
-// Get all stations for navigation
-const allStations = await getCollection('stations', ({ data }) => data.published);
-const sortedStations = allStations.sort((a, b) => a.data.order - b.data.order);
+// Get all tappe for navigation
+const allTappe = await getCollection('tappe', ({ data }) => data.published);
+const sortedTappe = allTappe.sort((a, b) => a.data.order - b.data.order);
 
-const { data } = station;
+const { data } = tappa;
 
 // Parse markdown in directions.instructions
 const directionsHtml = data.directions?.instructions ? await marked.parse(data.directions.instructions) : null;
@@ -105,7 +105,7 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
         ) : null}
 
         <div class="station-title-section">
-          <span class="station-number" aria-label={`Stazione numero ${data.order}`}>
+          <span class="station-number" aria-label={`Tappa numero ${data.order}`}>
             {data.order}
           </span>
           <h1>{data.title}</h1>
@@ -190,7 +190,7 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
     <!-- Tabs: Details / Transcript -->
     <div class="tabs-section">
       <div class="container">
-        <div class="tabs" role="tablist" aria-label="Contenuti della stazione">
+        <div class="tabs" role="tablist" aria-label="Contenuti della tappa">
           <button
             role="tab"
             id="tab-details"
@@ -275,15 +275,15 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
     <!-- Back to all stations -->
     <footer class="station-footer">
       <div class="container">
-        <a href="/stazioni" class="btn btn-outline">
-          &#8592; Tutte le stazioni
+        <a href="/tappe" class="btn btn-outline">
+          &#8592; Tutte le tappe
         </a>
       </div>
     </footer>
   </article>
 
   <!-- Station Navigation Drawer -->
-  <StationDrawer stations={sortedStations} currentStation={data.order} />
+  <StationDrawer stations={sortedTappe} currentStation={data.order} />
 
   <!-- Lightbox Modal -->
   {data.gallery && data.gallery.length > 0 && (

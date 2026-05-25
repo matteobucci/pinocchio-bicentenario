@@ -35,9 +35,9 @@ const prevStation = currentIndex > 0 ? sortedStations[currentIndex - 1] : null;
 const nextStation = currentIndex < sortedStations.length - 1 ? sortedStations[currentIndex + 1] : null;
 const currentStationData = sortedStations[currentIndex];
 
-// Generate station URLs
+// Generate tappa URLs
 function getStationUrl(station: Station): string {
-  return `/stazioni/${station.id.replace(/\.md$/, '')}`;
+  return `/tappe/${station.id.replace(/\.md$/, '')}`;
 }
 ---
 
@@ -45,7 +45,7 @@ function getStationUrl(station: Station): string {
   class="station-drawer"
   id="station-drawer"
   role="region"
-  aria-label="Navigazione stazioni"
+  aria-label="Navigazione tappe"
   data-state="peek"
   data-current={currentStation}
 >
@@ -56,10 +56,10 @@ function getStationUrl(station: Station): string {
     type="button"
     aria-expanded="false"
     aria-controls="drawer-content"
-    aria-label="Apri navigazione stazioni"
+    aria-label="Apri navigazione tappe"
   >
     <span class="handle-bar" aria-hidden="true"></span>
-    <span class="sr-only">Tocca per espandere la navigazione tra le stazioni</span>
+    <span class="sr-only">Tocca per espandere la navigazione tra le tappe</span>
   </button>
 
   <!-- Drawer Content -->
@@ -71,19 +71,19 @@ function getStationUrl(station: Station): string {
         <a
           href={prevStation ? getStationUrl(prevStation) : '#'}
           class:list={["nav-arrow", "nav-prev", { disabled: !prevStation }]}
-          aria-label={prevStation ? `Vai alla stazione precedente: ${prevStation.data.title}` : "Nessuna stazione precedente"}
+          aria-label={prevStation ? `Vai alla tappa precedente: ${prevStation.data.title}` : "Nessuna tappa precedente"}
           aria-disabled={!prevStation}
         >
           <span aria-hidden="true">&#8592;</span>
         </a>
 
-        <div class="progress-dots" role="list" aria-label="Stazioni del percorso">
+        <div class="progress-dots" role="list" aria-label="Tappe del percorso">
           {sortedStations.map((station, index) => (
             <a
               href={getStationUrl(station)}
               class:list={["progress-dot", { current: station.data.order === currentStation }]}
               role="listitem"
-              aria-label={`Stazione ${station.data.order}: ${station.data.title}${station.data.order === currentStation ? ' (attuale)' : ''}`}
+              aria-label={`Tappa ${station.data.order}: ${station.data.title}${station.data.order === currentStation ? ' (attuale)' : ''}`}
               aria-current={station.data.order === currentStation ? "step" : undefined}
             >
               <span class="sr-only">{station.data.order}</span>
@@ -94,16 +94,16 @@ function getStationUrl(station: Station): string {
         <a
           href={nextStation ? getStationUrl(nextStation) : '#'}
           class:list={["nav-arrow", "nav-next", { disabled: !nextStation }]}
-          aria-label={nextStation ? `Vai alla stazione successiva: ${nextStation.data.title}` : "Nessuna stazione successiva"}
+          aria-label={nextStation ? `Vai alla tappa successiva: ${nextStation.data.title}` : "Nessuna tappa successiva"}
           aria-disabled={!nextStation}
         >
           <span aria-hidden="true">&#8594;</span>
         </a>
       </nav>
 
-      <!-- Current station title -->
+      <!-- Current tappa title -->
       <div class="current-station">
-        <span class="station-label">Stazione {currentStation}</span>
+        <span class="station-label">Tappa {currentStation}</span>
         <span class="station-title">{currentStationData?.data.title}</span>
       </div>
 
@@ -111,17 +111,17 @@ function getStationUrl(station: Station): string {
       <button
         class="expand-hint"
         type="button"
-        aria-label="Espandi per vedere tutte le stazioni"
+        aria-label="Espandi per vedere tutte le tappe"
       >
         <span aria-hidden="true">&#8593;</span>
-        Tutte le stazioni
+        Tutte le tappe
       </button>
     </div>
 
-    <!-- Full State: All Stations List -->
+    <!-- Full State: All Tappe List -->
     <div class="drawer-full" aria-hidden="true">
-      <h2 class="drawer-full-title">Tutte le stazioni</h2>
-      <nav class="stations-list" aria-label="Elenco completo delle stazioni">
+      <h2 class="drawer-full-title">Tutte le tappe</h2>
+      <nav class="stations-list" aria-label="Elenco completo delle tappe">
         <ul role="list">
           {sortedStations.map((station) => (
             <li>
@@ -512,9 +512,9 @@ function getStationUrl(station: Station): string {
     // Update ARIA
     handle.setAttribute('aria-expanded', newState !== 'peek' ? 'true' : 'false');
     handle.setAttribute('aria-label',
-      newState === 'peek' ? 'Apri navigazione stazioni' :
+      newState === 'peek' ? 'Apri navigazione tappe' :
       newState === 'partial' ? 'Espandi a schermo intero o riduci' :
-      'Riduci navigazione stazioni'
+      'Riduci navigazione tappe'
     );
 
     // Update hidden state for full list
@@ -531,9 +531,9 @@ function getStationUrl(station: Station): string {
     announcement.className = 'sr-only';
 
     const messages: Record<DrawerState, string> = {
-      peek: 'Navigazione stazioni ridotta',
-      partial: 'Navigazione stazioni aperta con stazione corrente',
-      full: 'Elenco completo delle stazioni visibile'
+      peek: 'Navigazione tappe ridotta',
+      partial: 'Navigazione tappe aperta con tappa corrente',
+      full: 'Elenco completo delle tappe visibile'
     };
 
     announcement.textContent = messages[state];

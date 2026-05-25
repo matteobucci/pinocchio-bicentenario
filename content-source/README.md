@@ -1,8 +1,8 @@
 # content-source/
 
-Materiale sorgente per popolare le 12 stazioni del sito.
+Materiale sorgente per popolare le 12 tappe del sito.
 
-Questi file **non vengono pubblicati** (sono fuori da `public/` e `src/`). Servono come riferimento per scrivere i contenuti markdown in `src/content/stations/`.
+Questi file **non vengono pubblicati** (sono fuori da `public/` e `src/`). Servono come riferimento per i contenuti markdown in `src/content/tappe/`.
 
 ## File
 
@@ -15,22 +15,15 @@ Questi file **non vengono pubblicati** (sono fuori da `public/` e `src/`). Servo
 
 ## Audio importati
 
-I file audio del podcast sono stati estratti in `public/audio/` e rinominati in formato `tappa-NN.{mp3,mp4}`:
+I file audio del podcast sono in `public/audio/` in formato `tappa-NN.{mp3,mp4}`:
 
 - `tappa-01.mp3` … `tappa-09.mp3` (audio)
-- `tappa-10.mp4` … `tappa-12.mp4` (video, le ultime tre tappe sono in formato mp4)
+- `tappa-10.mp4` … `tappa-12.mp4` (video — le ultime tre tappe sono video)
 
 Sorgente: zip WeTransfer ricevuto, originariamente con nomi `1 tappa.mp3` … `12 tappa.mp4`.
 
-## Note importanti
+## Strategia di sincronizzazione
 
-- **Discrepanza con i placeholder esistenti**: la stazione 1 in `src/content/stations/stazione-01.md` è etichettata "La Bottega di Geppetto", ma la prima tappa del podcast reale è **"La Bottega di Maestro Ciliegia"** (Antonio Segoni, Via della Pietraia). Da correggere quando si scrivono i contenuti veri.
-- **Tappe 10–12 in mp4**: il player attuale (`PodcastPlayer.astro`) gestisce mp3 — verificare/estendere il componente per supportare anche video, oppure estrarre la traccia audio dei tre mp4.
-- **Frontmatter `mp3File`**: aggiornare in ogni `stazione-NN.md` con il path corretto `/audio/tappa-NN.mp3` (o `.mp4`).
+I `.docx` qui dentro sono la **fonte editoriale**, i `.md` in `src/content/tappe/` sono la **forma renderizzata**. Se arrivano revisioni, aggiorna il `.docx` corrispondente e riapplica manualmente al `.md`.
 
-## Prossimi passi suggeriti
-
-1. Estrarre testo strutturato dai docx (capitolo "DESCRIZIONE", "INDICAZIONI", "TRASCRIZIONE" per ogni tappa) e popolare i 12 file markdown
-2. Decidere come gestire i tre episodi video (10, 11, 12)
-3. Aggiungere immagini reali al posto dei placeholder `picsum.photos`
-4. Verificare l'allineamento del titolo della stazione 1
+Vedi `INTEGRATION.md` per la mappa completa di come ogni docx alimenta i campi del frontmatter Astro.

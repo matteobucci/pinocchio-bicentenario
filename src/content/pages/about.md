@@ -7,7 +7,7 @@ subtitle: "L'associazione e il progetto del bicentenario"
 
 Il **Pinocchio Bicentenario** è un'iniziativa per celebrare i 200 anni dalla nascita di Carlo Collodi e della sua opera immortale, *Le avventure di Pinocchio*.
 
-Abbiamo costruito un percorso a **12 stazioni** tra Firenze e Sesto Fiorentino, ognuna legata a un momento della storia del burattino e a un luogo reale che ha ispirato Collodi.
+Abbiamo costruito un percorso a **12 tappe** tra Firenze e Sesto Fiorentino, ognuna legata a un momento della storia del burattino e a un luogo reale che ha ispirato Collodi.
 
 ## L'Associazione
 
@@ -21,7 +21,7 @@ Siamo un'associazione a tutela delle disabilità che opera sul territorio di Ses
 
 ## Il Podcast
 
-Abbiamo realizzato un podcast in **12 puntate** che accompagna i visitatori attraverso le stazioni del percorso. Ogni episodio è disponibile anche in **versione trascritta** per garantire la massima accessibilità: chi non può ascoltare può leggere, chi ascolta può seguire anche con la trascrizione a fianco.
+Abbiamo realizzato un podcast in **12 puntate** che accompagna i visitatori attraverso le tappe del percorso. Ogni episodio è disponibile anche in **versione trascritta** per garantire la massima accessibilità: chi non può ascoltare può leggere, chi ascolta può seguire anche con la trascrizione a fianco.
 
 ## Accessibilità del percorso
 
@@ -37,4 +37,4 @@ Questo progetto è stato possibile grazie al supporto di tutti i volontari dell'
 
 ## Crediti immagini
 
-Le fotografie delle stazioni provengono da **Wikimedia Commons**, in larga parte di **Sailko**, con licenze CC BY 3.0 e CC BY-SA 3.0. Foto di Villa Gerini di Ulisse Albiati (Cyberuly), CC BY 3.0. Vedi le pagine delle singole immagini su [commons.wikimedia.org](https://commons.wikimedia.org) per attribuzione completa e termini di licenza.
+Le fotografie delle tappe provengono da **Wikimedia Commons**, in larga parte di **Sailko**, con licenze CC BY 3.0 e CC BY-SA 3.0. Foto di Villa Gerini di Ulisse Albiati (Cyberuly), CC BY 3.0. Vedi le pagine delle singole immagini su [commons.wikimedia.org](https://commons.wikimedia.org) per attribuzione completa e termini di licenza.

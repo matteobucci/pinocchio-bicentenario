@@ -15,24 +15,24 @@ public_folder: /images
 locale: it
 
 collections:
-  # Stazioni
-  - name: "stations"
-    label: "Stazioni"
-    label_singular: "Stazione"
-    folder: "src/content/stations"
+  # Tappe
+  - name: "tappe"
+    label: "Tappe"
+    label_singular: "Tappa"
+    folder: "src/content/tappe"
     create: true
     slug: "{{slug}}"
     sortable_fields: ["order", "title"]
     fields:
-      - { label: "Titolo", name: "title", widget: "string", hint: "Nome della stazione" }
-      - { label: "Ordine", name: "order", widget: "number", min: 1, max: 12, hint: "Numero della stazione (1-12)" }
+      - { label: "Titolo", name: "title", widget: "string", hint: "Nome della tappa" }
+      - { label: "Ordine", name: "order", widget: "number", min: 1, max: 12, hint: "Numero della tappa (1-12)" }
       - { label: "Descrizione breve", name: "description", widget: "text", hint: "Breve descrizione per la lista" }
       - { label: "Immagine principale", name: "heroImage", widget: "image", required: false, hint: "Immagine di copertina" }
       - label: "Galleria"
         name: "gallery"
         widget: "list"
         required: false
-        hint: "Immagini aggiuntive della stazione"
+        hint: "Immagini aggiuntive della tappa"
         fields:
           - { label: "Immagine", name: "image", widget: "image" }
           - { label: "Didascalia", name: "caption", widget: "string" }
@@ -46,10 +46,10 @@ collections:
           - { label: "Apple Podcasts URL", name: "applePodcastsUrl", widget: "string", required: false }
           - { label: "File MP3", name: "mp3File", widget: "file", required: false, hint: "File audio diretto (opzionale)" }
           - { label: "Durata", name: "duration", widget: "string", required: false, hint: "Es: 15:30" }
-      - label: "Dettagli stazione"
+      - label: "Dettagli tappa"
         name: "details"
         widget: "markdown"
-        hint: "Informazioni dettagliate sulla stazione"
+        hint: "Informazioni dettagliate sulla tappa"
       - label: "Come arrivarci"
         name: "directions"
         widget: "object"

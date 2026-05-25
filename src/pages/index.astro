@@ -2,48 +2,48 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 
-// Get all published stations sorted by order
-const stations = await getCollection('stations', ({ data }) => data.published);
-const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
+// Get all published tappe sorted by order
+const tappe = await getCollection('tappe', ({ data }) => data.published);
+const sortedTappe = tappe.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <BaseLayout title="Home">
   <section class="hero">
     <div class="container">
       <h1 class="hero-title">Pinocchio Bicentenario</h1>
-      <p class="hero-subtitle">Un viaggio in 12 stazioni attraverso il mondo di Pinocchio</p>
+      <p class="hero-subtitle">Un viaggio in 12 tappe attraverso il mondo di Pinocchio</p>
       <p class="hero-intro">
-        Benvenuti nel percorso del Bicentenario di Pinocchio a Sesto Fiorentino.
-        Scoprite le 12 stazioni che ripercorrono la storia del burattino più famoso del mondo,
+        Benvenuti nel percorso del Bicentenario di Pinocchio tra Firenze e Sesto Fiorentino.
+        Scoprite le 12 tappe che ripercorrono la storia del burattino più famoso del mondo,
         accompagnati dal nostro podcast accessibile a tutti.
       </p>
       <div class="hero-actions">
-        <a href="/stazioni" class="btn btn-primary">Esplora le stazioni</a>
+        <a href="/tappe" class="btn btn-primary">Esplora le tappe</a>
         <a href="/chi-siamo" class="btn btn-outline">Chi siamo</a>
       </div>
     </div>
   </section>
 
-  <section class="stations-preview" aria-labelledby="stations-heading">
+  <section class="stations-preview" aria-labelledby="tappe-heading">
     <div class="container">
-      <h2 id="stations-heading">Le 12 Stazioni</h2>
+      <h2 id="tappe-heading">Le 12 Tappe</h2>
       <p class="section-intro">
-        Ogni stazione racconta un capitolo della storia di Pinocchio, con podcast,
+        Ogni tappa racconta un capitolo della storia di Pinocchio, con podcast,
         immagini e trascrizioni accessibili.
       </p>
 
       <div class="stations-grid">
-        {sortedStations.map((station) => (
+        {sortedTappe.map((tappa) => (
           <article class="station-card card">
-            <a href={`/stazioni/${station.id.replace(/\.md$/, '')}`} class="station-card-link">
-              <div class="station-number" aria-hidden="true">{station.data.order}</div>
+            <a href={`/tappe/${tappa.id.replace(/\.md$/, '')}`} class="station-card-link">
+              <div class="station-number" aria-hidden="true">{tappa.data.order}</div>
               <div class="card-body">
-                <h3 class="station-title">{station.data.title}</h3>
-                <p class="station-description">{station.data.description}</p>
-                {station.data.podcast?.duration && (
+                <h3 class="station-title">{tappa.data.title}</h3>
+                <p class="station-description">{tappa.data.description}</p>
+                {tappa.data.podcast?.duration && (
                   <p class="station-meta">
                     <span class="sr-only">Durata podcast:</span>
-                    {station.data.podcast.duration}
+                    {tappa.data.podcast.duration}
                   </p>
                 )}
               </div>
@@ -53,8 +53,8 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
       </div>
 
       <div class="section-action">
-        <a href="/stazioni" class="btn btn-secondary">
-          Vedi tutte le stazioni
+        <a href="/tappe" class="btn btn-secondary">
+          Vedi tutte le tappe
         </a>
       </div>
     </div>
@@ -65,11 +65,11 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
       <h2 id="podcast-heading">Ascolta il Podcast</h2>
       <p>
         12 episodi che ti accompagnano attraverso il mondo di Pinocchio.
-        Ogni episodio è disponibile direttamente sulla pagina della stazione,
+        Ogni episodio è disponibile direttamente sulla pagina della tappa,
         con la trascrizione completa per garantire l'accessibilità a tutti.
       </p>
       <div class="podcast-cta-actions">
-        <a href="/stazioni" class="btn btn-primary">Apri la prima stazione</a>
+        <a href="/tappe" class="btn btn-primary">Apri la prima tappa</a>
       </div>
     </div>
   </section>
