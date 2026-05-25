@@ -1,68 +1,85 @@
 ---
-title: "Il Paese dei Balocchi"
+title: L'Incontro con la Volpe e il Gatto
 order: 7
-description: "Il luogo delle tentazioni, dove i bambini giocano tutto il giorno ma rischiano di trasformarsi in asini."
-heroImage: "https://picsum.photos/seed/stazione7/1200/600"
-gallery:
-  - image: "https://picsum.photos/seed/stazione7a/800/600"
-    caption: "L'ingresso del Paese"
-    alt: "Arco decorato con giocattoli colorati e luci"
-  - image: "https://picsum.photos/seed/stazione7b/800/600"
-    caption: "Le giostre"
-    alt: "Giostre antiche in un luna park d'epoca"
-  - image: "https://picsum.photos/seed/stazione7c/800/600"
-    caption: "La trasformazione"
-    alt: "Illustrazione di bambini con orecchie d'asino"
+description: Il luogo simbolico dove Pinocchio incontra i due imbroglioni che gli promettono il Campo dei Miracoli. Una delle svolte più importanti della storia, ambientata da Collodi nella zona di Motrone.
+heroImage: https://upload.wikimedia.org/wikipedia/commons/6/6a/Sesto_fiorentino%2C_ikea_%28osmannoro%29.JPG
 podcast:
-  episodeTitle: "Episodio 7 - Il Paese dei Balocchi"
-  spotifyUrl: "https://open.spotify.com/episode/example7"
-  applePodcastsUrl: "https://podcasts.apple.com/episode/example7"
-  mp3File: "/audio/episodio-07.mp3"
-  duration: "20:30"
+  episodeTitle: Episodio 7 — L'Incontro con la Volpe e il Gatto
+  mp3File: /audio/tappa-07.mp3
 directions:
-  address: "Area Eventi, Via del Parco 50, Sesto Fiorentino (FI)"
-  coordinates: "43.8389, 11.1945"
-  mapsUrl: "https://maps.google.com/?q=43.8389,11.1945"
-  instructions: |
-    **Dalla Stazione 6:** Proseguire verso Via del Parco, zona eventi (circa 15 minuti a piedi).
+  address: Via del Motrone, Osmannoro (Sesto Fiorentino)
+  coordinates: "43.79934, 11.19983"
+  mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+del+Motrone+Osmannoro+Sesto+Fiorentino
+  instructions: >
+    ## Dalla tappa 6 (Piazza Garibaldi, Peretola)
 
-    **In auto:** Grande parcheggio disponibile presso l'area eventi.
 
-    **Con i mezzi:** Autobus linea 5, fermata "Area Eventi".
-transcript: |
-  ## Trascrizione Episodio 7
+    ### In macchina
 
-  **Lucignolo:** Pinocchio, vieni con me al Paese dei Balocchi! Là non ci sono scuole, non ci sono maestri, non ci sono libri. In quel paese benedetto non si studia mai!
+    *8–12 minuti.*
 
-  **Pinocchio:** E cosa si fa tutto il giorno?
 
-  **Lucignolo:** Si gioca e ci si diverte dalla mattina alla sera!
+    Via Pistoiese verso Osmannoro → Via Pratese → direzione zona industriale Osmannoro → svolta in Via del Motrone.
 
-  **Narratore:** Ma quello che Lucignolo non disse era il terribile prezzo da pagare...
 
-  [Continua la trascrizione...]
+    ### In bici
+
+    *Circa 4–5 km, 15–20 minuti, pianeggiante.*
+
+
+    Da Piazza Garibaldi verso Via Pistoiese → direzione Osmannoro → Via Pratese → zona industriale dell'Osmannoro → Via del Motrone. Attenzione: Via Pratese può avere traffico intenso e camion, meglio usare tratti laterali quando disponibili.
+
+
+    ### In bus
+
+    *15–25 minuti.*
+
+
+    Bus **29** o **30** da Peretola in direzione Osmannoro / Pratese → scendi alla fermata in Via Pratese / zona Osmannoro → 5–10 minuti a piedi fino a Via del Motrone.
+transcript: >
+  ## Trascrizione — Episodio 7
+
+
+  Benvenuti a *Sulle tracce di Pinocchio*, il podcast che ci porta a scoprire le tappe della storia del burattino più famoso del mondo.
+
+
+  La settima tappa ci porta nel luogo simbolico dell'incontro tra Pinocchio e due dei personaggi più ingannevoli della storia: il Gatto e la Volpe.
+
+
+  Pinocchio si mette in viaggio con le cinque monete d'oro che gli sono state donate da Mangiafuoco. Durante il cammino incontra il Gatto e la Volpe, due furbi imbroglioni che fingono di essere poveri mendicanti. I due raccontano a Pinocchio dell'esistenza di un luogo straordinario: il famoso Campo dei Miracoli. Qui, gli dicono, basta piantare una moneta d'oro sotto terra perché durante la notte cresca un albero pieno di soldi.
+
+
+  Pinocchio, ingenuo e pieno di speranza, crede alle loro parole. Invece di tornare a casa dal suo papà Geppetto con le monete ricevute, decide di seguire i due truffatori.
+
+
+  Il Gatto e la Volpe rappresentano proprio questo: l'inganno e la furbizia. Sono personaggi che si presentano come poveri e innocui, ma che in realtà cercano soltanto di approfittarsi della buona fede di Pinocchio per rubargli il denaro.
+
+
+  Si pensa che Carlo Collodi si sia ispirato anche a luoghi reali della Toscana. In particolare al piccolo borgo di **Motrone**, nella piana tra Osmannoro e Castello, non lontano da Firenze. Oggi questa zona è molto diversa da quella immaginata nel racconto: è diventata un'area industriale, fatta di capannoni e attività produttive.
+
+
+  Ma il momento più importante di questa tappa è la svolta della storia. Pinocchio deve scegliere: tornare a casa e fare la cosa giusta, oppure fidarsi della promessa di diventare ricco senza fatica. Decide di credere al Gatto e alla Volpe. Ed è proprio questa scelta che lo porterà a essere ingannato e ad affrontare nuove difficoltà nel suo viaggio.
+
+
+  È una lezione importante che Collodi ci lascia: quando qualcosa sembra troppo facile per essere vero, spesso nasconde un inganno.
+
+
+  *Grazie per aver ascoltato la puntata del nostro podcast. Ci sentiamo nella prossima tappa del viaggio.*
 published: true
 ---
 
-La settima stazione ci porta nel seducente ma pericoloso Paese dei Balocchi, metafora delle false promesse di una vita senza impegno.
+## Il luogo
 
-## La storia
+Si pensa che Collodi si sia ispirato al piccolo borgo di **Motrone**, nella piana tra Osmannoro e Castello. Oggi la zona di Via del Motrone è un'area industriale fatta di capannoni e attività produttive — molto diversa dal paesaggio del racconto, ma con la stessa funzione di "incrocio" tra strade e destini diversi.
 
-Convinto dall'amico Lucignolo, Pinocchio partì per il Paese dei Balocchi, dove i bambini potevano giocare tutto il giorno senza mai studiare. Ma dopo cinque mesi di divertimento continuo, Pinocchio e Lucignolo cominciarono a trasformarsi in asini...
+## Cosa vedere nei dintorni
 
-## Cosa vedere
+- **Borgo di Motrone**: piccolo nucleo rurale immerso nella piana, oggi inglobato nell'area produttiva dell'Osmannoro ma ancora riconoscibile nei suoi tratti agricoli storici. Visitabile passeggiando lungo Via del Motrone.
+- **Santa Croce all'Osmannoro** (Via Lucchese, a pochi minuti): antico ospitale dei pellegrini del 1250 con cortile quadrato e tracce dello stemma degli Spini sulla facciata.
+- **Pista ciclabile dell'Osmannoro**: collega la piana a Sesto Fiorentino e Firenze, ideale per ripercorrere l'itinerario pinocchiesco in bicicletta.
 
-- **Installazione immersiva** "Il Paese dei Balocchi"
-- **Mostra** sui giocattoli storici italiani
-- **Area giochi** tradizionali
-- **Percorso educativo** sulle conseguenze delle scelte
+## Curiosità
 
-## Il messaggio
+Il nome *Motrone* deriva dal latino *mauta* (malta, mota), e indica la natura geologica della piana fiorentina: un terreno fangoso, argilloso, paludoso. È esattamente lo scenario notturno in cui Pinocchio incontra la Volpe e il Gatto: una strada di campagna persa nella nebbia, fra acquitrini e ombre.
 
-Il Paese dei Balocchi rappresenta la tentazione della vita facile, senza impegno e responsabilità. Collodi ci avverte: chi non vuole faticare finisce per perdere la propria dignità.
-
-## Laboratori
-
-- "Giochi di una volta": riscoperta dei giochi tradizionali
-- "Teatro delle ombre": racconta la tua storia
-- "Il valore del tempo": laboratorio sulla gestione del tempo libero
+Collodi soggiornò a lungo in zona fra il **1875 e il 1880**, ospite del fratello Paolo, direttore generale della Manifattura Ginori di Doccia. Da queste passeggiate trasse molte ambientazioni del romanzo.

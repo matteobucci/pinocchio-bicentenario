@@ -1,68 +1,82 @@
 ---
-title: "Il Teatro dei Burattini"
+title: La Quercia Grande
 order: 2
-description: "Il Gran Teatro dei Burattini di Mangiafoco, dove Pinocchio incontrò Arlecchino e Pulcinella."
-heroImage: "https://picsum.photos/seed/stazione2/1200/600"
-gallery:
-  - image: "https://picsum.photos/seed/stazione2a/800/600"
-    caption: "Il palcoscenico del teatro"
-    alt: "Palcoscenico in miniatura con burattini tradizionali appesi"
-  - image: "https://picsum.photos/seed/stazione2b/800/600"
-    caption: "I burattini della commedia"
-    alt: "Collezione di burattini: Arlecchino, Pulcinella e altri personaggi della commedia dell'arte"
-  - image: "https://picsum.photos/seed/stazione2c/800/600"
-    caption: "Mangiafoco e i suoi artisti"
-    alt: "Rappresentazione di Mangiafoco, il burattinaio dalla barba nera"
+description: L'unico luogo reale citato esplicitamente da Collodi nel romanzo. Una grande quercia in Via della Querciola dove avviene uno degli episodi più drammatici della storia di Pinocchio.
+heroImage: https://upload.wikimedia.org/wikipedia/commons/b/b3/Villa_il_Bel_Riposo.JPG
 podcast:
-  episodeTitle: "Episodio 2 - Il Teatro di Mangiafoco"
-  spotifyUrl: "https://open.spotify.com/episode/example2"
-  applePodcastsUrl: "https://podcasts.apple.com/episode/example2"
-  mp3File: "/audio/episodio-02.mp3"
-  duration: "21:30"
+  episodeTitle: Episodio 2 — La Quercia Grande
+  mp3File: /audio/tappa-02.mp3
 directions:
-  address: "Piazza Ginori 15, Sesto Fiorentino (FI)"
-  coordinates: "43.8467, 11.2001"
-  mapsUrl: "https://maps.google.com/?q=43.8467,11.2001"
-  instructions: |
-    **Dalla Stazione 1:** Proseguire su Via Gramsci fino a Piazza Ginori (circa 10 minuti a piedi).
+  address: Via della Querciola 44, Castello (Firenze)
+  coordinates: "43.81766, 11.23165"
+  mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+della+Querciola+44+Castello+Firenze
+  instructions: >
+    ## Dalla tappa 1 (Via della Pietraia)
 
-    **In auto:** Parcheggio disponibile in Piazza del Mercato, a 200 metri.
 
-    **Con i mezzi:** Autobus linea 2, fermata "Piazza Ginori".
-transcript: |
-  ## Trascrizione Episodio 2
+    ### A piedi
 
-  **Narratore:** Pinocchio vendette l'abbecedario che il povero Geppetto gli aveva comprato, per entrare nel Gran Teatro dei Burattini.
+    *7 minuti.*
 
-  Appena entrato, Pinocchio vide sul palcoscenico Arlecchino e Pulcinella che litigavano tra loro.
 
-  **Arlecchino:** Guarda! È Pinocchio! È il nostro fratello Pinocchio!
+    Procedi verso Via Giuliano Ricci, svolta a sinistra e prendi Via di Castello, svolta a destra e prendi Via della Querciola.
 
-  **Pulcinella:** Vieni qui, vieni a abbracciare i tuoi fratelli di legno!
 
-  [Continua la trascrizione...]
+    ### In bici
+
+    *Circa 3–3,5 km, 10–12 minuti, pianeggiante.*
+
+
+    Da Via Pietraia 2: Via delle Panche → Via Reginaldo Giuliani (verso nord) → direzione Castello / Sesto Fiorentino → Via della Querciola fino al numero 44.
+transcript: >
+  ## Trascrizione — Episodio 2
+
+
+  Benvenuti a *Sulle tracce di Pinocchio*, il podcast che ci accompagna nelle tappe più importanti della storia del burattino più famoso del mondo.
+
+
+  Oggi arriviamo a una tappa molto importante e un po' inquietante: la Grande Quercia.
+
+
+  Immaginate un bosco silenzioso. Gli alberi sono alti e le foglie si muovono piano nel vento. In mezzo al bosco si trova una grande quercia, un albero enorme e antico. È qui che succede uno degli episodi più drammatici della storia di Pinocchio.
+
+
+  Dopo aver incontrato due strani personaggi, il Gatto e la Volpe, Pinocchio decide di fidarsi di loro. I due gli parlano di un luogo magico chiamato il Campo dei Miracoli, dove — secondo loro — basta piantare delle monete per far crescere un albero pieno di soldi. Ma non è la verità. Il Gatto e la Volpe stanno ingannando Pinocchio.
+
+
+  Durante la notte, i due si travestono da terribili assassini e inseguono il povero burattino nel bosco. Pinocchio scappa più veloce che può. Corre tra gli alberi, attraversa il buio e sente i passi degli inseguitori sempre più vicini. Alla fine lo raggiungono proprio sotto la Grande Quercia.
+
+
+  Qui succede qualcosa di terribile. I due malfattori legano Pinocchio e lo appendono al ramo dell'albero. Il bosco torna silenzioso.
+
+
+  Ma la storia non finisce qui. Questo momento segna una svolta per Pinocchio. Le sue scelte sbagliate lo hanno portato in pericolo. Eppure, proprio da questo momento difficile, la sua avventura continuerà e incontrerà qualcuno che cambierà il suo destino.
+
+
+  *Grazie per aver ascoltato Sulle tracce di Pinocchio. Continuate il viaggio con noi nella prossima tappa.*
 published: true
 ---
 
-La seconda stazione ci porta nel magico mondo del teatro, dove Pinocchio fece il suo primo incontro con altri burattini come lui.
+## Dal libro
 
-## La storia
+> "In quel mentre che il povero Pinocchio impiccato dagli assassini a un ramo della Quercia grande, pareva ormai più morto che vivo, la bella Bambina dai capelli turchini si affacciò da capo dalla finestra, e impietositasi… batté per tre volte le mani insieme, e fece tre piccoli colpi."
+>
+> — *Le avventure di Pinocchio*, Capitolo XVI
 
-Pinocchio, invece di andare a scuola, vendette il suo abbecedario per comprare un biglietto per il Gran Teatro dei Burattini. Qui incontrò Arlecchino e Pulcinella, che lo riconobbero subito come un fratello di legno.
+## Il luogo reale
 
-## Cosa vedere
+La Quercia Grande si trovava in **Via della Querciola** a Castello. È l'**unico nome di luogo reale** menzionato esplicitamente in tutto il racconto di Collodi. Probabilmente l'albero fu abbattuto durante la seconda Guerra Mondiale.
 
-- **Ricostruzione del teatro** di Mangiafoco
-- **Collezione di burattini** della commedia dell'arte
-- **Spettacoli dal vivo** (nei weekend)
-- **Laboratorio** per costruire il proprio burattino
+La fatina era in realtà **Giovanna Ragionieri**: quando diventò fatina abitava in Via della Querciola, sopra al Bel Riposo, la villa dei Lorenzini. La sua casettina oggi non c'è più.
 
-## Il personaggio: Mangiafoco
+## Cosa vedere nei dintorni
 
-Mangiafoco, il terribile burattinaio dalla barba nera come l'inchiostro, che usava i burattini come legna da ardere. Ma sotto quell'aspetto spaventoso si nascondeva un cuore tenero.
+- **Villa Corsini** — visitabile venerdì e sabato 14:00–17:00, domenica 9:00–14:00
+- **Villa Medicea della Pietraia** — visitabile da martedì a domenica, 8:30–16:30
+- **Villa la Quiete** — 8 marzo–12 luglio e 5 settembre–31 ottobre, giardino aperto al pubblico 10:00–17:30 con ingresso gratuito senza prenotazione
 
-## Attività interattive
+## Curiosità
 
-- Spettacoli di burattini ogni sabato e domenica
-- Laboratori per bambini: "Costruisci il tuo burattino"
-- Visita guidata dietro le quinte del teatro
+La quercia grande si trovava in cima al podere e sotto di essa non ci andava mai nessuno. L'unico che ci andava per prendere ispirazione e restare da solo era proprio **Carlo Lorenzini**.
+
+Secondo la leggenda, le streghe si radunavano lì la notte del venerdì per appendere i bambini che poi mangiavano, dopo aver ballato con il demonio. Le persone si guardavano bene dall'avvicinarsi.

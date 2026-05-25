@@ -128,8 +128,23 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
               )}
             </div>
 
+            {/* Video Player (mp4) */}
+            {data.podcast.videoFile && (
+              <div class="video-player">
+                <video
+                  controls
+                  preload="metadata"
+                  playsinline
+                  aria-label={`Video: ${data.podcast.episodeTitle || 'Episodio podcast'}`}
+                >
+                  <source src={data.podcast.videoFile} type="video/mp4" />
+                  Il tuo browser non supporta l'elemento video.
+                </video>
+              </div>
+            )}
+
             {/* MP3 Player */}
-            {data.podcast.mp3File && (
+            {!data.podcast.videoFile && data.podcast.mp3File && (
               <div class="audio-player">
                 <audio
                   controls
@@ -677,6 +692,17 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
   .audio-player audio {
     width: 100%;
     max-width: 500px;
+  }
+
+  .video-player {
+    width: 100%;
+  }
+
+  .video-player video {
+    width: 100%;
+    max-width: 720px;
+    border-radius: var(--border-radius-md);
+    background: black;
   }
 
   .podcast-links {

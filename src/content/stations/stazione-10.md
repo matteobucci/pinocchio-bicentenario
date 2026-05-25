@@ -1,68 +1,73 @@
 ---
-title: "La Pancia del Pescecane"
+title: Il Teatro del Ciuchino Pinocchio
 order: 10
-description: "L'interno del grande Pescecane, dove Pinocchio ritrovò il suo papà Geppetto."
-heroImage: "https://picsum.photos/seed/stazione10/1200/600"
-gallery:
-  - image: "https://picsum.photos/seed/stazione10a/800/600"
-    caption: "L'interno del Pescecane"
-    alt: "Ricostruzione artistica dell'interno di una balena con luci soffuse"
-  - image: "https://picsum.photos/seed/stazione10b/800/600"
-    caption: "L'incontro con Geppetto"
-    alt: "Pinocchio che abbraccia Geppetto nella pancia del Pescecane"
-  - image: "https://picsum.photos/seed/stazione10c/800/600"
-    caption: "La fuga"
-    alt: "Pinocchio e Geppetto che nuotano fuori dalla bocca del Pescecane"
+description: Un teatro dove bambini e animali si muovono sul palco recitando e cantando — ma molti dei piccoli attori sono già diventati ciuchini. Un'altra trappola del Paese dei Balocchi.
+heroImage: https://upload.wikimedia.org/wikipedia/commons/f/f7/Sesto%2C_palazzo_pretorio_01.JPG
 podcast:
-  episodeTitle: "Episodio 10 - Ritrovare papà Geppetto"
-  spotifyUrl: "https://open.spotify.com/episode/example10"
-  applePodcastsUrl: "https://podcasts.apple.com/episode/example10"
-  mp3File: "/audio/episodio-10.mp3"
-  duration: "23:15"
+  episodeTitle: Episodio 10 — Il Teatro del Ciuchino Pinocchio
+  videoFile: /audio/tappa-10.mp4
 directions:
-  address: "Museo delle Scienze, Via Galilei 8, Sesto Fiorentino (FI)"
-  coordinates: "43.8445, 11.2034"
-  mapsUrl: "https://maps.google.com/?q=43.8445,11.2034"
-  instructions: |
-    **Dalla Stazione 9:** Proseguire su Via Galilei verso il Museo delle Scienze (circa 10 minuti a piedi).
+  address: Piazza Ginori, Sesto Fiorentino
+  coordinates: "43.83339, 11.20190"
+  mapsUrl: https://www.google.com/maps/search/?api=1&query=Piazza+Ginori+Sesto+Fiorentino
+  instructions: >
+    ## Dalla tappa 9 (Piazza Vittorio Veneto)
 
-    **In auto:** Parcheggio del museo gratuito per i visitatori.
 
-    **Con i mezzi:** Autobus linea 4, fermata "Museo".
-transcript: |
-  ## Trascrizione Episodio 10
+    ### In macchina
 
-  **Narratore:** Dentro la pancia del Pescecane, Pinocchio vide una luce fioca in lontananza.
 
-  **Pinocchio:** Chi c'è là?
+    Da Piazza Vittorio Veneto → Via Dante Alighieri o Via Gramsci verso il centro storico → indicazioni per Via Cavallotti → centro di Sesto Fiorentino → Piazza Ginori.
 
-  **Geppetto:** Pinocchio! Figlio mio! Sei davvero tu?
 
-  **Pinocchio:** Babbo! Finalmente ti ho ritrovato!
+    ### In bici
 
-  **Narratore:** Geppetto era stato inghiottito dal Pescecane due anni prima, mentre cercava Pinocchio per mare...
 
-  [Continua la trascrizione...]
+    Da Piazza Vittorio Veneto → Via Gramsci o Via Dante Alighieri verso il centro storico → indicazioni per il municipio / centro → Piazza Ginori.
+transcript: >
+  ## Trascrizione — Episodio 10
+
+
+  Benvenuti a *Sulle tracce di Pinocchio*, il podcast che ci porta a scoprire le tappe della storia del burattino più famoso del mondo.
+
+
+  Oggi iniziamo il nostro viaggio nella tappa del "Teatro dei Ciuchini!"
+
+
+  > "Ma cosa sarà mai?" si chiese Pinocchio.
+
+
+  Decise di avvicinarsi e… entrò! Dentro, bambini e animali si muovevano sul palco, recitando, cantando e facendo buffe scenette. C'era chi saltava, chi ballava, chi rideva a crepapelle!
+
+
+  Ma presto Pinocchio si accorse di qualcosa di strano: molti dei piccoli attori avevano orecchie lunghe e code! Erano diventati ciuchini… proprio come i bambini che restavano troppo a lungo nel Paese dei Balocchi!
+
+
+  Pinocchio capì subito il pericolo. Il teatro non era solo divertimento… era un'altra trappola del Paese dei Balocchi. Chi si lasciava trasportare solo dal gioco e dalla pigrizia, finiva per trasformarsi in ciuchino e recitare senza mai fermarsi.
+
+
+  Pinocchio respirò profondamente e decise di non restare lì troppo a lungo. Aveva imparato una lezione importante: giocare è divertente… ma bisogna sempre ricordarsi di crescere e imparare!
+
+
+  Così uscì dal Teatro dei Ciuchini, pronto a continuare la sua avventura, più saggio e attento alle sue scelte.
+
+
+  *Grazie per aver ascoltato la puntata del nostro podcast. Ci sentiamo nella prossima tappa del viaggio.*
 published: true
 ---
 
-La decima stazione ci porta nel ventre del Pescecane, dove avviene la commovente riunione tra padre e figlio.
+## Il luogo
 
-## La storia
+**Piazza Ginori** è il cuore del centro storico di Sesto Fiorentino, accanto al municipio. Una piazza che ha visto generazioni di sestesi: il posto giusto per fermarsi a riflettere sulla lezione del Teatro dei Ciuchini — il divertimento conta, ma non basta.
 
-Inghiottito dal Pescecane, Pinocchio scoprì che dentro viveva anche Geppetto, che era stato ingoiato due anni prima mentre lo cercava per mare. Insieme escogitarono un piano per fuggire: approfittando del fatto che il Pescecane dormiva a bocca aperta, uscirono nuotando verso la libertà.
+## Cosa vedere nei dintorni
 
-## Cosa vedere
+- **Palazzo Pretorio** (Piazza Ginori): edificio del 1447 con la facciata coperta dagli stemmi dei podestà che si sono succeduti per secoli, oggi sede della biblioteca comunale.
+- **Monumento a Carlo Ginori**: scultura del 1930 di Oddo Franceschi, al centro della piazza inaugurata il 28 agosto 1883 e dedicata ai marchesi Ginori.
+- **Museo Ginori** (Viale Pratese): museo della Manifattura di Doccia, attualmente **chiuso per restauri**. Il giardino antistante resta accessibile tutti i giorni 8:30–19:30 (chiuso ad agosto).
 
-- **Installazione immersiva** "Nel ventre della balena"
-- **Mostra** sui cetacei del Mediterraneo
-- **Percorso multisensoriale** al buio
-- **Esposizione** sul legame padre-figlio nella letteratura
+## Curiosità
 
-## Il significato
+La piazza fu inaugurata nello stesso anno (**1883**) in cui usciva in volume *Le avventure di Pinocchio*. Tra i consiglieri comunali che ne approvarono la realizzazione c'era **Paolo Lorenzini**, fratello di Carlo Collodi e direttore della Manifattura Ginori: lo stesso fratello presso cui lo scrittore soggiornava a Villa Il Bel Riposo.
 
-Questo è il momento della riconciliazione. Pinocchio ritrova il padre e insieme affrontano il pericolo. È l'inizio della vera trasformazione del burattino, che ora è disposto a sacrificarsi per chi ama.
-
-## Esperienza accessibile
-
-Il percorso al buio è stato progettato con esperti di accessibilità e include elementi tattili e sonori per una fruizione completa da parte di tutti i visitatori.
+Le targhe in terracotta che danno nome alla piazza e alle strade vicine furono donate proprio dai Ginori. Pinocchio e la piazza dei marchesi della porcellana sono dunque coetanei, legati da un filo familiare diretto.

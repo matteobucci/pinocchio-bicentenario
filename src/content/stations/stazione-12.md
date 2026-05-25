@@ -1,92 +1,93 @@
 ---
-title: "La Casa del Bambino Vero"
+title: Il Campo dei Miracoli
 order: 12
-description: "Il lieto fine: Pinocchio si sveglia bambino vero, premiato per la sua bontà e il suo sacrificio."
-heroImage: "https://picsum.photos/seed/stazione12/1200/600"
-gallery:
-  - image: "https://picsum.photos/seed/stazione12a/800/600"
-    caption: "La cameretta di Pinocchio"
-    alt: "Cameretta luminosa con letto e finestra aperta sul giardino"
-  - image: "https://picsum.photos/seed/stazione12b/800/600"
-    caption: "Il risveglio"
-    alt: "Pinocchio bambino vero che si guarda le mani stupito"
-  - image: "https://picsum.photos/seed/stazione12c/800/600"
-    caption: "Padre e figlio"
-    alt: "Geppetto che abbraccia Pinocchio bambino in una stanza luminosa"
-  - image: "https://picsum.photos/seed/stazione12d/800/600"
-    caption: "Il burattino abbandonato"
-    alt: "Il vecchio burattino di legno appoggiato a una sedia"
+description: "La tappa finale. Non il luogo dove crescono monete dal terreno, ma il vero campo dei miracoli: quello dove la pazienza, la cura e l'impegno fanno crescere ciò che si semina."
+heroImage: https://upload.wikimedia.org/wikipedia/commons/f/f2/Villa_colonnata_facade_2018.jpg
 podcast:
-  episodeTitle: "Episodio 12 - Finalmente un bambino vero"
-  spotifyUrl: "https://open.spotify.com/episode/example12"
-  applePodcastsUrl: "https://podcasts.apple.com/episode/example12"
-  mp3File: "/audio/episodio-12.mp3"
-  duration: "25:30"
+  episodeTitle: Episodio 12 — Il Campo dei Miracoli
+  videoFile: /audio/tappa-12.mp4
 directions:
-  address: "Villa Comunale, Viale della Libertà 1, Sesto Fiorentino (FI)"
-  coordinates: "43.8489, 11.1956"
-  mapsUrl: "https://maps.google.com/?q=43.8489,11.1956"
-  instructions: |
-    **Dalla Stazione 11:** Tornare verso il centro, Viale della Libertà (circa 20 minuti a piedi).
+  address: Villa Gerini, Colonnata (Sesto Fiorentino)
+  coordinates: "43.83720, 11.21340"
+  mapsUrl: https://www.google.com/maps/search/?api=1&query=Villa+Gerini+Sesto+Fiorentino
+  instructions: >
+    ## Dalla tappa 11 (Via delle Porcellane)
 
-    **In auto:** Parcheggio della Villa Comunale, accessibile anche ai disabili.
 
-    **Con i mezzi:** Tutte le linee fermano in Viale della Libertà.
+    ### In macchina
 
-    **Percorso completo:** Dalla Stazione 1 alla 12, il percorso totale è di circa 5 km a piedi.
-transcript: |
-  ## Trascrizione Episodio 12
 
-  **Narratore:** Una notte, Pinocchio sognò la Fata Turchina.
+    Da Via delle Porcellane → Via Lucchese verso Sesto Fiorentino → Via Gramsci → indicazioni per il centro di Sesto → Villa Gerini (zona Via XX Settembre / area verde storica).
 
-  **La Fata:** Bravo Pinocchio! In grazia del tuo buon cuore, io ti perdono tutte le monellerie che hai fatto. I ragazzi che assistono amorosamente i propri genitori nelle loro miserie e infermità, meritano sempre grande lode e grande affetto.
 
-  **Narratore:** Quando Pinocchio si svegliò, si accorse di non essere più un burattino di legno, ma un ragazzo come tutti gli altri.
+    ### In bici
 
-  **Pinocchio:** Babbo! Guarda! Sono diventato un bambino vero!
+    *Circa 15–20 minuti.*
 
-  **Geppetto:** E chi lo deve ringraziare?
 
-  **Pinocchio:** La Fata... e anche me stesso, perché finalmente ho capito cosa significa essere buoni.
+    Da Via delle Porcellane → Via Lucchese direzione Sesto Fiorentino → ingresso urbano → Via Gramsci → indicazioni per il parco / zona storica → Villa Gerini.
 
-  **Narratore:** E il vecchio burattino di legno? Era appoggiato a una sedia, con la testa girata da una parte, le braccia penzoloni e le gambe incrociate, come se fosse un miracolo che stesse ancora ritto. Pinocchio lo guardò e disse:
 
-  **Pinocchio:** Com'ero buffo quand'ero un burattino! E come sono contento di essere diventato un ragazzino perbene!
+    ### In autobus
 
-  FINE
+
+    Fermata su Via Lucchese → bus **57** o **64** direzione Sesto Fiorentino centro → scendi in zona Via Gramsci / Piazza Vittorio Veneto → 5–10 minuti a piedi fino a Villa Gerini.
+transcript: >
+  ## Trascrizione — Episodio 12
+
+
+  Benvenuti a *Sulle tracce di Pinocchio*, il podcast che ci porta a scoprire le tappe della storia del burattino più famoso del mondo.
+
+
+  Oggi iniziamo il nostro viaggio nella tappa: Campo dei Miracoli!
+
+
+  > "Che posto meraviglioso!" pensò Pinocchio.
+
+
+  Tutti dicevano che qui cresceva qualcosa di molto speciale… qualcosa che poteva cambiare la vita di chi lo trovava!
+
+
+  Curioso, Pinocchio si avvicinò a un campo dove un contadino gentile stava mostrando ai bambini come prendersi cura delle piantine.
+
+
+  > "Guarda Pinocchio," disse, "se curi queste piante con pazienza e amore, un giorno diventeranno grandi e forti. E tutto ciò che semini… tornerà indietro, in modi sorprendenti!"
+
+
+  Pinocchio capì subito la lezione. A differenza del Paese dei Balocchi o del Teatro dei Ciuchini, qui non bastava solo divertirsi… bisognava impegnarsi, prendersi cura delle cose ed essere pazienti. Solo così il Campo dei Miracoli poteva davvero rivelare i suoi segreti.
+
+
+  Pinocchio iniziò a piantare i suoi semi, a bagnarli e a proteggerli. E mentre lavorava, sentì crescere dentro di sé una piccola magia… la magia di fare qualcosa di buono e vedere il frutto dei propri sforzi.
+
+
+  Così il Campo dei Miracoli insegnò a Pinocchio una lezione importante: la vera magia non è solo divertirsi, ma imparare, lavorare con amore e vedere crescere ciò che si semina.
+
+
+  E così si conclude il nostro viaggio sulle tracce di Pinocchio. Tra errori, scoperte e sogni, abbiamo imparato che la vera magia non è nei luoghi… ma in ciò che scegliamo di diventare.
+
+
+  *Grazie per aver viaggiato con noi. La storia finisce qui… ma il vostro cammino continua.*
 published: true
 ---
 
-L'ultima stazione celebra il trionfo di Pinocchio: la trasformazione in bambino vero, premio per aver finalmente imparato ad essere buono.
+## Il luogo
 
-## La storia
+**Villa Gerini** è una storica villa di Sesto Fiorentino (frazione di Colonnata) con il suo parco e le aree verdi, posto ideale per chiudere il viaggio. Un campo non di monete, ma di alberi, terra e cura — proprio il "campo dei miracoli" che Collodi ci insegna a riconoscere.
 
-Dopo mesi di lavoro e sacrificio per curare Geppetto, la Fata Turchina apparve in sogno a Pinocchio per perdonarlo e premiarlo. Al risveglio, Pinocchio scoprì di essere diventato un bambino vero: non più legno, ma carne e ossa. Il vecchio burattino giaceva inerte su una sedia, testimone silenzioso della trasformazione.
+## Cosa vedere nei dintorni
 
-## Cosa vedere
+- **Villa Gerini** (Colonnata): dimora documentata dal XIV secolo, già dei Cappelli, poi dei Capponi, dei Del Benino e infine del marchese Carlo Gerini (metà Ottocento), a cui si deve l'aspetto attuale. Oggi usata per eventi e ricevimenti; ospita una collezione dell'associazione "Pinocchio a Casa Sua".
+- **Parco di Villa Gerini**: bosco di lecci attraversato da viali, parterre con vasche in pietra, laghetto artificiale con due isolotti e padiglione adibito a sala da tè. Sopravvivono un tasso secolare e un cedro dell'Himalaya.
+- **Colonnata**: borgo storico di Sesto, con la chiesa parrocchiale e antiche case coloniche.
 
-- **Mostra finale** "Da burattino a bambino"
-- **Sala immersiva** sulla trasformazione
-- **Esposizione** di tutte le edizioni storiche di Pinocchio
-- **Giardino della memoria** con installazioni artistiche
-- **Bookshop** con edizioni speciali e merchandise
+## Curiosità
 
-## Il messaggio di Collodi
+Una leggenda locale racconta che **Francesco Zoppi**, giardiniere di Villa Gerini, mentre lavorava nel parco trovò sepolte "due ceste di monete d'oro". Collodi, che soggiornava nelle vicinanze ospite del fratello Paolo, sarebbe stato ispirato proprio da questa storia per il celebre episodio in cui il Gatto e la Volpe convincono Pinocchio a seppellire le sue monete d'oro nel **Campo dei Miracoli**, promettendogli che ne sarebbe germogliato un albero carico di zecchini.
 
-La storia di Pinocchio è un racconto di crescita e redenzione. Non basta desiderare di essere migliori: bisogna dimostrarlo con le azioni. Pinocchio diventa bambino vero solo quando impara ad amare, a sacrificarsi e ad assumersi le proprie responsabilità.
+La villa è oggi considerata il "vero" Campo dei Miracoli della tradizione pinocchiesca.
 
-## Conclusione del percorso
+## Fine del viaggio
 
-Questa stazione segna la fine del viaggio attraverso il mondo di Pinocchio. Qui potete:
-- Ritirare il **certificato di completamento** del percorso
-- Lasciare un messaggio nel **libro degli ospiti**
-- Acquistare **ricordi** del bicentenario
-- Partecipare a **eventi speciali** (consultare il calendario)
+> La vera magia non è nei luoghi, ma in ciò che scegliamo di diventare.
 
-## Ringraziamenti
-
-Grazie per aver seguito il nostro percorso! Il progetto "Pinocchio Bicentenario" è stato realizzato grazie all'associazione e a tutti i volontari che hanno reso possibile questa celebrazione.
-
----
-
-*"I ragazzi che assistono amorosamente i propri genitori meritano sempre grande lode e grande affetto, anche se non possono essere citati come modelli di obbedienza e di buona condotta."* — Carlo Collodi
+Grazie per aver percorso con noi le dodici tappe sulle tracce di Pinocchio.

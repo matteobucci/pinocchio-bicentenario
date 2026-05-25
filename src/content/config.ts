@@ -17,6 +17,7 @@ const stationsCollection = defineCollection({
       spotifyUrl: z.string().optional(),
       applePodcastsUrl: z.string().optional(),
       mp3File: z.string().optional(),
+      videoFile: z.string().optional(),
       duration: z.string().optional(),
     }).optional(),
     details: z.string().optional(),
@@ -26,6 +27,7 @@ const stationsCollection = defineCollection({
       instructions: z.string().optional(),
       mapsUrl: z.string().optional(),
     }).optional(),
+    transcript: z.string().optional(),
     published: z.boolean().default(true),
   }),
 });

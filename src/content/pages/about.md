@@ -1,31 +1,17 @@
 ---
 title: "Chi siamo"
 subtitle: "L'associazione e il progetto del bicentenario"
-team:
-  - name: "Nome Cognome"
-    role: "Presidente dell'associazione"
-    bio: "Descrizione breve del ruolo e dell'impegno nell'associazione."
-  - name: "Nome Cognome"
-    role: "Coordinatore del progetto"
-    bio: "Descrizione breve del ruolo nel progetto Pinocchio Bicentenario."
-contacts:
-  email: "info@esempio.it"
-  phone: "+39 055 123456"
-  address: "Via Example 1, 50019 Sesto Fiorentino (FI)"
-  social:
-    - platform: "Facebook"
-      url: "https://facebook.com/esempio"
-    - platform: "Instagram"
-      url: "https://instagram.com/esempio"
 ---
 
 ## Il Progetto
 
-Il **Pinocchio Bicentenario** è un'iniziativa della nostra associazione per celebrare i 200 anni dalla nascita di Carlo Collodi e della sua opera immortale.
+Il **Pinocchio Bicentenario** è un'iniziativa per celebrare i 200 anni dalla nascita di Carlo Collodi e della sua opera immortale, *Le avventure di Pinocchio*.
+
+Abbiamo costruito un percorso a **12 stazioni** tra Firenze e Sesto Fiorentino, ognuna legata a un momento della storia del burattino e a un luogo reale che ha ispirato Collodi.
 
 ## L'Associazione
 
-Siamo un'associazione a tutela delle disabilità che opera sul territorio di Sesto Fiorentino. Il nostro impegno quotidiano è quello di promuovere l'inclusione e l'accessibilità in ogni ambito della vita sociale e culturale.
+Siamo un'associazione a tutela delle disabilità che opera sul territorio di Sesto Fiorentino. Il nostro impegno quotidiano è promuovere l'inclusione e l'accessibilità in ogni ambito della vita sociale e culturale.
 
 ### La nostra missione
 
@@ -35,8 +21,20 @@ Siamo un'associazione a tutela delle disabilità che opera sul territorio di Ses
 
 ## Il Podcast
 
-Abbiamo realizzato un podcast in 12 puntate che accompagna i visitatori attraverso le stazioni del percorso. Ogni episodio è disponibile anche in versione trascritta per garantire la massima accessibilità.
+Abbiamo realizzato un podcast in **12 puntate** che accompagna i visitatori attraverso le stazioni del percorso. Ogni episodio è disponibile anche in **versione trascritta** per garantire la massima accessibilità: chi non può ascoltare può leggere, chi ascolta può seguire anche con la trascrizione a fianco.
+
+## Accessibilità del percorso
+
+Il percorso è stato pensato per essere il più accessibile possibile. Trovi tutte le informazioni utili — lavori in corso, bagni pubblici, fontanelli — nella [pagina dedicata all'accessibilità](/accessibilita).
+
+## Contatti
+
+> Le informazioni di contatto saranno pubblicate prossimamente. Per informazioni preliminari, segui gli aggiornamenti del progetto.
 
 ## Ringraziamenti
 
-Questo progetto è stato possibile grazie al supporto di tutti i volontari dell'associazione.
+Questo progetto è stato possibile grazie al supporto di tutti i volontari dell'associazione e di chi ha creduto in un percorso culturale **aperto a tutti**.
+
+## Crediti immagini
+
+Le fotografie delle stazioni provengono da **Wikimedia Commons**, in larga parte di **Sailko**, con licenze CC BY 3.0 e CC BY-SA 3.0. Foto di Villa Gerini di Ulisse Albiati (Cyberuly), CC BY 3.0. Vedi le pagine delle singole immagini su [commons.wikimedia.org](https://commons.wikimedia.org) per attribuzione completa e termini di licenza.

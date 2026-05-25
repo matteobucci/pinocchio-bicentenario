@@ -1,0 +1,220 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Accessibilità del percorso"
+  description="Informazioni utili sull'accessibilità del percorso Pinocchio Bicentenario: lavori in corso, bagni pubblici, fontanelli, deviazioni"
+>
+  <div class="page-header">
+    <div class="container">
+      <h1>Accessibilità del percorso</h1>
+      <p class="page-subtitle">
+        Informazioni utili per affrontare il percorso delle 12 stazioni: lavori in corso, deviazioni, bagni pubblici, fontanelli pubblici.
+      </p>
+    </div>
+  </div>
+
+  <div class="page-content">
+    <div class="container">
+      <div class="content-wrapper">
+
+        <section aria-labelledby="works-heading">
+          <h2 id="works-heading">Lavori in corso e deviazioni</h2>
+          <p>
+            Le indicazioni di seguito sono valide al momento della pubblicazione. La situazione può cambiare: prima di partire, consigliamo di verificare lo stato delle strade tramite Google Maps o le informazioni del Comune.
+          </p>
+
+          <div class="work-block">
+            <h3>📍 Castello → Via Reginaldo Giuliani</h3>
+            <ul>
+              <li>Strada urbana con possibili rallentamenti e strettoie.</li>
+              <li>Potenziali lavori sulla rete idrica e sulla strada, anche se non sempre con chiusure complete.</li>
+            </ul>
+          </div>
+
+          <div class="work-block">
+            <h3>📍 Attraverso Rifredi / ingresso verso Sesto Fiorentino</h3>
+            <ul>
+              <li>Possibili deviazioni dovute ai cantieri stradali.</li>
+              <li>Alcuni tratti di attraversamento della periferia possono presentare semafori mobili o segnaletica di deviazione.</li>
+            </ul>
+          </div>
+
+          <div class="work-block">
+            <h3>📍 Ingresso in Sesto Fiorentino</h3>
+            <ul>
+              <li>Viale G. Ferraris e altre arterie potrebbero avere lavori in corso: potrebbe essere necessario seguire percorsi alternativi segnalati.</li>
+            </ul>
+          </div>
+
+          <div class="work-block">
+            <h3>📍 Via Lucchese / Osmannoro</h3>
+            <ul>
+              <li>Opere di urbanizzazione attorno all'area commerciale, con trasformazione di incroci e nuove infrastrutture (rotatorie, parcheggi) nell'ambito dell'espansione dell'Osmannoro Nord-Est.</li>
+              <li>Possibili modifiche temporanee dei sensi di marcia e restringimenti.</li>
+            </ul>
+          </div>
+
+          <div class="work-block">
+            <h3>📍 Intersezioni e rotatorie</h3>
+            <ul>
+              <li>Riqualificazione stradale e nuove rotatorie con segni provvisori, riduzione delle corsie e presenza di operai sulle strade di accesso e uscita dall'Osmannoro.</li>
+            </ul>
+          </div>
+
+          <div class="work-block">
+            <h3>📍 Vie urbane e attraversamenti pedonali</h3>
+            <ul>
+              <li>Interventi continui di messa a norma degli attraversamenti pedonali e riqualificazione dei marciapiedi, con possibili sensi unici alternati o chiusure temporanee.</li>
+            </ul>
+          </div>
+
+          <div class="work-block">
+            <h3>📍 Peretola — traffico e circolazione</h3>
+            <ul>
+              <li>Strade come Viale Guidoni, Viale Talenti e Via Meucci (principali collegamenti tra aeroporto, Osmannoro e Firenze) possono subire rallentamenti, restringimenti di corsia o deviazioni temporanee.</li>
+              <li>Nell'ambito del masterplan aeroportuale sono previsti interventi sul fosso Reale e nuove strutture di accesso stradale: possibili deviazioni programmate negli anni a venire.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section aria-labelledby="toilets-heading" class="services-section">
+          <h2 id="toilets-heading">Bagni pubblici</h2>
+          <ul class="services-list">
+            <li><strong>Castello:</strong> Giardino della Villa Medicea di Castello (Firenze)</li>
+            <li><strong>Sesto Fiorentino:</strong> WC pubblico in Via della Mula, 1</li>
+            <li><strong>Peretola:</strong> Via de Vespucci 71 (Firenze)</li>
+            <li><strong>Osmannoro:</strong> Via Tommaso Alva Edison 1 (Sesto Fiorentino), Tecnomat, Ikea</li>
+          </ul>
+          <p class="note">
+            <em>Nota:</em> In Firenze, zona Castello/centro, i bagni pubblici non sono molto diffusi. È buona norma utilizzare i servizi nelle stazioni, musei, bar e caffè (anche dietro consumo minimo) se quelli pubblici sono chiusi o pieni.
+          </p>
+        </section>
+
+        <section aria-labelledby="fountains-heading" class="services-section">
+          <h2 id="fountains-heading">Fontanelli pubblici</h2>
+          <ul class="services-list">
+            <li>Via delle Panche, 189 (Firenze)</li>
+            <li>Via delle Panche, 234 (Firenze)</li>
+            <li>Via della Mula, 1 (Sesto Fiorentino)</li>
+            <li>Piazza IV Novembre (Sesto Fiorentino)</li>
+            <li>Parco dell'Uliveta (Sesto Fiorentino — due fontanelli)</li>
+            <li>Casa dell'Acqua (fontanello alta qualità) — Piazza Giuseppe Garibaldi 10, Firenze</li>
+            <li>Via di Peretola, 140–150, Firenze</li>
+          </ul>
+        </section>
+
+        <section aria-labelledby="general-heading" class="services-section">
+          <h2 id="general-heading">Accessibilità del sito web</h2>
+          <p>
+            Questo sito è stato realizzato con l'obiettivo di rispettare gli standard <strong>WCAG 2.1 livello AA</strong>:
+          </p>
+          <ul>
+            <li>Navigazione completa da tastiera</li>
+            <li>Compatibilità con screen reader</li>
+            <li>Contrasto colori almeno 4.5:1</li>
+            <li>Testi alternativi su tutte le immagini significative</li>
+            <li><strong>Trascrizione completa</strong> di ogni episodio del podcast</li>
+            <li>Skip link per saltare direttamente al contenuto principale</li>
+            <li>Indicatori di focus visibili</li>
+          </ul>
+          <p>
+            Se incontri barriere d'accesso o problemi di usabilità, segnalalo all'associazione: ogni feedback ci aiuta a migliorare il percorso, sia digitale che fisico.
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .page-header {
+    background: var(--color-secondary-50);
+    padding: var(--space-12) 0;
+    text-align: center;
+  }
+
+  .page-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-neutral-600);
+    max-width: 700px;
+    margin: var(--space-4) auto 0;
+    line-height: var(--line-height-relaxed);
+  }
+
+  .page-content {
+    padding: var(--space-12) 0;
+  }
+
+  .content-wrapper {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+  }
+
+  .content-wrapper section {
+    margin-bottom: var(--space-10);
+  }
+
+  .content-wrapper h2 {
+    margin-bottom: var(--space-4);
+    color: var(--color-primary-700);
+  }
+
+  .work-block {
+    background: var(--color-neutral-50);
+    border-left: 4px solid var(--color-primary-400);
+    padding: var(--space-4) var(--space-5);
+    margin-bottom: var(--space-4);
+    border-radius: var(--border-radius-md);
+  }
+
+  .work-block h3 {
+    margin-top: 0;
+    margin-bottom: var(--space-2);
+    font-size: var(--font-size-base);
+    color: var(--color-neutral-800);
+  }
+
+  .work-block ul {
+    margin: 0;
+    padding-left: var(--space-6);
+    color: var(--color-neutral-700);
+  }
+
+  .work-block li {
+    margin-bottom: var(--space-1);
+    line-height: var(--line-height-relaxed);
+  }
+
+  .services-section {
+    background: var(--color-neutral-50);
+    padding: var(--space-6);
+    border-radius: var(--border-radius-md);
+  }
+
+  .services-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-4);
+  }
+
+  .services-list li {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--color-neutral-200);
+  }
+
+  .services-list li:last-child {
+    border-bottom: none;
+  }
+
+  .note {
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-600);
+    background: var(--color-accent-50);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--border-radius-md);
+    border-left: 3px solid var(--color-accent-400);
+  }
+</style>

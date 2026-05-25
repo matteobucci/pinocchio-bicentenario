@@ -65,15 +65,11 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
       <h2 id="podcast-heading">Ascolta il Podcast</h2>
       <p>
         12 episodi che ti accompagnano attraverso il mondo di Pinocchio.
-        Disponibile su tutte le principali piattaforme.
+        Ogni episodio è disponibile direttamente sulla pagina della stazione,
+        con la trascrizione completa per garantire l'accessibilità a tutti.
       </p>
-      <div class="podcast-links">
-        <a href="#" class="podcast-link" rel="noopener noreferrer" target="_blank">
-          <span>Spotify</span>
-        </a>
-        <a href="#" class="podcast-link" rel="noopener noreferrer" target="_blank">
-          <span>Apple Podcasts</span>
-        </a>
+      <div class="podcast-cta-actions">
+        <a href="/stazioni" class="btn btn-primary">Apri la prima stazione</a>
       </div>
     </div>
   </section>
@@ -205,12 +201,13 @@ const sortedStations = stations.sort((a, b) => a.data.order - b.data.order);
   }
 
   .podcast-cta p {
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto var(--space-6);
     color: var(--color-neutral-600);
+    line-height: var(--line-height-relaxed);
   }
 
-  .podcast-links {
+  .podcast-cta-actions {
     display: flex;
     gap: var(--space-4);
     justify-content: center;

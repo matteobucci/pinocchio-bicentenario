@@ -47,9 +47,24 @@ const stationData = sortedStations.map(station => {
   };
 });
 
-// Calculate center point
-const avgLat = stationData.reduce((sum, s) => sum + s.lat, 0) / stationData.length;
-const avgLng = stationData.reduce((sum, s) => sum + s.lng, 0) / stationData.length;
+// Calculate center point (fallback to Sesto Fiorentino if no coordinates available)
+const hasCoordinates = stationData.length > 0;
+const avgLat = hasCoordinates
+  ? stationData.reduce((sum, s) => sum + s.lat, 0) / stationData.length
+  : 43.8331;  // Sesto Fiorentino default
+const avgLng = hasCoordinates
+  ? stationData.reduce((sum, s) => sum + s.lng, 0) / stationData.length
+  : 11.1989;
+
+// Always provide a text-alternative list from ALL stations (with or without coords)
+const allStationsForList = [...stations]
+  .sort((a, b) => a.data.order - b.data.order)
+  .map(station => ({
+    slug: station.id.replace(/\.md$/, ''),
+    title: station.data.title,
+    order: station.data.order,
+    address: station.data.directions?.address || ''
+  }));
 ---
 
 <!-- Leaflet CSS -->
@@ -61,26 +76,39 @@ const avgLng = stationData.reduce((sum, s) => sum + s.lng, 0) / stationData.leng
 />
 
 <div class="tour-map-container">
-  <div
-    id="tour-map"
-    class="tour-map"
-    style={`height: ${height};`}
-    role="application"
-    aria-label="Mappa interattiva del percorso con le 12 stazioni"
-    tabindex="0"
-  ></div>
+  {hasCoordinates ? (
+    <div
+      id="tour-map"
+      class="tour-map"
+      style={`height: ${height};`}
+      role="application"
+      aria-label="Mappa interattiva del percorso con le 12 stazioni"
+      tabindex="0"
+    ></div>
+  ) : (
+    <div class="tour-map-placeholder" style={`min-height: ${height};`}>
+      <p>
+        🗺️ <strong>Mappa interattiva in arrivo.</strong><br />
+        Nel frattempo, ecco l'elenco delle stazioni con i relativi indirizzi.
+      </p>
+    </div>
+  )}
 
-  <!-- Text alternative for screen readers -->
-  <details class="map-text-alternative">
+  <!-- Text alternative — always shown, also acts as fallback if map fails -->
+  <details class="map-text-alternative" open={!hasCoordinates}>
     <summary>Elenco testuale delle stazioni</summary>
     <ol class="station-list">
-      {stationData.map(station => (
+      {allStationsForList.map(station => (
         <li>
           <a href={`/stazioni/${station.slug}`}>
             <strong>Stazione {station.order}:</strong> {station.title}
           </a>
-          <br />
-          <span class="station-address">{station.address}</span>
+          {station.address && (
+            <>
+              <br />
+              <span class="station-address">{station.address}</span>
+            </>
+          )}
         </li>
       ))}
     </ol>

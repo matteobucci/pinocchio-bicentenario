@@ -1,64 +1,76 @@
 ---
-title: "Il Campo dei Miracoli"
+title: La Scuola
 order: 4
-description: "Il luogo dove Pinocchio seppellì i suoi zecchini, sperando di vederli moltiplicare."
-heroImage: "https://picsum.photos/seed/stazione4/1200/600"
-gallery:
-  - image: "https://picsum.photos/seed/stazione4a/800/600"
-    caption: "Il campo al tramonto"
-    alt: "Campo aperto con un grande albero solitario al tramonto"
-  - image: "https://picsum.photos/seed/stazione4b/800/600"
-    caption: "La buca degli zecchini"
-    alt: "Piccola buca nel terreno con monete d'oro finte"
-  - image: "https://picsum.photos/seed/stazione4c/800/600"
-    caption: "L'Albero degli Zecchini"
-    alt: "Installazione artistica di un albero con monete dorate appese ai rami"
+description: La scuola comunale che ospitava le elementari per i bambini di Quarto, Castello e Quinto. È qui che Pinocchio, con il libro nuovo sotto il braccio, parte pieno di buone intenzioni.
+heroImage: https://upload.wikimedia.org/wikipedia/commons/9/9e/La_petraia%2C_veduta_02.JPG
 podcast:
-  episodeTitle: "Episodio 4 - L'Albero degli Zecchini"
-  spotifyUrl: "https://open.spotify.com/episode/example4"
-  applePodcastsUrl: "https://podcasts.apple.com/episode/example4"
-  mp3File: "/audio/episodio-04.mp3"
-  duration: "17:20"
+  episodeTitle: Episodio 4 — La Scuola
+  mp3File: /audio/tappa-04.mp3
 directions:
-  address: "Parco della Piana, Via della Querciola, Sesto Fiorentino (FI)"
-  coordinates: "43.8412, 11.1923"
-  mapsUrl: "https://maps.google.com/?q=43.8412,11.1923"
-  instructions: |
-    **Dalla Stazione 3:** Seguire Via della Querciola verso il Parco della Piana (circa 15 minuti a piedi).
+  address: Via Giulio Bechi 2/D, Firenze
+  coordinates: "43.81684, 11.22590"
+  mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+Giulio+Bechi+2+Firenze
+  instructions: >
+    ## Dalla tappa 3 (Via Reginaldo Giuliani)
 
-    **In auto:** Ampio parcheggio gratuito all'ingresso del parco.
 
-    **In bicicletta:** Pista ciclabile collegata al centro città.
-transcript: |
-  ## Trascrizione Episodio 4
+    ### A piedi
 
-  **La Volpe:** Ecco il Campo dei Miracoli! Scava una buca, mettici i tuoi zecchini, coprili di terra, annaffiali con due secchie d'acqua, spargici sopra un pizzico di sale, e la mattina dopo troverai un bellissimo albero carico di zecchini d'oro!
+    *5 minuti.*
 
-  **Pinocchio:** Davvero?!
 
-  **Narratore:** E Pinocchio, che era un burattino credulone, fece esattamente quello che gli avevano detto...
+    Procedi verso Via Reginaldo Giuliani, svolta a sinistra e prendi Via Giulio Bechi 2/D.
 
-  [Continua la trascrizione...]
+
+    ### In bici
+
+    *Circa 1,5–2 km, 6–8 minuti, pianeggiante.*
+
+
+    Da Via Reginaldo Giuliani, pedala in direzione Careggi / Rifredi → incrocio con Via delle Panche → zona residenziale vicina → Via Bechi fino al numero 2.
+transcript: >
+  ## Trascrizione — Episodio 4
+
+
+  Benvenuti a *Sulle tracce di Pinocchio*, il podcast che ci accompagna nelle tappe più importanti della storia del burattino più famoso del mondo.
+
+
+  Oggi arriviamo a una tappa molto importante: la scuola.
+
+
+  Dopo tante avventure e qualche guaio, Pinocchio promette al suo babbo Geppetto che diventerà un bravo bambino. Geppetto, che vuole molto bene al suo burattino, fa un grande sacrificio: vende la sua vecchia giacca per comprargli un libro di scuola. Con il libro sotto il braccio, Pinocchio parte pieno di buone intenzioni.
+
+
+  La scuola rappresenta una nuova possibilità. Qui Pinocchio potrebbe imparare a leggere, a scrivere e a diventare più responsabile. All'inizio sembra davvero deciso a impegnarsi.
+
+
+  Ma Pinocchio è ancora molto curioso e si lascia distrarre facilmente. Lungo la strada incontra amici poco affidabili e spesso preferisce il divertimento allo studio. Così, invece di seguire sempre la strada della scuola, finisce per trovarsi in nuove avventure… e nuovi guai.
+
+
+  La scuola nella storia di Pinocchio rappresenta qualcosa di molto importante: la crescita. Andare a scuola significa imparare, ascoltare e diventare più consapevoli delle proprie scelte. Per Pinocchio questo percorso non è semplice, ma ogni errore lo aiuta a capire qualcosa di nuovo. E passo dopo passo, tra sbagli e promesse, Pinocchio si avvicina sempre di più al suo sogno: diventare un vero bambino.
+
+
+  *Grazie per aver ascoltato Sulle tracce di Pinocchio. Continuate a seguire il nostro viaggio nella prossima tappa.*
 published: true
 ---
 
-La quarta stazione ci porta nel famigerato Campo dei Miracoli, dove i sogni di ricchezza di Pinocchio si infransero contro la dura realtà.
+## Dal libro
 
-## La storia
+> "Smesso che fu di nevicare, Pinocchio col suo bravo Abbecedario nuovo sotto il braccio, prese la strada che menava alla scuola: e strada facendo, fantasticava nel suo cervellino mille ragionamenti e mille castelli in aria, uno più bello dell'altro. (…) Oggi, alla scuola, voglio subito imparare a leggere: domani poi imparerò a scrivere, e domani l'altro imparerò a fare i numeri."
+>
+> — *Le avventure di Pinocchio*
 
-Convinto dalle false promesse del Gatto e della Volpe, Pinocchio seppellì i suoi quattro zecchini d'oro (il quinto l'aveva già speso) credendo che sarebbero diventati un albero carico di monete. Naturalmente, i due imbroglioni tornarono di notte a rubare le monete.
+## Il luogo reale
 
-## Cosa vedere
+Il Collodi non dice se Pinocchio partì da casa della Fatina o se prima andò a casa sua. Fece passo svelto su Via della Querciola, sbucò sulla strada maestra che conduce a Sesto, attraversò, girò a destra e — continuando a camminare ancora un poco — si trovò in classe.
 
-- **Installazione artistica** "L'Albero degli Zecchini"
-- **Percorso natura** nel Parco della Piana
-- **Area pic-nic** per famiglie
-- **Pannelli educativi** sull'educazione finanziaria per bambini
+La **scuola comunale** si trovava all'angolo dell'attuale **Via Bechi** (la vecchia Via della Stazione), tra lo spaccio dei tabacchi dove andava a comprare i sigari il Re e l'Osteria dove Lorenzini andava a giocare la partitella a carte.
 
-## La lezione
+## Cosa vedere nei dintorni
 
-Non esistono scorciatoie per la ricchezza. Questa stazione ospita anche laboratori di educazione finanziaria per i più piccoli, insegnando il valore del risparmio e del lavoro onesto.
+- **Accademia della Crusca** — per i singoli, ogni ultima domenica del mese alle ore 11; per i gruppi, tutti i giorni dalle 9 alle 16 (o altri orari su accordo)
+- **Villa Medicea Reale di Castello** — visitabile da martedì a domenica, 8:30–17:00
 
-## Natura e biodiversità
+## Curiosità
 
-Il Parco della Piana ospita numerose specie di uccelli e piante autoctone. Durante la visita, potrete osservare la flora e la fauna tipica della campagna toscana.
+La scuola era un grosso edificio che ospitava le elementari per i bambini di **Quarto, Castello e Quinto**. Tra le ali del caseggiato c'era il giardino, e in mezzo al giardino un vecchissimo pozzo.

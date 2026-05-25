@@ -1,67 +1,83 @@
 ---
-title: "La Capanna sul Mare"
+title: L'Osteria del Gambero Rosso
 order: 11
-description: "Il rifugio dove Pinocchio si prese cura del padre malato, lavorando duramente per mantenerlo."
-heroImage: "https://picsum.photos/seed/stazione11/1200/600"
-gallery:
-  - image: "https://picsum.photos/seed/stazione11a/800/600"
-    caption: "La capanna di paglia"
-    alt: "Piccola capanna con tetto di paglia vicino alla riva"
-  - image: "https://picsum.photos/seed/stazione11b/800/600"
-    caption: "Pinocchio al lavoro"
-    alt: "Pinocchio che porta acqua con i secchi"
-  - image: "https://picsum.photos/seed/stazione11c/800/600"
-    caption: "Geppetto convalescente"
-    alt: "Geppetto seduto su una sedia mentre Pinocchio lo accudisce"
+description: "Un'osteria accogliente piena di profumi, dove Pinocchio si ferma a riposare. Ma anche qui c'è una lezione: bisogna sapere quando è il momento di rimettersi in cammino."
+heroImage: https://upload.wikimedia.org/wikipedia/commons/3/30/Museo_della_Porcellana_di_Doccia%2C_sesto_fiorentino%2C_Richard-Ginori.JPG
 podcast:
-  episodeTitle: "Episodio 11 - Il lavoro e la dedizione"
-  spotifyUrl: "https://open.spotify.com/episode/example11"
-  applePodcastsUrl: "https://podcasts.apple.com/episode/example11"
-  mp3File: "/audio/episodio-11.mp3"
-  duration: "17:50"
+  episodeTitle: Episodio 11 — L'Osteria del Gambero Rosso
+  videoFile: /audio/tappa-11.mp4
 directions:
-  address: "Podere La Capanna, Via dei Pescatori 3, Sesto Fiorentino (FI)"
-  coordinates: "43.8398, 11.2067"
-  mapsUrl: "https://maps.google.com/?q=43.8398,11.2067"
-  instructions: |
-    **Dalla Stazione 10:** Seguire Via dei Pescatori verso la periferia (circa 15 minuti a piedi).
+  address: Via delle Porcellane, Sesto Fiorentino
+  coordinates: "43.83717, 11.21374"
+  mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+delle+Porcellane+Sesto+Fiorentino
+  instructions: >
+    ## Dalla tappa 10 (Piazza Ginori)
 
-    **In auto:** Strada sterrata, parcheggio all'inizio del sentiero.
 
-    **In bicicletta:** Percorso ciclabile collegato alla stazione precedente.
-transcript: |
-  ## Trascrizione Episodio 11
+    ### In macchina
 
-  **Narratore:** Usciti dal Pescecane, Pinocchio portò Geppetto in salvo in una capanna abbandonata. Il vecchio falegname era debole e malato.
+    *5–10 minuti.*
 
-  **Pinocchio:** Non ti preoccupare, babbo. Da oggi ci penso io a te.
 
-  **Narratore:** E così Pinocchio cominciò a lavorare. Girava il bindolo per attingere acqua, intrecciava canestri, faceva qualunque lavoro pur di comprare latte e medicine per il suo babbo.
+    Da Piazza Ginori → Via Gramsci direzione nord → indicazioni per la zona industriale / Osmannoro–Quinto Basso → Via Lucchese o strade parallele locali → Via delle Porcellane.
 
-  [Continua la trascrizione...]
+
+    ### In bici
+
+    *8–12 minuti.*
+
+
+    Da Piazza Ginori → Via Gramsci direzione nord → zona industriale (Quinto Basso / Osmannoro) → Via Lucchese → Via delle Porcellane.
+
+
+    ### In autobus
+
+
+    Da Piazza Ginori cammina fino alle fermate su Via Gramsci → bus **57** o **64** (in base alla tratta attiva) direzione Quinto Basso / Osmannoro → scendi alla fermata più vicina a Via Lucchese / Via delle Porcellane → 2–5 minuti a piedi.
+transcript: >
+  ## Trascrizione — Episodio 11
+
+
+  Benvenuti a *Sulle tracce di Pinocchio*, il podcast che ci porta a scoprire le tappe della storia del burattino più famoso del mondo.
+
+
+  Oggi iniziamo il nostro viaggio nella tappa dell'Osteria del Gambero Rosso!
+
+
+  > "Chissà cosa si mangia qui!" pensò Pinocchio.
+
+
+  Entrò e vide un luogo pieno di profumi invitanti: torte fumanti, pane croccante e tante ciotole di minestre calde. C'erano tavoli pieni di bambini che ridevano, e il proprietario, un uomo dal sorriso grande, accoglieva tutti con gentilezza.
+
+
+  > "Benvenuto, Pinocchio!" disse il locandiere. "Qui potrai riposare un po' e mangiare qualcosa di buono prima di continuare il tuo viaggio!"
+
+
+  Pinocchio si sedette e gustò un piatto di pasta calda, mentre ascoltava le storie dei bambini seduti accanto a lui.
+
+
+  Ma anche l'Osteria del Gambero Rosso aveva qualcosa di speciale… alcuni bambini si fermavano troppo a lungo, e iniziavano a dimenticare il tempo e i loro impegni, proprio come nel Paese dei Balocchi!
+
+
+  Pinocchio capì subito che, anche in un luogo così accogliente e divertente, bisognava sempre ricordarsi di non perdere di vista la strada giusta. Così Pinocchio salutò il locandiere, ringraziò per il pasto e le storie, e riprese il suo cammino, più saggio e pronto a nuove avventure.
+
+
+  *Grazie per aver ascoltato la puntata del nostro podcast. Ci sentiamo nella prossima tappa del viaggio.*
 published: true
 ---
 
-L'undicesima stazione racconta la trasformazione morale di Pinocchio, che da burattino scapestrato diventa figlio amorevole e lavoratore.
+## Il luogo
 
-## La storia
+**Via delle Porcellane** si trova nella zona di Quinto Basso, area produttiva storica di Sesto Fiorentino legata alla manifattura ceramica. La memoria del lavoro e della comunità fa da sfondo a una tappa che parla di ospitalità, ma anche di responsabilità.
 
-Dopo la fuga dal Pescecane, Pinocchio portò il padre malato in una capanna abbandonata. Per la prima volta, il burattino si assunse le proprie responsabilità: lavorò duramente girando il bindolo di un orto, intrecciando canestri, facendo qualunque mestiere per comprare cibo e medicine per Geppetto.
+## Cosa vedere nei dintorni
 
-## Cosa vedere
+- **Villa Ginori-Buondelmonti "Le Corti"**: sede storica originale della Manifattura, acquistata da Carlo Ginori nel 1737. La produzione di porcellana dura iniziò qui con le ricerche sul caolino.
+- **Tomba etrusca della Montagnola** (Via Fratelli Rosselli, Quinto Fiorentino): uno dei più significativi monumenti funerari etruschi del centro Italia, datato VII secolo a.C., con tholos a pseudo-cupola. Visite su prenotazione tramite la Pro Loco o la Soprintendenza.
+- **Tomba della Mula** (poco distante): secondo tumulo etrusco della zona, anch'esso visitabile.
 
-- **Ricostruzione della capanna** con arredi poveri dell'epoca
-- **Mostra** sui mestieri tradizionali toscani
-- **Orto didattico** con bindolo funzionante
-- **Laboratorio** di intreccio di canestri
+## Curiosità
 
-## La svolta
+La **Manifattura Ginori**, fondata nel 1737 a Doccia, fu il vero "oro bianco" di Sesto: nel 1893 produceva circa **quattro milioni di pezzi l'anno**, e nel 1896 si fuse con la milanese Richard.
 
-Questo è il momento in cui Pinocchio smette di essere egoista. Impara il valore del sacrificio, del lavoro e dell'amore filiale. È la prova finale prima della trasformazione.
-
-## Attività
-
-- Laboratorio "Impara un mestiere antico"
-- Cura dell'orto per bambini
-- Visita agli animali della fattoria didattica
-- Degustazione prodotti dell'orto
+Carlo Lorenzini frequentò assiduamente questa fabbrica grazie al fratello Paolo, direttore della manifattura. L'osteria dove la Volpe e il Gatto si abbuffano alle spalle di Pinocchio richiama le tante locande lungo la Via Lucchese che servivano operai, carrettieri e mercanti di porcellane in transito fra Doccia e Firenze.

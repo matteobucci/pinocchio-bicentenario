@@ -1,66 +1,73 @@
 ---
-title: "La Casa della Fata Turchina"
+title: Il Mare
 order: 5
-description: "La dimora della Fata dai Capelli Turchini, che salvò Pinocchio e lo guidò verso la trasformazione."
-heroImage: "https://picsum.photos/seed/stazione5/1200/600"
-gallery:
-  - image: "https://picsum.photos/seed/stazione5a/800/600"
-    caption: "La casetta bianca"
-    alt: "Casetta bianca con persiane azzurre immersa in un giardino fiorito"
-  - image: "https://picsum.photos/seed/stazione5b/800/600"
-    caption: "Il giardino incantato"
-    alt: "Giardino con fiori colorati e farfalle"
-  - image: "https://picsum.photos/seed/stazione5c/800/600"
-    caption: "La Fata Turchina"
-    alt: "Illustrazione della Fata dai Capelli Turchini in abito azzurro"
+description: Pinocchio scopre che Geppetto è partito in mare per cercarlo e si getta tra le onde per raggiungerlo. La tappa è collegata a Via San Biagio a Petriolo.
+heroImage: https://upload.wikimedia.org/wikipedia/commons/7/7d/Chiesa_di_San_Biagio_a_Petriolo_02.JPG
 podcast:
-  episodeTitle: "Episodio 5 - La Fata dai Capelli Turchini"
-  spotifyUrl: "https://open.spotify.com/episode/example5"
-  applePodcastsUrl: "https://podcasts.apple.com/episode/example5"
-  mp3File: "/audio/episodio-05.mp3"
-  duration: "22:10"
+  episodeTitle: Episodio 5 — Il Mare
+  mp3File: /audio/tappa-05.mp3
 directions:
-  address: "Villa Solaria, Via delle Fate 1, Sesto Fiorentino (FI)"
-  coordinates: "43.8501, 11.2045"
-  mapsUrl: "https://maps.google.com/?q=43.8501,11.2045"
-  instructions: |
-    **Dalla Stazione 4:** Risalire verso il centro e proseguire su Via delle Fate (circa 20 minuti a piedi).
+  address: Via San Biagio a Petriolo, Firenze
+  coordinates: "43.79577, 11.19228"
+  mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+San+Biagio+a+Petriolo+Firenze
+  instructions: >
+    ## Dalla tappa 4 (Via Giulio Bechi)
 
-    **In auto:** Parcheggio riservato per visitatori con disabilità. Altri parcheggi a 300 metri.
 
-    **Con i mezzi:** Autobus linea 3, fermata "Villa Solaria".
-transcript: |
-  ## Trascrizione Episodio 5
+    ### In macchina
 
-  **Narratore:** Pinocchio bussò alla porta della casetta bianca. Una bella bambina dai capelli turchini si affacciò alla finestra.
+    *Circa 20–25 minuti, traffico permettendo.*
 
-  **La Fata:** Chi è?
 
-  **Pinocchio:** Sono un povero burattino inseguito dagli assassini! Per carità, fatemi entrare!
+    Da Via Giulio Bechi verso sud → Viale Volta / Viale Don Minzoni direzione centro → zona Porta al Prato → FI-PI-LI / Viadotto dell'Indiano → uscita Peretola–Brozzi–Quaracchi → Via Pistoiese → svolta in Via San Biagio a Petriolo.
 
-  **Narratore:** La Fata lo accolse e da quel momento divenne per lui come una mamma...
 
-  [Continua la trascrizione...]
+    ### In autobus
+
+    *Circa 40–55 minuti.*
+
+
+    Bus verso Stazione SMN / Porta al Prato → cambia con il bus **35** o **68** in direzione Peretola–Le Piagge → scendi alla fermata Petriolo → 3–5 minuti a piedi.
+
+
+    ### In bici
+
+    *Circa 8–10 km, 35–45 minuti, pianeggiante.*
+
+
+    Via Giulio Bechi → Viale Volta → scendi verso Piazza della Libertà → Viale Fratelli Rosselli → zona Porta al Prato → ciclabile verso il Parco delle Cascine → direttrice verso Peretola → Via San Biagio a Petriolo.
+transcript: >
+  ## Trascrizione — Episodio 5
+
+
+  Benvenuti a *Sulle tracce di Pinocchio*, il podcast che ci porta a scoprire le tappe della storia del burattino più famoso del mondo.
+
+
+  Oggi iniziamo il nostro viaggio nella tappa: del Mare!
+
+
+  Pinocchio scopre che suo padre è partito in mare con una piccola barca per cercarlo. Appena lo viene a sapere, si sente pieno di rimorso e decide subito di raggiungerlo. Corre fino alla spiaggia, ma quando arriva vede la barca ormai lontana tra le onde. Senza pensarci due volte, si getta in mare per cercare di salvarlo.
+
+
+  Il mare è agitato e Pinocchio rischia di annegare. Dopo una lunga lotta contro le onde, viene salvato da un pescatore, ma il pericolo non è finito. Pinocchio non riesce ancora a ritrovare Geppetto, e apprende da un pesce in riva alla spiaggia che nel mare si aggira un enorme pesce cane.
+
+
+  *Grazie per aver ascoltato la puntata del nostro podcast. Ci sentiamo nella prossima tappa del viaggio.*
 published: true
 ---
 
-La quinta stazione ci porta nella magica dimora della Fata Turchina, figura materna e guida spirituale di Pinocchio.
+## Il luogo
 
-## La storia
+Questa tappa è collegata alla zona di **Via San Biagio a Petriolo**, area di Peretola, tra la piana fiorentina e Sesto Fiorentino. Un'area che oggi è urbana ma che storicamente apriva sui campi e sulle vie d'acqua della pianura.
 
-Dopo essere sfuggito agli assassini (il Gatto e la Volpe travestiti), Pinocchio trovò rifugio nella casetta della Fata dai Capelli Turchini. Lei lo curò, lo perdonò per le sue bugie (nonostante il naso che si allungava!) e promise di trasformarlo in un bambino vero se avesse imparato a comportarsi bene.
+## Cosa vedere nei dintorni
 
-## Cosa vedere
+- **Chiesa di San Biagio a Petriolo** (Via San Biagio): edificio di origine XI secolo con loggiato quattrocentesco e portale romanico. All'interno un crocifisso ligneo cinquecentesco della bottega di Antonio da Sangallo il Vecchio e un ciborio attribuito a Mino da Fiesole. Aperta in occasione delle funzioni.
+- **Aeroporto Amerigo Vespucci**: lo storico campo di volo di Peretola, inaugurato nel 1931 e intitolato dal 1990 al navigatore fiorentino nato proprio qui. La piana è raggiungibile in tramvia (linea T2, fermata Guidoni o Aeroporto).
+- **Parco di San Donato e zona Novoli**: aree verdi e piste ciclabili a breve distanza, comode per una pausa fra una tappa e l'altra.
 
-- **Villa storica** restaurata con giardino all'italiana
-- **Mostra** "Le figure femminili in Pinocchio"
-- **Giardino delle farfalle** accessibile
-- **Percorso sensoriale** per non vedenti
+## Curiosità
 
-## Il personaggio: La Fata Turchina
+Il toponimo *Petriolo* deriverebbe da *Pretoriolo*, piccolo praetorium di epoca romana: segno che l'area era abitata da secoli quando Collodi la frequentava.
 
-La Fata rappresenta l'amore incondizionato, la guida e la speranza di redenzione. È lei che dà a Pinocchio la possibilità di diventare un bambino vero, chiedendo in cambio solo che sia buono.
-
-## Accessibilità
-
-Questa stazione è completamente accessibile: rampe, percorsi tattili, descrizioni audio e video in LIS (Lingua dei Segni Italiana).
+Fino alla metà dell'Ottocento, tutta la piana di Peretola–Osmannoro era un acquitrino periodicamente allagato: per gli abitanti del contado quella vasta distesa d'acqua era la cosa più vicina al **mare** che avessero mai visto. Si ritiene che proprio questo paesaggio palustre abbia ispirato a Collodi il "gran mare" in cui Pinocchio finisce inghiottito dal Pesce-cane.

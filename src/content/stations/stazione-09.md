@@ -1,66 +1,84 @@
 ---
-title: "Il Mare e lo Scoglio"
+title: Il Paese dei Balocchi
 order: 9
-description: "Le acque dove Pinocchio fu gettato e dove ritrovò la speranza prima di essere inghiottito dal Pescecane."
-heroImage: "https://picsum.photos/seed/stazione9/1200/600"
-gallery:
-  - image: "https://picsum.photos/seed/stazione9a/800/600"
-    caption: "Il mare in tempesta"
-    alt: "Rappresentazione artistica di un mare in tempesta con onde alte"
-  - image: "https://picsum.photos/seed/stazione9b/800/600"
-    caption: "Lo scoglio della salvezza"
-    alt: "Scoglio roccioso che emerge dalle acque"
-  - image: "https://picsum.photos/seed/stazione9c/800/600"
-    caption: "Il Pescecane"
-    alt: "Illustrazione del grande Pescecane con le fauci aperte"
+description: Il luogo dove non ci sono compiti né scuola e tutto è divertimento. Pinocchio ci arriva con l'amico Lucignolo e scopre, troppo tardi, che chi pensa solo a giocare si trasforma in un asinello.
+heroImage: https://upload.wikimedia.org/wikipedia/commons/7/7c/Sesto%2C_comune_in_piazza_vittorio_veneto_01.JPG
 podcast:
-  episodeTitle: "Episodio 9 - Nelle fauci del Pescecane"
-  spotifyUrl: "https://open.spotify.com/episode/example9"
-  applePodcastsUrl: "https://podcasts.apple.com/episode/example9"
-  mp3File: "/audio/episodio-09.mp3"
-  duration: "19:40"
+  episodeTitle: Episodio 9 — Il Paese dei Balocchi
+  mp3File: /audio/tappa-09.mp3
 directions:
-  address: "Fontana del Mare, Piazza della Repubblica, Sesto Fiorentino (FI)"
-  coordinates: "43.8472, 11.1989"
-  mapsUrl: "https://maps.google.com/?q=43.8472,11.1989"
-  instructions: |
-    **Dalla Stazione 8:** Proseguire verso Piazza della Repubblica (circa 8 minuti a piedi).
+  address: Piazza Vittorio Veneto, Sesto Fiorentino
+  coordinates: "43.83186, 11.19918"
+  mapsUrl: https://www.google.com/maps/search/?api=1&query=Piazza+Vittorio+Veneto+Sesto+Fiorentino
+  instructions: >
+    ## Dalla tappa 8 (Via Lucchese)
 
-    **In auto:** Zona pedonale, parcheggi nelle vie limitrofe.
 
-    **Con i mezzi:** Fermata centrale "Piazza della Repubblica".
-transcript: |
-  ## Trascrizione Episodio 9
+    ### In macchina
 
-  **Narratore:** Gettato in mare con un sasso al collo, Pinocchio si liberò della pelle d'asino grazie ai pesci affamati e tornò ad essere un burattino di legno.
+    *10–15 minuti, fino a 20 minuti nelle ore di punta.*
 
-  **Pinocchio:** Sono salvo! Ma dove sono?
 
-  **Narratore:** Nuotava verso la riva quando all'improvviso vide un'ombra immensa sotto di lui... Il terribile Pescecane!
+    Da Via Lucchese direzione Sesto Fiorentino → Via Pratese → sempre dritto seguendo le indicazioni per Sesto centro → Via del Termine / Via Gramsci → Piazza Vittorio Veneto.
 
-  [Continua la trascrizione...]
+
+    ### In bici
+
+    *15–20 minuti.*
+
+
+    Da Via Lucchese → Via Pratese direzione Sesto Fiorentino → indicazioni per Sesto centro → zona urbana → Piazza Vittorio Veneto.
+
+
+    ### In autobus
+
+
+    Fermata su Via Pratese (zona Osmannoro) → bus **29** o **30** direzione Sesto Fiorentino → scendi in una delle fermate del centro (Sesto FS / Piazza Galvani o vicine al centro storico) → 5–10 minuti a piedi fino a Piazza Vittorio Veneto.
+transcript: >
+  ## Trascrizione — Episodio 9
+
+
+  Benvenuti a *Sulle tracce di Pinocchio*, il podcast che ci porta a scoprire le tappe della storia del burattino più famoso del mondo.
+
+
+  Oggi iniziamo il nostro viaggio nella tappa: il Paese dei Balocchi!
+
+
+  Immaginate un luogo dove si gioca tutto il giorno, dove non ci sono compiti né scuola, e dove tutto sembra un grande divertimento!
+
+
+  Pinocchio sente parlare di questo posto incredibile dal suo amico Lucignolo e… decide di andarci! Salì su un carro con Lucignolo e tanti altri bambini, cantando, ridendo e facendo scherzi lungo la strada.
+
+
+  Quando arrivarono… il Paese dei Balocchi era ancora più meraviglioso di quanto avessero immaginato! C'erano giostre colorate, altalene altissime, montagne di dolci, teatri di burattini e palloni che volavano in cielo. Pinocchio correva da una parte all'altra, saltava, giocava e rideva senza mai fermarsi. Ogni giorno era un'avventura nuova!
+
+
+  Ma dopo qualche giorno… qualcosa cambiò. Pinocchio si svegliò e sentì un dolore alle orecchie. Si guardò e… oh no! Le sue orecchie stavano diventando lunghe, proprio come quelle di un asinello! Anche la sua voce era cambiata… era diventata un raglio!
+
+
+  Capì allora che il Paese dei Balocchi non era solo divertimento… era un posto dove i bambini che pensavano solo a giocare si trasformavano in asinelli. Pinocchio si spaventò, ma dentro di sé trovò il coraggio di cambiare strada. Capì che divertirsi è bello, ma crescere e imparare è ancora più importante.
+
+
+  Così scappò dal Paese dei Balocchi, pronto a continuare il suo viaggio… più saggio e più attento alle sue scelte.
+
+
+  *Grazie per aver ascoltato la puntata del nostro podcast. Ci sentiamo nella prossima tappa del viaggio.*
 published: true
 ---
 
-La nona stazione ci porta simbolicamente in mare aperto, dove Pinocchio affrontò una delle prove più difficili.
+## Il luogo
 
-## La storia
+**Piazza Vittorio Veneto** è una delle piazze principali di Sesto Fiorentino: punto di incontro, di passaggio e di vita quotidiana del paese. Il legame con il Paese dei Balocchi richiama il senso di un luogo dove la comunità si riunisce per divertirsi.
 
-Venduto per fare un tamburo dalla sua pelle d'asino, Pinocchio fu gettato in mare. Ma i pesci mangiarono la pelle d'asino e lui tornò burattino. Mentre nuotava verso riva, fu inghiottito dal terribile Pescecane (la famosa balena della tradizione popolare).
+## Cosa vedere nei dintorni
 
-## Cosa vedere
+- **Palazzo Comunale di Sesto Fiorentino** (Piazza Vittorio Veneto): imponente edificio del 1869, sede del municipio, con al centro della piazza il monumento ai caduti.
+- **Vie pedonali Cavallotti, Alighieri e Verdi**: tre strade commerciali che partono dalla piazza e attraversano il centro storico otto-novecentesco, ideali per una passeggiata fra negozi e caffè.
+- **Pieve di San Martino** (poco distante): chiesa di impianto romanico già citata nell'868, con un Crocifisso di Agnolo Gaddi, allievo di Giotto.
+- **Parco Villa Solaria** (Via degli Strozzi): parco pubblico attrezzato per bambini. Orari: novembre–febbraio 9:00–17:00 (chiuso martedì), marzo/ottobre 9:00–18:00, aprile–settembre 8:00–19:30.
 
-- **Installazione acquatica** con proiezioni
-- **Fontana monumentale** "Il Mare di Pinocchio"
-- **Mostra** sulla fauna marina del Mediterraneo
-- **Esperienza immersiva** "Nel ventre del Pescecane"
+## Curiosità
 
-## Simbolismo
+Piazza Vittorio Veneto — per tutti i sestesi **"Piazza del Comune"** — è il cuore della vita cittadina: d'inverno ospita la pista di pattinaggio, d'estate i dehors dei locali, in primavera fiere e mercati. È esattamente il tipo di luogo festoso, luminoso e affollato che Collodi avrebbe potuto immaginare come **Paese dei Balocchi**: una piazza dove i bambini si radunano per giocare.
 
-Il mare rappresenta l'ignoto, le difficoltà della vita che sembrano insormontabili. Ma anche nel momento più buio, c'è sempre una possibilità di rinascita.
-
-## Per i bambini
-
-- Laboratorio "Costruisci il tuo Pescecane"
-- Giochi d'acqua nella stagione estiva
-- Letture animate sul tema del mare
+La sua impronta otto-novecentesca racconta la trasformazione di Sesto da borgo agricolo a cittadina industriale negli stessi decenni in cui Collodi scriveva il romanzo (1881–1883).
