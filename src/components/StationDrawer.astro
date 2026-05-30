@@ -197,7 +197,11 @@ const items = [...stations]
   }
 
   .drawer.is-open { transform: translateY(0); }
-  .drawer.is-dragging { transition: none; }
+  /* While dragging, follow the finger via --drag-y with no transition. */
+  .drawer.is-dragging {
+    transition: none;
+    transform: translateY(var(--drag-y, 0));
+  }
 
   @media (min-width: 768px) {
     .drawer {
@@ -207,6 +211,7 @@ const items = [...stations]
       transform: translate(-50%, 100%);
     }
     .drawer.is-open { transform: translate(-50%, 0); }
+    .drawer.is-dragging { transform: translate(-50%, var(--drag-y, 0)); }
   }
 
   .drawer__grabber {
@@ -414,6 +419,7 @@ const items = [...stations]
       lastFocused = document.activeElement as HTMLElement;
       drawer.classList.add("is-open");
       backdrop.removeAttribute("hidden");
+      backdrop.style.opacity = ""; // drop any inline opacity left by a drag
       requestAnimationFrame(() => backdrop.classList.add("is-visible"));
       drawer.setAttribute("aria-hidden", "false");
       peek.setAttribute("aria-expanded", "true");
@@ -435,7 +441,13 @@ const items = [...stations]
       lastFocused?.focus?.();
     }
 
-    peek.addEventListener("click", openDrawer);
+    let suppressClick = false;
+    // Tap or keyboard (Enter/Space on the button) opens; a real drag sets
+    // suppressClick so the synthesized click doesn't re-trigger.
+    peek.addEventListener("click", () => {
+      if (suppressClick) { suppressClick = false; return; }
+      openDrawer();
+    });
     backdrop.addEventListener("click", closeDrawer);
     closeBtn?.addEventListener("click", closeDrawer);
 
@@ -450,58 +462,82 @@ const items = [...stations]
 
     // ---- Unified pointer drag (mouse + touch) ----
     // Drag the peek tab UP to open; drag the open sheet's grabber DOWN to close.
+    // Offset is written to a CSS var (--drag-y) so it composes with the
+    // breakpoint-specific centering instead of overwriting the transform.
+    const SLOP = 6; // px of movement before a press counts as a drag, not a tap
+    const vh = () => drawer.offsetHeight || window.innerHeight * 0.8;
+
     let startY = 0;
     let deltaY = 0;
-    let dragging = false;
+    let dragging = false; // true once movement passes SLOP
     let mode: "open" | "close" | null = null;
-    const height = () => drawer.offsetHeight || window.innerHeight * 0.8;
 
     function onMove(e: PointerEvent) {
-      if (!dragging) return;
+      if (mode === null) return;
       deltaY = e.clientY - startY;
+      if (!dragging && Math.abs(deltaY) < SLOP) return;
+      dragging = true;
+      drawer.classList.add("is-dragging");
+      backdrop.style.transition = "none";
       if (mode === "open") {
-        const reveal = Math.min(Math.max(-deltaY, 0), height());
-        drawer.classList.add("is-dragging");
-        drawer.style.transform = `translateY(${height() - reveal}px)`;
-        if (reveal > 4) backdrop.removeAttribute("hidden");
-      } else if (mode === "close") {
-        const push = Math.min(Math.max(deltaY, 0), height());
-        drawer.classList.add("is-dragging");
-        drawer.style.transform = `translateY(${push}px)`;
+        const reveal = Math.min(Math.max(-deltaY, 0), vh());
+        drawer.style.setProperty("--drag-y", `${vh() - reveal}px`);
+        backdrop.removeAttribute("hidden");
+        backdrop.style.opacity = String((reveal / vh()) * 0.9);
+      } else {
+        const push = Math.min(Math.max(deltaY, 0), vh());
+        drawer.style.setProperty("--drag-y", `${push}px`);
+        backdrop.style.opacity = String((1 - push / vh()) * 0.9);
       }
     }
 
-    function onUp() {
-      if (!dragging) return;
+    function endDrag(e: PointerEvent) {
+      if (mode === null) return;
+      const m = mode;
+      const wasDragging = dragging;
+      mode = null;
       dragging = false;
-      drawer.classList.remove("is-dragging");
-      drawer.style.transform = "";
       window.removeEventListener("pointermove", onMove);
-      window.removeEventListener("pointerup", onUp);
-      const threshold = Math.min(120, height() * 0.25);
-      if (mode === "open") {
-        if (-deltaY > threshold) openDrawer();
-        else {
+      try { (e.target as HTMLElement).releasePointerCapture?.(e.pointerId); } catch {}
+
+      // Reset the live-drag transform; the class transitions take over.
+      drawer.classList.remove("is-dragging");
+      drawer.style.removeProperty("--drag-y");
+      backdrop.style.transition = "";
+
+      if (!wasDragging) {
+        backdrop.style.opacity = "";
+        return; // it was a tap → leave it to the click handler
+      }
+
+      const threshold = Math.min(120, vh() * 0.25);
+      if (m === "open") {
+        suppressClick = true; // handled as a drag, not a click
+        if (-deltaY > threshold) {
+          openDrawer(); // manages the backdrop (clears inline opacity, adds is-visible)
+        } else {
           backdrop.classList.remove("is-visible");
+          backdrop.style.opacity = "";
           if (!isOpen()) backdrop.setAttribute("hidden", "");
         }
-      } else if (mode === "close" && deltaY > threshold) {
-        closeDrawer();
+      } else {
+        backdrop.style.opacity = "";
+        if (deltaY > threshold) closeDrawer();
+        // under threshold: is-open is still set, so it springs home.
       }
-      mode = null;
     }
 
     function startDrag(e: PointerEvent, dragMode: "open" | "close") {
-      dragging = true;
+      if (e.button && e.button !== 0) return; // primary button / touch only
       mode = dragMode;
+      dragging = false;
       startY = e.clientY;
       deltaY = 0;
+      try { (e.target as HTMLElement).setPointerCapture?.(e.pointerId); } catch {}
       window.addEventListener("pointermove", onMove);
-      window.addEventListener("pointerup", onUp);
+      window.addEventListener("pointerup", endDrag, { once: true });
     }
 
-    // A plain click still works: a near-zero drag falls under threshold and the
-    // click handler opens the sheet.
     peek.addEventListener("pointerdown", (e) => startDrag(e, "open"));
     grabber?.addEventListener("pointerdown", (e) => startDrag(e, "close"));
   }

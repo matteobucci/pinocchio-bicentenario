@@ -43,6 +43,20 @@ const currentPath = Astro.url.pathname;
     <!-- Preload critical CSS -->
     <link rel="preload" href="/styles/global.css" as="style" />
 
+    <!-- Leaflet (maps). Loaded once here — not per-component — so the library
+         persists across client-side navigations and is guaranteed available
+         before any map initializes on astro:page-load. is:inline keeps Astro
+         from bundling these as ES modules (the plugin's UMD wrapper needs a
+         classic-script `this`, otherwise it throws on `global.L`). -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script is:inline src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script is:inline src="https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js"></script>
+
     <!-- Client-side routing: navigations swap content without a full reload,
          so the persistent station drawer stays mounted and never rebuilds. -->
     <ClientRouter />

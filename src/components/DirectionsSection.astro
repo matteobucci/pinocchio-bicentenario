@@ -148,23 +148,24 @@ const mapPoints = [
   )}
 </section>
 
-<!-- Leaflet (shared CDN build, also used by TourMap) -->
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-  crossorigin=""
-/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script src="https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js"></script>
+<!-- Leaflet itself is loaded once in BaseLayout's <head> so it persists across
+     client-side navigations; this script only initializes the mini-map. -->
+<script>
+  // Leaflet is loaded as a global from <head>.
+  declare const L: any;
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
+  // Builds the focused "Come arrivare" mini-map. Runs on first load and after
+  // every client-side navigation (astro:page-load); reads its points from the
+  // element's data-points attribute, so each page gets fresh content. The
+  // `mapReady` flag guards against re-initializing the same node.
+  function initRouteMiniMap() {
     const el = document.getElementById('route-mini-map');
     if (!el || typeof L === 'undefined') return;
+    if (el.dataset.mapReady === 'true') return;
+    el.dataset.mapReady = 'true';
 
     const points = JSON.parse(el.getAttribute('data-points') || '[]')
-      .filter((p) => p.lat && p.lng);
+      .filter((p: any) => p.lat && p.lng);
     if (points.length === 0) return;
 
     const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
@@ -177,7 +178,7 @@ const mapPoints = [
     }).addTo(map);
 
     // Route line (prev → current → next), styled like the main TourMap.
-    const path = points.map((p) => [p.lat, p.lng]);
+    const path = points.map((p: any) => [p.lat, p.lng]);
     if (path.length > 1) {
       L.polyline(path, { color: '#ffffff', weight: 12, opacity: 1, lineCap: 'round', lineJoin: 'round' }).addTo(map);
       const route = L.polyline(path, { color: '#3d7d66', weight: 7, opacity: 0.95, lineCap: 'round', lineJoin: 'round' }).addTo(map);
@@ -191,8 +192,8 @@ const mapPoints = [
       }
     }
 
-    const markers = [];
-    points.forEach((p) => {
+    const markers: any[] = [];
+    points.forEach((p: any) => {
       const isCurrent = p.role === 'current';
       const size = isCurrent ? 36 : 28;
       const marker = L.marker([p.lat, p.lng], {
@@ -226,7 +227,13 @@ const mapPoints = [
     // Only allow wheel-zoom while the map is focused, matching TourMap.
     el.addEventListener('focus', () => map.scrollWheelZoom.enable());
     el.addEventListener('blur', () => map.scrollWheelZoom.disable());
-  });
+  }
+
+  // Run on initial load and after every client-side navigation. This module is
+  // hoisted and executes once, so the listener is registered a single time;
+  // the element-level `mapReady` guard prevents any double initialization.
+  initRouteMiniMap();
+  document.addEventListener('astro:page-load', initRouteMiniMap);
 </script>
 
 <style>

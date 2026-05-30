@@ -97,14 +97,6 @@ const avgLng = hasCoordinates
   : 11.1989;
 ---
 
-<!-- Leaflet CSS -->
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-  crossorigin=""
-/>
-
 <div class="tour-map-container">
   {hasCoordinates ? (
     <div
@@ -114,6 +106,10 @@ const avgLng = hasCoordinates
       role="application"
       aria-label="Mappa interattiva del percorso con le 12 tappe"
       tabindex="0"
+      data-stations={JSON.stringify(stationData)}
+      data-pois={JSON.stringify(poiData)}
+      data-lat={avgLat}
+      data-lng={avgLng}
     ></div>
   ) : (
     <div class="tour-map-placeholder" style={`min-height: ${height};`}>
@@ -348,15 +344,28 @@ const avgLng = hasCoordinates
   }
 </style>
 
-<!-- Leaflet JS -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<!-- Polyline decorator: clean triangular direction arrows along the route -->
-<script src="https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js"></script>
+<script>
+  // Leaflet is loaded as a global from <head>.
+  declare const L: any;
 
-<script define:vars={{ stationData, poiData, avgLat, avgLng, currentStation }}>
-  document.addEventListener('DOMContentLoaded', () => {
+  // Builds the interactive tour map. Runs on first load AND after every
+  // client-side navigation (astro:page-load) — Leaflet is loaded in <head> so
+  // `L` is always available. All per-page data is read from the #tour-map
+  // element's data-* attributes, so each navigation gets fresh content with no
+  // stale closures. The `mapReady` flag guards against re-initializing a node.
+  function initTourMap() {
+    const mapElement = document.getElementById('tour-map');
+    if (!mapElement || typeof L === 'undefined') return;
+    if (mapElement.dataset.mapReady === 'true') return;
+    mapElement.dataset.mapReady = 'true';
+
+    const stationData = JSON.parse(mapElement.dataset.stations || '[]');
+    const poiData = JSON.parse(mapElement.dataset.pois || '[]');
+    const avgLat = parseFloat(mapElement.dataset.lat || '') || 43.8331;
+    const avgLng = parseFloat(mapElement.dataset.lng || '') || 11.1989;
+
     // Initialize map centered on the stations
-    const map = L.map('tour-map', {
+    const map = L.map(mapElement, {
       center: [avgLat, avgLng],
       zoom: 14,
       scrollWheelZoom: false  // Prevent accidental zoom while scrolling
@@ -370,7 +379,7 @@ const avgLng = hasCoordinates
     }).addTo(map);
 
     // Create custom icon for each station
-    function createMarkerIcon(order, isCurrent) {
+    function createMarkerIcon(order: number, isCurrent: boolean) {
       return L.divIcon({
         className: `station-marker ${isCurrent ? 'current' : ''}`,
         html: `<span>${order}</span>`,
@@ -381,10 +390,10 @@ const avgLng = hasCoordinates
     }
 
     // Add markers for each station
-    const markers = [];
-    const pathCoords = [];
+    const markers: any[] = [];
+    const pathCoords: any[] = [];
 
-    stationData.forEach(station => {
+    stationData.forEach((station: any) => {
       if (station.lat && station.lng) {
         pathCoords.push([station.lat, station.lng]);
 
@@ -454,7 +463,7 @@ const avgLng = hasCoordinates
     }
 
     // Add point-of-interest markers (toilets, water, rest areas, parking)
-    poiData.forEach((poi) => {
+    poiData.forEach((poi: any) => {
       L.marker([poi.lat, poi.lng], {
         icon: L.divIcon({
           className: `poi-marker poi-marker--${poi.type}`,
@@ -483,7 +492,6 @@ const avgLng = hasCoordinates
     }
 
     // Enable scroll wheel zoom when map is focused
-    const mapElement = document.getElementById('tour-map');
     mapElement.addEventListener('focus', () => {
       map.scrollWheelZoom.enable();
     });
@@ -493,7 +501,7 @@ const avgLng = hasCoordinates
 
     // Keyboard navigation for markers
     let currentMarkerIndex = 0;
-    mapElement.addEventListener('keydown', (e) => {
+    mapElement.addEventListener('keydown', (e: KeyboardEvent) => {
       if (e.key === 'Tab') return; // Allow normal tab behavior
 
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
@@ -510,5 +518,11 @@ const avgLng = hasCoordinates
         markers[currentMarkerIndex].openPopup();
       }
     });
-  });
+  }
+
+  // Run on initial load and after every client-side navigation. This module is
+  // hoisted and executes once, so the listener is registered a single time;
+  // the element-level `mapReady` guard prevents any double initialization.
+  initTourMap();
+  document.addEventListener('astro:page-load', initTourMap);
 </script>
