@@ -1,22 +1,23 @@
 ---
 /**
- * StationDrawer - Google Maps-style bottom sheet for station navigation
+ * StationDrawer — Playful, persistent bottom-sheet navigation between tappe.
  *
- * A persistent drawer at the bottom of the screen with three states:
- * - Peek: Just handle visible (48px)
- * - Partial: Current station + prev/next nav (~200px)
- * - Full: Scrollable list of all stations (~70vh)
+ * Persists across client-side navigations (transition:persist) so it never
+ * reloads or rebuilds: selecting a tappa swaps the page content with the
+ * ClientRouter animation while the sheet smoothly closes — no flash, no
+ * scroll jump back to the top of a rebuilt page.
  *
- * Fully accessible with keyboard navigation and screen reader support.
+ * Interaction:
+ *  - Drag the peek tab UP (or click/Enter) to open; drag the grabber DOWN,
+ *    click the backdrop, the ✕, or press Escape to close.
+ *
+ * The "current" highlight is refreshed in JS on every navigation, because the
+ * persisted DOM is not re-rendered with fresh props.
  */
 
 interface Station {
   id: string;
-  data: {
-    title: string;
-    order: number;
-    published?: boolean;
-  };
+  data: { title: string; order: number; published?: boolean };
 }
 
 interface Props {
@@ -26,606 +27,485 @@ interface Props {
 
 const { stations, currentStation } = Astro.props;
 
-// Sort stations by order
-const sortedStations = [...stations].sort((a, b) => a.data.order - b.data.order);
-
-// Find current, previous, and next stations
-const currentIndex = sortedStations.findIndex(s => s.data.order === currentStation);
-const prevStation = currentIndex > 0 ? sortedStations[currentIndex - 1] : null;
-const nextStation = currentIndex < sortedStations.length - 1 ? sortedStations[currentIndex + 1] : null;
-const currentStationData = sortedStations[currentIndex];
-
-// Generate tappa URLs
-function getStationUrl(station: Station): string {
-  return `/tappe/${station.id.replace(/\.md$/, '')}`;
-}
+const items = [...stations]
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((s) => ({
+    slug: s.id.replace(/\.md$/, ''),
+    order: s.data.order,
+    title: s.data.title,
+    isCurrent: s.data.order === currentStation,
+  }));
 ---
 
-<div
-  class="station-drawer"
-  id="station-drawer"
-  role="region"
-  aria-label="Navigazione tappe"
-  data-state="peek"
-  data-current={currentStation}
+{/* Peek tab — always visible. Drag up or click to open. Persists across pages. */}
+<button
+  id="drawer-peek"
+  class="drawer-peek"
+  transition:persist="station-drawer-peek"
+  aria-haspopup="dialog"
+  aria-controls="station-drawer"
+  aria-expanded="false"
 >
-  <!-- Handle / Header -->
-  <button
-    class="drawer-handle"
-    id="drawer-handle"
-    type="button"
-    aria-expanded="false"
-    aria-controls="drawer-content"
-    aria-label="Apri navigazione tappe"
-  >
-    <span class="handle-bar" aria-hidden="true"></span>
-    <span class="sr-only">Tocca per espandere la navigazione tra le tappe</span>
-  </button>
+  <span class="drawer-peek__grip" aria-hidden="true"></span>
+  <span class="drawer-peek__label">
+    <span class="drawer-peek__emoji" aria-hidden="true">🪵</span>
+    Le tappe
+  </span>
+</button>
 
-  <!-- Drawer Content -->
-  <div class="drawer-content" id="drawer-content">
-    <!-- Partial State: Quick Navigation -->
-    <div class="drawer-partial">
-      <!-- Progress dots -->
-      <nav class="progress-nav" aria-label="Progresso nel percorso">
-        <a
-          href={prevStation ? getStationUrl(prevStation) : '#'}
-          class:list={["nav-arrow", "nav-prev", { disabled: !prevStation }]}
-          aria-label={prevStation ? `Vai alla tappa precedente: ${prevStation.data.title}` : "Nessuna tappa precedente"}
-          aria-disabled={!prevStation}
-        >
-          <span aria-hidden="true">&#8592;</span>
-        </a>
+<div
+  id="station-drawer-backdrop"
+  class="drawer-backdrop"
+  transition:persist="station-drawer-backdrop"
+  hidden
+></div>
 
-        <div class="progress-dots" role="list" aria-label="Tappe del percorso">
-          {sortedStations.map((station, index) => (
-            <a
-              href={getStationUrl(station)}
-              class:list={["progress-dot", { current: station.data.order === currentStation }]}
-              role="listitem"
-              aria-label={`Tappa ${station.data.order}: ${station.data.title}${station.data.order === currentStation ? ' (attuale)' : ''}`}
-              aria-current={station.data.order === currentStation ? "step" : undefined}
-            >
-              <span class="sr-only">{station.data.order}</span>
-            </a>
-          ))}
-        </div>
-
-        <a
-          href={nextStation ? getStationUrl(nextStation) : '#'}
-          class:list={["nav-arrow", "nav-next", { disabled: !nextStation }]}
-          aria-label={nextStation ? `Vai alla tappa successiva: ${nextStation.data.title}` : "Nessuna tappa successiva"}
-          aria-disabled={!nextStation}
-        >
-          <span aria-hidden="true">&#8594;</span>
-        </a>
-      </nav>
-
-      <!-- Current tappa title -->
-      <div class="current-station">
-        <span class="station-label">Tappa {currentStation}</span>
-        <span class="station-title">{currentStationData?.data.title}</span>
-      </div>
-
-      <!-- Expand hint -->
-      <button
-        class="expand-hint"
-        type="button"
-        aria-label="Espandi per vedere tutte le tappe"
-      >
-        <span aria-hidden="true">&#8593;</span>
-        Tutte le tappe
-      </button>
-    </div>
-
-    <!-- Full State: All Tappe List -->
-    <div class="drawer-full" aria-hidden="true">
-      <h2 class="drawer-full-title">Tutte le tappe</h2>
-      <nav class="stations-list" aria-label="Elenco completo delle tappe">
-        <ul role="list">
-          {sortedStations.map((station) => (
-            <li>
-              <a
-                href={getStationUrl(station)}
-                class:list={["station-item", { current: station.data.order === currentStation }]}
-                aria-current={station.data.order === currentStation ? "page" : undefined}
-              >
-                <span class="station-order">{station.data.order}</span>
-                <span class="station-name">{station.data.title}</span>
-                {station.data.order === currentStation && (
-                  <span class="current-badge" aria-hidden="true">Attuale</span>
-                )}
-                <span class="station-arrow" aria-hidden="true">&#8594;</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </div>
+<aside
+  id="station-drawer"
+  class="drawer"
+  transition:persist="station-drawer"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Naviga tra le tappe"
+  aria-hidden="true"
+>
+  <div class="drawer__grabber" id="drawer-grabber" aria-hidden="true">
+    <span class="drawer__handle"></span>
   </div>
-</div>
+
+  <div class="drawer__header">
+    <h2 class="drawer__title">
+      <span class="drawer__title-emoji" aria-hidden="true">🎭</span>
+      Le 12 tappe
+    </h2>
+    <button id="station-drawer-close" class="drawer__close" aria-label="Chiudi l'elenco">
+      <span aria-hidden="true">✕</span>
+    </button>
+  </div>
+
+  <nav class="drawer__nav" aria-label="Elenco delle tappe">
+    <ol class="drawer__list">
+      {items.map((item) => (
+        <li>
+          <a
+            href={`/tappe/${item.slug}`}
+            class:list={["drawer__item", { "drawer__item--current": item.isCurrent }]}
+            aria-current={item.isCurrent ? "page" : undefined}
+          >
+            <span class="drawer__num" aria-hidden="true">{item.order}</span>
+            <span class="drawer__item-text">{item.title}</span>
+            <span class="drawer__here" aria-hidden="true">Sei qui</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+</aside>
 
 <style>
-  .station-drawer {
+  /* ---------- Peek tab ---------- */
+  .drawer-peek {
     position: fixed;
     bottom: 0;
-    left: 0;
-    right: 0;
-    background: var(--color-neutral-50);
-    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
-    z-index: var(--z-sticky);
-    transform: translateY(calc(100% - 48px));
-    transition: transform var(--transition-slow);
-    max-height: 80vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* States */
-  .station-drawer[data-state="peek"] {
-    transform: translateY(calc(100% - 48px));
-  }
-
-  .station-drawer[data-state="partial"] {
-    transform: translateY(calc(100% - 200px));
-  }
-
-  .station-drawer[data-state="full"] {
-    transform: translateY(0);
-  }
-
-  /* Handle */
-  .drawer-handle {
-    display: flex;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: inline-flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 48px;
-    background: transparent;
+    gap: 6px;
+    padding: var(--space-2) var(--space-6) var(--space-3);
+    background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600));
+    color: white;
     border: none;
-    cursor: pointer;
+    border-radius: var(--border-radius-lg, 14px) var(--border-radius-lg, 14px) 0 0;
+    font-family: var(--font-family-heading, inherit);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-bold);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.18);
+    cursor: grab;
+    touch-action: none;
+    animation: peek-bob 2.8s ease-in-out infinite;
+  }
+
+  .drawer-peek:active { cursor: grabbing; }
+
+  .drawer-peek__grip {
+    width: 42px;
+    height: 5px;
+    border-radius: var(--border-radius-full, 999px);
+    background: rgba(255, 255, 255, 0.7);
+  }
+
+  .drawer-peek__label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .drawer-peek__emoji { font-size: 1.15em; }
+
+  .drawer-peek:hover {
+    background: linear-gradient(135deg, var(--color-primary-500), var(--color-primary-700));
+  }
+
+  .drawer-peek:focus-visible {
+    outline: var(--focus-ring-width, 3px) solid var(--focus-ring-color, #fff);
+    outline-offset: var(--focus-ring-offset, 2px);
+  }
+
+  /* Hide the peek tab while the sheet is open */
+  body.drawer-open .drawer-peek {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateX(-50%) translateY(100%);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    animation: none;
+  }
+
+  /* ---------- Backdrop ---------- */
+  .drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(60, 40, 20, 0.45);
+    backdrop-filter: blur(2px);
+    z-index: 1001;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .drawer-backdrop.is-visible { opacity: 1; }
+
+  /* ---------- Sheet ---------- */
+  .drawer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1002;
+    max-height: 80vh;
+    background: var(--color-neutral-50, #fff);
+    border-radius: 22px 22px 0 0;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.25);
+    transform: translateY(100%);
+    /* springy overshoot = playful */
+    transition: transform 0.42s cubic-bezier(0.34, 1.4, 0.5, 1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-top: 4px dashed var(--color-primary-300);
+  }
+
+  .drawer.is-open { transform: translateY(0); }
+  .drawer.is-dragging { transition: none; }
+
+  @media (min-width: 768px) {
+    .drawer {
+      left: 50%;
+      right: auto;
+      width: 460px;
+      transform: translate(-50%, 100%);
+    }
+    .drawer.is-open { transform: translate(-50%, 0); }
+  }
+
+  .drawer__grabber {
     padding: var(--space-3);
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: grab;
     touch-action: none;
   }
 
-  .drawer-handle:focus-visible {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: calc(-1 * var(--focus-ring-width));
-    border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
-  }
+  .drawer__grabber:active { cursor: grabbing; }
 
-  .handle-bar {
-    width: 40px;
-    height: 4px;
+  .drawer__handle {
+    width: 48px;
+    height: 5px;
     background: var(--color-neutral-300);
-    border-radius: var(--border-radius-full);
-    transition: background var(--transition-fast);
+    border-radius: var(--border-radius-full, 999px);
   }
 
-  .drawer-handle:hover .handle-bar,
-  .drawer-handle:focus .handle-bar {
-    background: var(--color-neutral-400);
-  }
-
-  /* Content container */
-  .drawer-content {
-    flex: 1;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Partial state content */
-  .drawer-partial {
-    padding: 0 var(--space-4) var(--space-4);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-
-  /* Progress navigation */
-  .progress-nav {
+  .drawer__header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: var(--space-3);
+    justify-content: space-between;
+    padding: 0 var(--space-5) var(--space-3);
+    flex-shrink: 0;
   }
 
-  .nav-arrow {
-    display: flex;
+  .drawer__title {
+    display: inline-flex;
     align-items: center;
-    justify-content: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-xl);
+    margin: 0;
+    color: var(--color-primary-700);
+  }
+
+  .drawer__title-emoji { font-size: 1.1em; }
+
+  .drawer__close {
+    background: var(--color-neutral-100);
+    border: none;
+    border-radius: var(--border-radius-full, 999px);
     width: 40px;
     height: 40px;
-    background: var(--color-primary-500);
-    color: white;
-    border-radius: var(--border-radius-full);
-    text-decoration: none;
     font-size: var(--font-size-lg);
-    transition: all var(--transition-fast);
-    flex-shrink: 0;
-  }
-
-  .nav-arrow:hover:not(.disabled) {
-    background: var(--color-primary-600);
-    transform: scale(1.05);
-  }
-
-  .nav-arrow:focus-visible {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: var(--focus-ring-offset);
-  }
-
-  .nav-arrow.disabled {
-    background: var(--color-neutral-200);
-    color: var(--color-neutral-400);
-    pointer-events: none;
-  }
-
-  /* Progress dots */
-  .progress-dots {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .progress-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: var(--border-radius-full);
-    background: var(--color-neutral-300);
-    border: 2px solid transparent;
-    transition: all var(--transition-fast);
-  }
-
-  .progress-dot:hover {
-    background: var(--color-primary-300);
-    transform: scale(1.2);
-  }
-
-  .progress-dot:focus-visible {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: var(--focus-ring-offset);
-  }
-
-  .progress-dot.current {
-    background: var(--color-primary-500);
-    width: 14px;
-    height: 14px;
-    border-color: var(--color-primary-200);
-  }
-
-  /* Current station display */
-  .current-station {
-    text-align: center;
-  }
-
-  .station-label {
-    display: block;
-    font-size: var(--font-size-xs);
-    color: var(--color-neutral-500);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    margin-bottom: var(--space-1);
-  }
-
-  .station-title {
-    display: block;
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-neutral-800);
-  }
-
-  /* Expand hint */
-  .expand-hint {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    padding: var(--space-2) var(--space-4);
-    background: transparent;
-    border: 1px solid var(--color-neutral-200);
-    border-radius: var(--border-radius-md);
-    color: var(--color-neutral-600);
-    font-size: var(--font-size-sm);
+    line-height: 1;
     cursor: pointer;
-    transition: all var(--transition-fast);
-    margin: 0 auto;
+    color: var(--color-neutral-600);
+    transition: background 0.15s ease, transform 0.15s ease;
   }
 
-  .expand-hint:hover {
-    background: var(--color-neutral-100);
-    color: var(--color-neutral-800);
+  .drawer__close:hover {
+    background: var(--color-neutral-200);
+    transform: rotate(90deg);
   }
 
-  .expand-hint:focus-visible {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: var(--focus-ring-offset);
+  .drawer__close:focus-visible {
+    outline: var(--focus-ring-width, 3px) solid var(--focus-ring-color, currentColor);
+    outline-offset: var(--focus-ring-offset, 2px);
   }
 
-  /* Full state content */
-  .drawer-full {
-    display: none;
-    flex-direction: column;
-    overflow: hidden;
-    padding: 0 var(--space-4) var(--space-4);
-  }
-
-  .station-drawer[data-state="full"] .drawer-partial {
-    display: none;
-  }
-
-  .station-drawer[data-state="full"] .drawer-full {
-    display: flex;
-  }
-
-  .drawer-full-title {
-    font-size: var(--font-size-lg);
-    font-weight: var(--font-weight-semibold);
-    color: var(--color-neutral-800);
-    margin: 0 0 var(--space-4);
-    text-align: center;
-  }
-
-  /* Stations list */
-  .stations-list {
-    flex: 1;
+  .drawer__nav {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    padding: 0 var(--space-4) calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
   }
 
-  .stations-list ul {
+  .drawer__list {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
   }
 
-  .station-item {
+  .drawer__item {
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    padding: var(--space-3) var(--space-4);
+    padding: var(--space-3);
+    border-radius: var(--border-radius-md, 10px);
     text-decoration: none;
-    color: var(--color-neutral-700);
-    border-radius: var(--border-radius-md);
-    transition: all var(--transition-fast);
-    margin-bottom: var(--space-1);
+    color: var(--color-neutral-800);
+    transition: background 0.15s ease, transform 0.12s ease;
   }
 
-  .station-item:hover {
-    background: var(--color-neutral-100);
-    color: var(--color-neutral-900);
+  .drawer__item:hover { background: var(--color-primary-50); }
+  .drawer__item:active { transform: scale(0.98); }
+
+  .drawer__item:focus-visible {
+    outline: var(--focus-ring-width, 3px) solid var(--focus-ring-color, var(--color-primary-500));
+    outline-offset: 2px;
   }
 
-  .station-item:focus-visible {
-    outline: var(--focus-ring-width) solid var(--focus-ring-color);
-    outline-offset: calc(-1 * var(--focus-ring-offset));
-  }
-
-  .station-item.current {
+  .drawer__item--current {
     background: var(--color-primary-50);
-    color: var(--color-primary-700);
+    font-weight: var(--font-weight-medium);
   }
 
-  .station-order {
+  .drawer__num {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    background: var(--color-primary-500);
-    color: white;
-    font-size: var(--font-size-sm);
-    font-weight: var(--font-weight-bold);
-    border-radius: var(--border-radius-full);
     flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600));
+    color: white;
+    border-radius: var(--border-radius-full, 999px);
+    font-family: var(--font-family-heading, inherit);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-base);
+    box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.2));
   }
 
-  .station-item.current .station-order {
-    background: var(--color-primary-600);
+  .drawer__item--current .drawer__num {
+    background: linear-gradient(135deg, var(--color-secondary-400, #5aa088), var(--color-secondary-600, #2d5e4d));
+    animation: coin-bounce 0.6s ease;
   }
 
-  .station-name {
-    flex: 1;
-    font-weight: var(--font-weight-medium);
-  }
+  .drawer__item-text { flex: 1; }
 
-  .current-badge {
+  .drawer__here {
+    display: none;
     font-size: var(--font-size-xs);
-    background: var(--color-primary-100);
-    color: var(--color-primary-700);
-    padding: var(--space-1) var(--space-2);
-    border-radius: var(--border-radius-sm);
-    font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-bold);
+    background: var(--color-secondary-500, #3d7d66);
+    color: white;
+    padding: 3px var(--space-2);
+    border-radius: var(--border-radius-full, 999px);
+    white-space: nowrap;
   }
 
-  .station-arrow {
-    color: var(--color-neutral-400);
-    transition: transform var(--transition-fast);
+  .drawer__item--current .drawer__here { display: inline-block; }
+
+  /* Leave room so the peek tab never covers page content */
+  :global(body:has(.drawer-peek)) { padding-bottom: 64px; }
+
+  /* ---------- Animations ---------- */
+  @keyframes peek-bob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
   }
 
-  .station-item:hover .station-arrow {
-    transform: translateX(4px);
-    color: var(--color-primary-500);
+  @keyframes coin-bounce {
+    0% { transform: scale(0.6) rotate(-12deg); }
+    60% { transform: scale(1.15) rotate(6deg); }
+    100% { transform: scale(1) rotate(0); }
   }
 
-  /* Body padding when drawer is visible */
-  :global(body:has(.station-drawer)) {
-    padding-bottom: 60px;
-  }
-
-  /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    .station-drawer {
+    .drawer,
+    .drawer-peek,
+    .drawer-backdrop,
+    .drawer__item,
+    .drawer__close,
+    .drawer__item--current .drawer__num {
       transition: none;
-    }
-  }
-
-  /* Desktop adjustments */
-  @media (min-width: 768px) {
-    .station-drawer {
-      max-width: 500px;
-      left: 50%;
-      transform: translateX(-50%) translateY(calc(100% - 48px));
-      border-radius: var(--border-radius-xl) var(--border-radius-xl) 0 0;
-    }
-
-    .station-drawer[data-state="peek"] {
-      transform: translateX(-50%) translateY(calc(100% - 48px));
-    }
-
-    .station-drawer[data-state="partial"] {
-      transform: translateX(-50%) translateY(calc(100% - 200px));
-    }
-
-    .station-drawer[data-state="full"] {
-      transform: translateX(-50%) translateY(0);
+      animation: none;
     }
   }
 </style>
 
 <script>
-  // StationDrawer state management
-  const drawer = document.getElementById('station-drawer');
-  const handle = document.getElementById('drawer-handle');
-  const expandHint = document.querySelector('.expand-hint');
-  const drawerFull = document.querySelector('.drawer-full');
-
-  const STATES = ['peek', 'partial', 'full'] as const;
-  type DrawerState = typeof STATES[number];
-
-  let currentState: DrawerState = 'peek';
-  let startY = 0;
-  let currentY = 0;
-  let isDragging = false;
-
-  function setState(newState: DrawerState) {
-    if (!drawer || !handle || !drawerFull) return;
-
-    currentState = newState;
-    drawer.setAttribute('data-state', newState);
-
-    // Update ARIA
-    handle.setAttribute('aria-expanded', newState !== 'peek' ? 'true' : 'false');
-    handle.setAttribute('aria-label',
-      newState === 'peek' ? 'Apri navigazione tappe' :
-      newState === 'partial' ? 'Espandi a schermo intero o riduci' :
-      'Riduci navigazione tappe'
-    );
-
-    // Update hidden state for full list
-    drawerFull.setAttribute('aria-hidden', newState !== 'full' ? 'true' : 'false');
-
-    // Announce state change for screen readers
-    announceStateChange(newState);
+  /**
+   * The drawer DOM persists across view transitions, so we:
+   *  1. bind interaction handlers only ONCE per node (guarded by data-bound),
+   *  2. refresh the "current" highlight on every astro:page-load.
+   */
+  function refreshCurrent() {
+    const match = location.pathname.match(/\/tappe\/([^/]+)\/?$/);
+    const slug = match ? match[1] : null;
+    document.querySelectorAll<HTMLAnchorElement>(".drawer__item").forEach((el) => {
+      const href = el.getAttribute("href") || "";
+      const isCurrent = slug !== null && href.endsWith(`/tappe/${slug}`);
+      el.classList.toggle("drawer__item--current", isCurrent);
+      if (isCurrent) el.setAttribute("aria-current", "page");
+      else el.removeAttribute("aria-current");
+    });
   }
 
-  function announceStateChange(state: DrawerState) {
-    const announcement = document.createElement('div');
-    announcement.setAttribute('role', 'status');
-    announcement.setAttribute('aria-live', 'polite');
-    announcement.className = 'sr-only';
+  function setupDrawer() {
+    // Bail if the drawer isn't on this page; otherwise treat the three required
+    // nodes as non-null (the `!` lets the closures below see the narrowed type).
+    if (!document.getElementById("station-drawer")) return;
+    const peek = document.getElementById("drawer-peek")!;
+    const drawer = document.getElementById("station-drawer")!;
+    const backdrop = document.getElementById("station-drawer-backdrop")!;
+    const closeBtn = document.getElementById("station-drawer-close");
+    const grabber = document.getElementById("drawer-grabber");
 
-    const messages: Record<DrawerState, string> = {
-      peek: 'Navigazione tappe ridotta',
-      partial: 'Navigazione tappe aperta con tappa corrente',
-      full: 'Elenco completo delle tappe visibile'
-    };
+    refreshCurrent();
 
-    announcement.textContent = messages[state];
-    document.body.appendChild(announcement);
-    setTimeout(() => announcement.remove(), 1000);
-  }
+    // Bind interaction handlers only once, even though this runs on every nav.
+    if (drawer.dataset.bound === "true") return;
+    drawer.dataset.bound = "true";
 
-  function cycleState() {
-    const currentIndex = STATES.indexOf(currentState);
-    const nextIndex = (currentIndex + 1) % STATES.length;
-    setState(STATES[nextIndex]);
-  }
+    let lastFocused: HTMLElement | null = null;
 
-  // Handle click
-  handle?.addEventListener('click', () => {
-    if (currentState === 'peek') {
-      setState('partial');
-    } else if (currentState === 'full') {
-      setState('partial');
-    } else {
-      setState('peek');
+    const isOpen = () => drawer.classList.contains("is-open");
+
+    function openDrawer() {
+      lastFocused = document.activeElement as HTMLElement;
+      drawer.classList.add("is-open");
+      backdrop.removeAttribute("hidden");
+      requestAnimationFrame(() => backdrop.classList.add("is-visible"));
+      drawer.setAttribute("aria-hidden", "false");
+      peek.setAttribute("aria-expanded", "true");
+      document.body.classList.add("drawer-open");
+      document.body.style.overflow = "hidden";
+      closeBtn?.focus();
     }
-  });
 
-  // Expand hint click
-  expandHint?.addEventListener('click', () => {
-    setState('full');
-  });
+    function closeDrawer() {
+      drawer.classList.remove("is-open");
+      backdrop.classList.remove("is-visible");
+      drawer.setAttribute("aria-hidden", "true");
+      peek.setAttribute("aria-expanded", "false");
+      document.body.classList.remove("drawer-open");
+      document.body.style.overflow = "";
+      window.setTimeout(() => {
+        if (!isOpen()) backdrop.setAttribute("hidden", "");
+      }, 300);
+      lastFocused?.focus?.();
+    }
 
-  // Touch/swipe handling
-  function handleTouchStart(e: TouchEvent) {
-    if (!drawer) return;
-    startY = e.touches[0].clientY;
-    isDragging = true;
-    drawer.style.transition = 'none';
-  }
+    peek.addEventListener("click", openDrawer);
+    backdrop.addEventListener("click", closeDrawer);
+    closeBtn?.addEventListener("click", closeDrawer);
 
-  function handleTouchMove(e: TouchEvent) {
-    if (!isDragging || !drawer) return;
-    currentY = e.touches[0].clientY;
-  }
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen()) closeDrawer();
+    });
 
-  function handleTouchEnd() {
-    if (!isDragging || !drawer) return;
+    // Selecting a tappa: let the view transition navigate, then close smoothly.
+    drawer.querySelectorAll(".drawer__item").forEach((link) => {
+      link.addEventListener("click", () => closeDrawer());
+    });
 
-    isDragging = false;
-    drawer.style.transition = '';
+    // ---- Unified pointer drag (mouse + touch) ----
+    // Drag the peek tab UP to open; drag the open sheet's grabber DOWN to close.
+    let startY = 0;
+    let deltaY = 0;
+    let dragging = false;
+    let mode: "open" | "close" | null = null;
+    const height = () => drawer.offsetHeight || window.innerHeight * 0.8;
 
-    const deltaY = startY - currentY;
-    const threshold = 50;
-
-    if (Math.abs(deltaY) > threshold) {
-      if (deltaY > 0) {
-        // Swipe up
-        if (currentState === 'peek') setState('partial');
-        else if (currentState === 'partial') setState('full');
-      } else {
-        // Swipe down
-        if (currentState === 'full') setState('partial');
-        else if (currentState === 'partial') setState('peek');
+    function onMove(e: PointerEvent) {
+      if (!dragging) return;
+      deltaY = e.clientY - startY;
+      if (mode === "open") {
+        const reveal = Math.min(Math.max(-deltaY, 0), height());
+        drawer.classList.add("is-dragging");
+        drawer.style.transform = `translateY(${height() - reveal}px)`;
+        if (reveal > 4) backdrop.removeAttribute("hidden");
+      } else if (mode === "close") {
+        const push = Math.min(Math.max(deltaY, 0), height());
+        drawer.classList.add("is-dragging");
+        drawer.style.transform = `translateY(${push}px)`;
       }
     }
+
+    function onUp() {
+      if (!dragging) return;
+      dragging = false;
+      drawer.classList.remove("is-dragging");
+      drawer.style.transform = "";
+      window.removeEventListener("pointermove", onMove);
+      window.removeEventListener("pointerup", onUp);
+      const threshold = Math.min(120, height() * 0.25);
+      if (mode === "open") {
+        if (-deltaY > threshold) openDrawer();
+        else {
+          backdrop.classList.remove("is-visible");
+          if (!isOpen()) backdrop.setAttribute("hidden", "");
+        }
+      } else if (mode === "close" && deltaY > threshold) {
+        closeDrawer();
+      }
+      mode = null;
+    }
+
+    function startDrag(e: PointerEvent, dragMode: "open" | "close") {
+      dragging = true;
+      mode = dragMode;
+      startY = e.clientY;
+      deltaY = 0;
+      window.addEventListener("pointermove", onMove);
+      window.addEventListener("pointerup", onUp);
+    }
+
+    // A plain click still works: a near-zero drag falls under threshold and the
+    // click handler opens the sheet.
+    peek.addEventListener("pointerdown", (e) => startDrag(e, "open"));
+    grabber?.addEventListener("pointerdown", (e) => startDrag(e, "close"));
   }
 
-  handle?.addEventListener('touchstart', handleTouchStart, { passive: true });
-  handle?.addEventListener('touchmove', handleTouchMove, { passive: true });
-  handle?.addEventListener('touchend', handleTouchEnd);
-
-  // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    if (!drawer) return;
-
-    // Only handle when drawer has focus or is expanded
-    const drawerHasFocus = drawer.contains(document.activeElement);
-
-    if (e.key === 'Escape' && currentState !== 'peek') {
-      setState('peek');
-      handle?.focus();
-    }
-  });
-
-  // Click outside to minimize (when full)
-  document.addEventListener('click', (e) => {
-    if (!drawer) return;
-
-    if (currentState === 'full' && !drawer.contains(e.target as Node)) {
-      setState('partial');
-    }
-  });
-
-  // Initialize to partial state after a short delay for better UX
-  setTimeout(() => {
-    setState('partial');
-  }, 500);
+  setupDrawer();
+  document.addEventListener("astro:page-load", setupDrawer);
 </script>

@@ -10,28 +10,17 @@ directions:
   address: Via San Biagio a Petriolo, Firenze
   coordinates: "43.79577, 11.19228"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+San+Biagio+a+Petriolo+Firenze
-  instructions: >
-    ## Dalla tappa 4 (Via Giulio Bechi)
-
-
-    ### In macchina
-
+  byCar: >
     *Circa 20–25 minuti, traffico permettendo.*
 
 
     Da Via Giulio Bechi verso sud → Viale Volta / Viale Don Minzoni direzione centro → zona Porta al Prato → FI-PI-LI / Viadotto dell'Indiano → uscita Peretola–Brozzi–Quaracchi → Via Pistoiese → svolta in Via San Biagio a Petriolo.
-
-
-    ### In autobus
-
+  byTransit: >
     *Circa 40–55 minuti.*
 
 
     Bus verso Stazione SMN / Porta al Prato → cambia con il bus **35** o **68** in direzione Peretola–Le Piagge → scendi alla fermata Petriolo → 3–5 minuti a piedi.
-
-
-    ### In bici
-
+  byBike: >
     *Circa 8–10 km, 35–45 minuti, pianeggiante.*
 
 

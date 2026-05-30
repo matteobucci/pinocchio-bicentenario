@@ -1,0 +1,415 @@
+---
+/**
+ * DirectionsSection — "Come arrivare" block for a single tappa.
+ *
+ * Renders, in order:
+ *  1. an auto-generated context line ("Dalla Tappa N: …" / "Punto di partenza")
+ *  2. the address
+ *  3. a focused mini-map showing the previous, current and next point with the
+ *     route line — same visual language as the full TourMap
+ *  4. a segmented selector over the travel modes that actually have content
+ *     (🚶 a piedi / 🚴 in bici / 🚗 in auto / 🚌 mezzi pubblici)
+ *  5. the "Apri in Google Maps" button
+ *
+ * The mode selector is a standard ARIA tablist; the generic tablist controller
+ * on the detail page wires up its keyboard interaction.
+ */
+import { marked } from 'marked';
+
+interface Point {
+  order: number;
+  title: string;
+  slug?: string;
+  lat: number;
+  lng: number;
+}
+
+interface Directions {
+  address: string;
+  coordinates?: string;
+  byFoot?: string;
+  byBike?: string;
+  byCar?: string;
+  byTransit?: string;
+  instructions?: string;
+  mapsUrl?: string;
+}
+
+interface Props {
+  directions: Directions;
+  current: Point;
+  prev?: Point | null;
+  next?: Point | null;
+}
+
+const { directions, current, prev = null, next = null } = Astro.props;
+
+// Travel modes, in display order. Only those with content are rendered.
+const MODES = [
+  { key: 'foot', label: 'A piedi', emoji: '🚶', content: directions.byFoot },
+  { key: 'bike', label: 'In bici', emoji: '🚴', content: directions.byBike },
+  { key: 'car', label: 'In auto', emoji: '🚗', content: directions.byCar },
+  { key: 'transit', label: 'Mezzi pubblici', emoji: '🚌', content: directions.byTransit },
+];
+
+const modes = await Promise.all(
+  MODES.filter((m) => m.content && m.content.trim())
+    .map(async (m) => ({ ...m, html: await marked.parse(m.content!) }))
+);
+
+// Fallback to the legacy single blob when no per-mode field is filled.
+const legacyHtml =
+  modes.length === 0 && directions.instructions?.trim()
+    ? await marked.parse(directions.instructions)
+    : null;
+
+// Context line: where these directions start from.
+const contextLabel = prev
+  ? `Dalla Tappa ${prev.order}: ${prev.title}`
+  : 'Punto di partenza del percorso';
+
+// Points to plot on the mini-map (prev → current → next), preserving order.
+const mapPoints = [
+  prev && { ...prev, role: 'prev' },
+  { ...current, role: 'current' },
+  next && { ...next, role: 'next' },
+].filter(Boolean);
+---
+
+<section class="directions-section" aria-labelledby="directions-heading">
+  <h2 id="directions-heading">Come arrivare</h2>
+  <p class="directions-context">{contextLabel}</p>
+  <address class="directions-address">
+    <strong>{directions.address}</strong>
+  </address>
+
+  <!-- Focused route map: previous, current and next point -->
+  <div
+    id="route-mini-map"
+    class="route-mini-map"
+    role="application"
+    aria-label={`Mappa del percorso: ${contextLabel} fino a ${current.title}`}
+    tabindex="0"
+    data-points={JSON.stringify(mapPoints)}
+  ></div>
+
+  {(modes.length > 0 || legacyHtml) && (
+    <div class="directions-modes" id="directions-modes">
+      {modes.length > 0 && (
+        <>
+          <div class="mode-tabs" role="tablist" aria-label="Scegli come arrivare">
+            {modes.map((m, i) => (
+              <button
+                role="tab"
+                id={`mode-tab-${m.key}`}
+                aria-selected={i === 0 ? 'true' : 'false'}
+                aria-controls={`mode-panel-${m.key}`}
+                class:list={['mode-tab', { active: i === 0 }]}
+                tabindex={i === 0 ? undefined : -1}
+                type="button"
+              >
+                <span class="mode-emoji" aria-hidden="true">{m.emoji}</span>
+                {m.label}
+              </button>
+            ))}
+          </div>
+          {modes.map((m, i) => (
+            <div
+              role="tabpanel"
+              id={`mode-panel-${m.key}`}
+              aria-labelledby={`mode-tab-${m.key}`}
+              class="mode-panel prose"
+              hidden={i !== 0}
+            >
+              <Fragment set:html={m.html} />
+            </div>
+          ))}
+        </>
+      )}
+
+      {legacyHtml && (
+        <div class="mode-panel prose">
+          <Fragment set:html={legacyHtml} />
+        </div>
+      )}
+    </div>
+  )}
+
+  {directions.mapsUrl && (
+    <a
+      href={directions.mapsUrl}
+      class="btn btn-secondary directions-maps-link"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Apri in Google Maps
+      <span class="sr-only">(nuova finestra)</span>
+    </a>
+  )}
+</section>
+
+<!-- Leaflet (shared CDN build, also used by TourMap) -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js"></script>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('route-mini-map');
+    if (!el || typeof L === 'undefined') return;
+
+    const points = JSON.parse(el.getAttribute('data-points') || '[]')
+      .filter((p) => p.lat && p.lng);
+    if (points.length === 0) return;
+
+    const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 20,
+    }).addTo(map);
+
+    // Route line (prev → current → next), styled like the main TourMap.
+    const path = points.map((p) => [p.lat, p.lng]);
+    if (path.length > 1) {
+      L.polyline(path, { color: '#ffffff', weight: 12, opacity: 1, lineCap: 'round', lineJoin: 'round' }).addTo(map);
+      const route = L.polyline(path, { color: '#3d7d66', weight: 7, opacity: 0.95, lineCap: 'round', lineJoin: 'round' }).addTo(map);
+      if (L.polylineDecorator) {
+        L.polylineDecorator(route, {
+          patterns: [{
+            offset: 25, repeat: 80,
+            symbol: L.Symbol.arrowHead({ pixelSize: 10, headAngle: 50, polygon: true, pathOptions: { stroke: false, fillColor: '#ffffff', fillOpacity: 0.95 } }),
+          }],
+        }).addTo(map);
+      }
+    }
+
+    const markers = [];
+    points.forEach((p) => {
+      const isCurrent = p.role === 'current';
+      const size = isCurrent ? 36 : 28;
+      const marker = L.marker([p.lat, p.lng], {
+        icon: L.divIcon({
+          className: `station-marker ${isCurrent ? 'current' : 'adjacent'}`,
+          html: `<span>${p.order}</span>`,
+          iconSize: [size, size],
+          iconAnchor: [size / 2, size / 2],
+          popupAnchor: [0, -size / 2],
+        }),
+        title: `Tappa ${p.order}: ${p.title}`,
+        alt: `Tappa ${p.order}: ${p.title}`,
+        keyboard: true,
+      }).addTo(map);
+
+      const link = p.slug && !isCurrent
+        ? `<a href="/tappe/${p.slug}" class="popup-link">Vai alla tappa</a>`
+        : '';
+      marker.bindPopup(
+        `<div class="popup-content"><div class="popup-title">Tappa ${p.order}</div><div>${p.title}</div>${link}</div>`
+      );
+      markers.push(marker);
+    });
+
+    if (markers.length === 1) {
+      map.setView(markers[0].getLatLng(), 16);
+    } else {
+      map.fitBounds(L.featureGroup(markers).getBounds().pad(0.25));
+    }
+
+    // Only allow wheel-zoom while the map is focused, matching TourMap.
+    el.addEventListener('focus', () => map.scrollWheelZoom.enable());
+    el.addEventListener('blur', () => map.scrollWheelZoom.disable());
+  });
+</script>
+
+<style>
+  .directions-section {
+    margin-top: var(--space-10);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-neutral-200);
+  }
+
+  .directions-context {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-secondary-700, var(--color-secondary-500));
+    margin: 0 0 var(--space-1);
+  }
+
+  .directions-address {
+    font-style: normal;
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-5);
+  }
+
+  .route-mini-map {
+    width: 100%;
+    height: 280px;
+    border-radius: var(--border-radius-lg);
+    border: var(--border-width) solid var(--color-neutral-200);
+    margin-bottom: var(--space-6);
+  }
+
+  .route-mini-map:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+  }
+
+  /* Segmented mode selector — mirrors the page's main tab pills */
+  .mode-tabs {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    margin-bottom: var(--space-5);
+    background: var(--color-primary-100);
+    border-radius: var(--border-radius-full);
+    max-width: 100%;
+  }
+
+  .mode-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    flex: 1 1 auto;
+    padding: var(--space-3) var(--space-5);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-primary-700);
+    background: transparent;
+    border: none;
+    border-radius: var(--border-radius-full);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .mode-emoji {
+    font-size: 1.15em;
+    line-height: 1;
+  }
+
+  .mode-tab:hover {
+    color: var(--color-primary-900);
+    background: rgb(255 255 255 / 0.5);
+  }
+
+  .mode-tab.active {
+    color: var(--color-primary-700);
+    background: white;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .mode-tab:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: 2px;
+  }
+
+  .mode-panel {
+    animation: directionsFade var(--transition-base);
+  }
+
+  .mode-panel[hidden] {
+    display: none;
+  }
+
+  @keyframes directionsFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .directions-maps-link {
+    margin-top: var(--space-5);
+  }
+
+  /* Marker styling for the mini-map (Leaflet injects these into the global
+     DOM, so they can't rely on Astro's scoped class hashing). */
+  :global(.station-marker) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border-radius: 50%;
+    background: var(--color-primary-500);
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    border: 3px solid white;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    line-height: 1;
+  }
+
+  :global(.station-marker span) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+
+  :global(.station-marker.adjacent) {
+    background: var(--color-primary-400);
+    opacity: 0.9;
+  }
+
+  :global(.station-marker.current) {
+    background: var(--color-secondary-500);
+    font-size: 14px;
+    border-width: 4px;
+    z-index: 1000 !important;
+  }
+
+  :global(.leaflet-popup-content-wrapper) {
+    border-radius: var(--border-radius-md);
+  }
+
+  :global(.leaflet-popup-content) {
+    margin: var(--space-3);
+    font-family: var(--font-family-base);
+  }
+
+  :global(.popup-content) { text-align: center; }
+
+  :global(.popup-title) {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-neutral-800);
+    margin-bottom: var(--space-2);
+  }
+
+  :global(.popup-link) {
+    display: inline-block;
+    margin-top: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background: var(--color-primary-500) !important;
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: var(--border-radius-md);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+  }
+
+  :global(.popup-link:hover) {
+    background: var(--color-primary-600) !important;
+  }
+
+  @media (max-width: 768px) {
+    .mode-tabs {
+      display: flex;
+      width: 100%;
+    }
+
+    .mode-tab {
+      padding: var(--space-3) var(--space-3);
+      font-size: var(--font-size-sm);
+    }
+  }
+</style>

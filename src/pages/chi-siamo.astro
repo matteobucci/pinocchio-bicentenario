@@ -97,6 +97,54 @@ const { data } = aboutPage;
             )}
           </section>
         )}
+
+        <section class="accessibility-section" aria-labelledby="accessibility-heading">
+          <h2 id="accessibility-heading">Accessibilità</h2>
+          <p class="accessibility-intro">
+            Questo sito è realizzato da un'associazione che si occupa di
+            disabilità: l'accessibilità è una priorità, non un'aggiunta. Ecco gli
+            interventi adottati per renderlo fruibile a tutte e tutti.
+          </p>
+          <ul class="accessibility-list" role="list">
+            <li>
+              <strong>Struttura semantica</strong> — uso di HTML semantico
+              (<code>nav</code>, <code>main</code>, <code>article</code>,
+              <code>section</code>) per una navigazione chiara con gli screen reader.
+            </li>
+            <li>
+              <strong>Navigazione da tastiera</strong> — tutte le funzioni sono
+              utilizzabili senza mouse, con indicatori di focus sempre visibili.
+            </li>
+            <li>
+              <strong>Skip link</strong> — collegamento per saltare direttamente
+              al contenuto principale.
+            </li>
+            <li>
+              <strong>Testi alternativi</strong> — tutte le immagini hanno
+              descrizioni <code>alt</code> per chi usa screen reader.
+            </li>
+            <li>
+              <strong>Contrasto dei colori</strong> — rapporto di contrasto
+              conforme allo standard WCAG 2.1 livello AA (minimo 4.5:1).
+            </li>
+            <li>
+              <strong>Etichette ARIA</strong> — ruoli e stati ARIA per componenti
+              interattivi come gallerie e schede a tab.
+            </li>
+            <li>
+              <strong>Galleria accessibile</strong> — navigazione da tastiera
+              (frecce, Esc), gestione del focus e annunci per screen reader.
+            </li>
+            <li>
+              <strong>Trascrizioni dei podcast</strong> — ogni episodio audio è
+              sempre accompagnato dalla trascrizione testuale.
+            </li>
+            <li>
+              <strong>Link esterni segnalati</strong> — i collegamenti che si
+              aprono in una nuova finestra sono indicati anche per gli screen reader.
+            </li>
+          </ul>
+        </section>
       </div>
     </div>
   </div>
@@ -104,7 +152,7 @@ const { data } = aboutPage;
 
 <style>
   .page-header {
-    background: var(--color-secondary-50);
+    background: var(--gradient-hero);
     padding: var(--space-12) 0;
     text-align: center;
   }
@@ -217,5 +265,47 @@ const { data } = aboutPage;
   .social-link:hover {
     background: var(--color-primary-100);
     color: var(--color-primary-700);
+  }
+
+  /* Accessibility */
+  .accessibility-section {
+    margin-top: var(--space-12);
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--color-neutral-200);
+  }
+
+  .accessibility-intro {
+    color: var(--color-neutral-600);
+    max-width: 60ch;
+    margin-bottom: var(--space-6);
+  }
+
+  .accessibility-list {
+    display: grid;
+    gap: var(--space-3);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .accessibility-list li {
+    padding-left: var(--space-6);
+    position: relative;
+  }
+
+  .accessibility-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent-600);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .accessibility-list code {
+    font-family: var(--font-mono, monospace);
+    font-size: 0.9em;
+    background: var(--color-neutral-100);
+    padding: 0.1em 0.35em;
+    border-radius: var(--border-radius-sm);
   }
 </style>

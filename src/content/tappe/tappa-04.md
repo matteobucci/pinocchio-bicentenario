@@ -10,20 +10,12 @@ directions:
   address: Via Giulio Bechi 2/D, Firenze
   coordinates: "43.81684, 11.22590"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+Giulio+Bechi+2+Firenze
-  instructions: >
-    ## Dalla tappa 3 (Via Reginaldo Giuliani)
-
-
-    ### A piedi
-
+  byFoot: >
     *5 minuti.*
 
 
     Procedi verso Via Reginaldo Giuliani, svolta a sinistra e prendi Via Giulio Bechi 2/D.
-
-
-    ### In bici
-
+  byBike: >
     *Circa 1,5–2 km, 6–8 minuti, pianeggiante.*
 
 

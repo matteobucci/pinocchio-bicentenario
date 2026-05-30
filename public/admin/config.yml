@@ -56,7 +56,11 @@ collections:
         fields:
           - { label: "Indirizzo", name: "address", widget: "string" }
           - { label: "Coordinate GPS", name: "coordinates", widget: "string", required: false, hint: "Formato: 43.1234, 11.5678" }
-          - { label: "Indicazioni", name: "instructions", widget: "markdown", required: false }
+          - { label: "🚶 A piedi", name: "byFoot", widget: "markdown", required: false, hint: "Indicazioni a piedi (lascia vuoto se non applicabile)" }
+          - { label: "🚴 In bici", name: "byBike", widget: "markdown", required: false, hint: "Indicazioni in bicicletta" }
+          - { label: "🚗 In auto", name: "byCar", widget: "markdown", required: false, hint: "Indicazioni in automobile" }
+          - { label: "🚌 Mezzi pubblici", name: "byTransit", widget: "markdown", required: false, hint: "Bus, tram o treno" }
+          - { label: "Indicazioni (testo unico, legacy)", name: "instructions", widget: "markdown", required: false, hint: "Usato solo se i campi per modalità sono vuoti" }
           - { label: "Link Google Maps", name: "mapsUrl", widget: "string", required: false }
       - label: "Trascrizione"
         name: "transcript"
@@ -125,3 +129,26 @@ collections:
               - { label: "Spotify", name: "spotify", widget: "string", required: false }
               - { label: "Apple Podcasts", name: "apple", widget: "string", required: false }
               - { label: "RSS Feed", name: "rss", widget: "string", required: false }
+
+      - label: "Punti mappa"
+        name: "map_points"
+        file: "src/content/settings/map-points.json"
+        description: "Punti di servizio mostrati sulla mappa del percorso (bagni, acqua, soste, parcheggi)"
+        fields:
+          - label: "Punti"
+            name: "points"
+            widget: "list"
+            label_singular: "Punto"
+            summary: "{{fields.name}} ({{fields.type}})"
+            fields:
+              - label: "Tipo"
+                name: "type"
+                widget: "select"
+                options:
+                  - { label: "♿ Bagno accessibile", value: "bagno" }
+                  - { label: "🚰 Punto acqua", value: "acqua" }
+                  - { label: "🪑 Area sosta", value: "sosta" }
+                  - { label: "🅿️ Parcheggio accessibile", value: "parcheggio" }
+              - { label: "Nome", name: "name", widget: "string", hint: "Es: Bagno accessibile - Piazza del Mercato" }
+              - { label: "Coordinate GPS", name: "coordinates", widget: "string", hint: "Formato: 43.1234, 11.5678" }
+              - { label: "Descrizione", name: "description", widget: "text", required: false, hint: "Dettagli utili (opzionale)" }

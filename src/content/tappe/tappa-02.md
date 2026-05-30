@@ -10,20 +10,12 @@ directions:
   address: Via della Querciola 44, Castello (Firenze)
   coordinates: "43.81766, 11.23165"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+della+Querciola+44+Castello+Firenze
-  instructions: >
-    ## Dalla tappa 1 (Via della Pietraia)
-
-
-    ### A piedi
-
+  byFoot: >
     *7 minuti.*
 
 
     Procedi verso Via Giuliano Ricci, svolta a sinistra e prendi Via di Castello, svolta a destra e prendi Via della Querciola.
-
-
-    ### In bici
-
+  byBike: >
     *Circa 3–3,5 km, 10–12 minuti, pianeggiante.*
 
 

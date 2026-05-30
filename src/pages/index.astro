@@ -1,6 +1,8 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import TourMap from '../components/TourMap.astro';
 import { getCollection } from 'astro:content';
+import mapPoints from '../content/settings/map-points.json';
 
 // Get all published tappe sorted by order
 const tappe = await getCollection('tappe', ({ data }) => data.published);
@@ -24,7 +26,27 @@ const sortedTappe = tappe.sort((a, b) => a.data.order - b.data.order);
     </div>
   </section>
 
+  <section class="map-preview" aria-labelledby="map-heading">
+    <div class="container">
+      <h2 id="map-heading">Il percorso sulla mappa</h2>
+      <p class="section-intro">
+        Le 12 tappe del percorso tra Firenze e Sesto Fiorentino, con i punti
+        di servizio accessibili lungo il cammino.
+      </p>
+      <TourMap stations={sortedTappe} points={mapPoints.points} height="420px" />
+    </div>
+  </section>
+
   <section class="stations-preview" aria-labelledby="tappe-heading">
+    <svg
+      class="trail-bg"
+      viewBox="0 0 1000 1000"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M 150 -30 C 150 130, 850 180, 850 340 C 850 500, 150 540, 150 700 C 150 860, 850 900, 850 1030" />
+    </svg>
     <div class="container">
       <h2 id="tappe-heading">Le 12 Tappe</h2>
       <p class="section-intro">
@@ -78,8 +100,8 @@ const sortedTappe = tappe.sort((a, b) => a.data.order - b.data.order);
 <style>
   /* Hero */
   .hero {
-    background: linear-gradient(135deg, var(--color-primary-100), var(--color-secondary-100));
-    padding: var(--space-16) 0;
+    background: var(--gradient-hero);
+    padding: var(--space-20) 0;
     text-align: center;
   }
 
@@ -110,9 +132,45 @@ const sortedTappe = tappe.sort((a, b) => a.data.order - b.data.order);
     flex-wrap: wrap;
   }
 
+  /* Map Preview */
+  .map-preview {
+    padding: var(--space-16) 0 0;
+  }
+
   /* Stations Preview */
   .stations-preview {
+    position: relative;
+    overflow: hidden;
     padding: var(--space-16) 0;
+    background: var(--gradient-stations);
+  }
+
+  /* Decorative dashed trail winding behind the cards.
+     preserveAspectRatio="none" stretches it to fill the section at any size;
+     non-scaling-stroke keeps the dashes a uniform screen size so they never distort. */
+  .trail-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    color: var(--color-primary-400);
+    opacity: 0.35;
+  }
+
+  .trail-bg path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 14 20;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .stations-preview .container {
+    position: relative;
+    z-index: 1;
   }
 
   .section-intro {
@@ -131,11 +189,19 @@ const sortedTappe = tappe.sort((a, b) => a.data.order - b.data.order);
 
   .station-card {
     position: relative;
-    transition: transform var(--transition-fast);
+    /* allow the number badge to pop outside the rounded corner */
+    overflow: visible;
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   }
 
   .station-card:hover {
     transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* extra top room so the badge never collides with the title */
+  .station-card .card-body {
+    padding-top: var(--space-8);
   }
 
   .station-card-link {
@@ -152,18 +218,22 @@ const sortedTappe = tappe.sort((a, b) => a.data.order - b.data.order);
 
   .station-number {
     position: absolute;
-    top: var(--space-4);
-    right: var(--space-4);
-    width: 40px;
-    height: 40px;
-    background: var(--color-primary-500);
+    top: -14px;
+    left: -14px;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600));
     color: white;
     border-radius: var(--border-radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
+    font-family: var(--font-family-heading);
     font-weight: var(--font-weight-bold);
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-xl);
+    box-shadow: var(--shadow-primary);
+    border: 3px solid white;
+    z-index: 2;
   }
 
   .station-title {
@@ -191,8 +261,8 @@ const sortedTappe = tappe.sort((a, b) => a.data.order - b.data.order);
 
   /* Podcast CTA */
   .podcast-cta {
-    background: var(--color-accent-50);
-    padding: var(--space-12) 0;
+    background: var(--gradient-podcast);
+    padding: var(--space-16) 0;
     text-align: center;
   }
 

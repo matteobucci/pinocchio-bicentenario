@@ -70,12 +70,28 @@
   --color-info: #476688;
 
   /* ===================
+     SURFACES & GRADIENTS
+     Warm tinted backgrounds to replace flat grays in long sections
+     =================== */
+  --surface-warm: #fbf6ee;          /* soft cream — main alternating section bg */
+  --surface-warm-deep: #f6ecdc;     /* slightly deeper cream */
+  --surface-mint: var(--color-secondary-50);
+  --surface-sky: var(--color-accent-50);
+
+  --gradient-hero: linear-gradient(135deg, var(--color-primary-200) 0%, var(--color-secondary-200) 50%, var(--color-accent-200) 100%);
+  --gradient-warm: linear-gradient(180deg, #fdfaf4 0%, #f6ecdc 100%);
+  --gradient-podcast: linear-gradient(135deg, var(--color-accent-200), var(--color-secondary-200));
+  --gradient-stations: linear-gradient(180deg, #fff6e9 0%, #fdeede 100%);
+
+  /* ===================
      TYPOGRAPHY
      =================== */
 
-  /* Font families - accessible, readable fonts */
-  --font-family-base: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-family-heading: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  /* Font families - accessible, readable fonts.
+     Body: Atkinson Hyperlegible (high legibility for low-vision readers).
+     Heading: Fredoka (rounded, warm, friendly without being childish). */
+  --font-family-base: 'Atkinson Hyperlegible', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-heading: 'Fredoka', 'Atkinson Hyperlegible', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 
   /* Font sizes - using rem for accessibility */
   --font-size-xs: 0.75rem;    /* 12px */
@@ -126,10 +142,11 @@
      BORDERS & RADIUS
      =================== */
 
-  --border-radius-sm: 0.25rem;
-  --border-radius-md: 0.5rem;
-  --border-radius-lg: 0.75rem;
-  --border-radius-xl: 1rem;
+  --border-radius-sm: 0.375rem;
+  --border-radius-md: 0.625rem;
+  --border-radius-lg: 1rem;
+  --border-radius-xl: 1.5rem;
+  --border-radius-2xl: 2rem;
   --border-radius-full: 9999px;
 
   --border-width: 1px;
@@ -139,9 +156,11 @@
      SHADOWS
      =================== */
 
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  /* Warm-tinted shadows (brown base instead of pure black) for a softer feel */
+  --shadow-sm: 0 1px 2px 0 rgb(69 47 31 / 0.06);
+  --shadow-md: 0 4px 10px -2px rgb(69 47 31 / 0.12), 0 2px 4px -2px rgb(69 47 31 / 0.08);
+  --shadow-lg: 0 14px 28px -6px rgb(69 47 31 / 0.16), 0 6px 10px -6px rgb(69 47 31 / 0.1);
+  --shadow-primary: 0 8px 20px -6px rgb(154 107 53 / 0.4);
 
   /* ===================
      TRANSITIONS

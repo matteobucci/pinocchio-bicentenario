@@ -18,13 +18,53 @@ interface Station {
   };
 }
 
+/** A point of interest (toilet, water, rest area, parking) shown on the map. */
+interface MapPoint {
+  type: string;
+  name: string;
+  coordinates?: string;
+  description?: string;
+}
+
 interface Props {
   stations: Station[];
+  points?: MapPoint[];
   currentStation?: number;
   height?: string;
 }
 
-const { stations, currentStation, height = "400px" } = Astro.props;
+const { stations, points = [], currentStation, height = "400px" } = Astro.props;
+
+// Visual + accessible metadata for each POI type. `emoji` is decorative;
+// `label` is the text used by screen readers and the legend.
+const POI_TYPES: Record<string, { emoji: string; label: string }> = {
+  bagno: { emoji: "♿", label: "Bagno accessibile" },
+  acqua: { emoji: "🚰", label: "Punto acqua" },
+  sosta: { emoji: "🪑", label: "Area sosta" },
+  parcheggio: { emoji: "🅿️", label: "Parcheggio accessibile" },
+};
+
+// Parse POIs that have valid coordinates so the script can place markers.
+const poiData = points
+  .filter((p) => p.coordinates && POI_TYPES[p.type])
+  .map((p) => {
+    const coords = p.coordinates!.split(",").map((c) => parseFloat(c.trim()));
+    return {
+      type: p.type,
+      name: p.name,
+      description: p.description || "",
+      emoji: POI_TYPES[p.type].emoji,
+      typeLabel: POI_TYPES[p.type].label,
+      lat: coords[0],
+      lng: coords[1],
+    };
+  })
+  .filter((p) => !isNaN(p.lat) && !isNaN(p.lng));
+
+// Which POI types are actually present — used to render the legend.
+const legendTypes = Object.keys(POI_TYPES).filter((t) =>
+  poiData.some((p) => p.type === t)
+);
 
 // Sort stations by order and extract coordinate data
 const sortedStations = [...stations]
@@ -55,16 +95,6 @@ const avgLat = hasCoordinates
 const avgLng = hasCoordinates
   ? stationData.reduce((sum, s) => sum + s.lng, 0) / stationData.length
   : 11.1989;
-
-// Always provide a text-alternative list from ALL stations (with or without coords)
-const allStationsForList = [...stations]
-  .sort((a, b) => a.data.order - b.data.order)
-  .map(station => ({
-    slug: station.id.replace(/\.md$/, ''),
-    title: station.data.title,
-    order: station.data.order,
-    address: station.data.directions?.address || ''
-  }));
 ---
 
 <!-- Leaflet CSS -->
@@ -89,30 +119,45 @@ const allStationsForList = [...stations]
     <div class="tour-map-placeholder" style={`min-height: ${height};`}>
       <p>
         🗺️ <strong>Mappa interattiva in arrivo.</strong><br />
-        Nel frattempo, ecco l'elenco delle tappe con i relativi indirizzi.
+        Nel frattempo, trovi l'elenco completo delle tappe qui sotto.
       </p>
     </div>
   )}
 
-  <!-- Text alternative — always shown, also acts as fallback if map fails -->
-  <details class="map-text-alternative" open={!hasCoordinates}>
-    <summary>Elenco testuale delle tappe</summary>
-    <ol class="station-list">
-      {allStationsForList.map(station => (
-        <li>
-          <a href={`/tappe/${station.slug}`}>
-            <strong>Tappa {station.order}:</strong> {station.title}
-          </a>
-          {station.address && (
-            <>
-              <br />
-              <span class="station-address">{station.address}</span>
-            </>
-          )}
+  {legendTypes.length > 0 && (
+    <ul class="map-legend" aria-label="Legenda dei punti di servizio sulla mappa">
+      {legendTypes.map((type) => (
+        <li class="map-legend__item">
+          <span class={`poi-icon poi-icon--${type}`} aria-hidden="true">
+            {POI_TYPES[type].emoji}
+          </span>
+          <span>{POI_TYPES[type].label}</span>
         </li>
       ))}
-    </ol>
-  </details>
+    </ul>
+  )}
+
+  <!-- Service points text alternative — POI names/descriptions aren't conveyed
+       by the map markers or legend, so this list is their only text equivalent.
+       (The tappe themselves are listed in full on the page below the map.) -->
+  {poiData.length > 0 && (
+    <details class="map-text-alternative">
+      <summary>Punti di servizio lungo il percorso</summary>
+      <ul class="poi-list">
+        {poiData.map((poi) => (
+          <li>
+            <strong>{poi.typeLabel}:</strong> {poi.name}
+            {poi.description && (
+              <>
+                <br />
+                <span class="station-address">{poi.description}</span>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
+    </details>
+  )}
 </div>
 
 <style>
@@ -148,25 +193,6 @@ const allStationsForList = [...stations]
   .map-text-alternative summary:focus-visible {
     outline: var(--focus-ring-width) solid var(--focus-ring-color);
     outline-offset: var(--focus-ring-offset);
-  }
-
-  .station-list {
-    margin-top: var(--space-3);
-    padding-left: var(--space-6);
-  }
-
-  .station-list li {
-    margin-bottom: var(--space-3);
-    line-height: var(--line-height-relaxed);
-  }
-
-  .station-list a {
-    color: var(--color-primary-600);
-    text-decoration: none;
-  }
-
-  .station-list a:hover {
-    text-decoration: underline;
   }
 
   .station-address {
@@ -212,6 +238,77 @@ const allStationsForList = [...stations]
     transform: scale(1.1);
   }
 
+  /* POI (point of interest) markers */
+  :global(.poi-marker) {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 30px !important;
+    height: 30px !important;
+    border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg);
+    background: white;
+    border: 2px solid var(--color-neutral-300);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+
+  :global(.poi-marker span) {
+    transform: rotate(45deg);
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  :global(.poi-marker--bagno) { border-color: var(--color-info); }
+  :global(.poi-marker--acqua) { border-color: var(--color-secondary-500); }
+  :global(.poi-marker--sosta) { border-color: var(--color-warning); }
+  :global(.poi-marker--parcheggio) { border-color: var(--color-primary-500); }
+
+  /* Legend below the map */
+  .map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-5);
+    list-style: none;
+    margin: var(--space-3) 0 0;
+    padding: var(--space-3);
+    background: var(--color-neutral-50);
+    border-radius: var(--border-radius-md);
+  }
+
+  .map-legend__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-neutral-700);
+  }
+
+  .poi-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--color-neutral-300);
+    font-size: 14px;
+  }
+
+  .poi-icon--bagno { border-color: var(--color-info); }
+  .poi-icon--acqua { border-color: var(--color-secondary-500); }
+  .poi-icon--sosta { border-color: var(--color-warning); }
+  .poi-icon--parcheggio { border-color: var(--color-primary-500); }
+
+  .poi-list {
+    padding-left: var(--space-6);
+  }
+
+  .poi-list li {
+    margin-bottom: var(--space-3);
+    line-height: var(--line-height-relaxed);
+  }
+
   :global(.leaflet-popup-content-wrapper) {
     border-radius: var(--border-radius-md);
   }
@@ -253,8 +350,10 @@ const allStationsForList = [...stations]
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<!-- Polyline decorator: clean triangular direction arrows along the route -->
+<script src="https://unpkg.com/leaflet-polylinedecorator@1.6.0/dist/leaflet.polylineDecorator.js"></script>
 
-<script define:vars={{ stationData, avgLat, avgLng, currentStation }}>
+<script define:vars={{ stationData, poiData, avgLat, avgLng, currentStation }}>
   document.addEventListener('DOMContentLoaded', () => {
     // Initialize map centered on the stations
     const map = L.map('tour-map', {
@@ -263,10 +362,11 @@ const allStationsForList = [...stations]
       scrollWheelZoom: false  // Prevent accidental zoom while scrolling
     });
 
-    // Add OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      maxZoom: 19
+    // Add CARTO Positron tiles — clean, light base so the route and markers stand out
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+      subdomains: 'abcd',
+      maxZoom: 20
     }).addTo(map);
 
     // Create custom icon for each station
@@ -311,15 +411,70 @@ const allStationsForList = [...stations]
 
     // Draw path connecting stations
     if (pathCoords.length > 1) {
+      // White casing underneath for contrast against the light base map
       L.polyline(pathCoords, {
-        color: '#3d7d66',  // secondary-500
-        weight: 3,
-        opacity: 0.7,
-        dashArray: '10, 10',
+        color: '#ffffff',
+        weight: 13,
+        opacity: 1,
         lineCap: 'round',
         lineJoin: 'round'
       }).addTo(map);
+
+      // Bold solid route line on top
+      const routeLine = L.polyline(pathCoords, {
+        color: '#3d7d66',  // secondary-500
+        weight: 8,
+        opacity: 0.95,
+        lineCap: 'round',
+        lineJoin: 'round'
+      }).addTo(map);
+
+      // Clean triangular direction arrows repeated along the route (sense of travel).
+      // Falls back gracefully to just the line if the plugin failed to load.
+      if (L.polylineDecorator) {
+        L.polylineDecorator(routeLine, {
+          patterns: [
+            {
+              offset: 30,
+              repeat: 90,
+              symbol: L.Symbol.arrowHead({
+                pixelSize: 11,
+                headAngle: 50,
+                polygon: true,
+                pathOptions: {
+                  stroke: false,
+                  fillColor: '#ffffff',
+                  fillOpacity: 0.95,
+                },
+              }),
+            },
+          ],
+        }).addTo(map);
+      }
     }
+
+    // Add point-of-interest markers (toilets, water, rest areas, parking)
+    poiData.forEach((poi) => {
+      L.marker([poi.lat, poi.lng], {
+        icon: L.divIcon({
+          className: `poi-marker poi-marker--${poi.type}`,
+          html: `<span>${poi.emoji}</span>`,
+          iconSize: [30, 30],
+          iconAnchor: [15, 30],
+          popupAnchor: [0, -28],
+        }),
+        title: `${poi.typeLabel}: ${poi.name}`,
+        alt: `${poi.typeLabel}: ${poi.name}`,
+      })
+        .addTo(map)
+        .bindPopup(
+          `<div class="popup-content">
+            <div class="popup-title">${poi.typeLabel}</div>
+            <div>${poi.name}</div>
+            ${poi.description ? `<p>${poi.description}</p>` : ''}
+          </div>`
+        );
+    });
 
     // Fit map to show all markers with padding
     if (markers.length > 0) {

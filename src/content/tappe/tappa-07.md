@@ -2,7 +2,17 @@
 title: L'Incontro con la Volpe e il Gatto
 order: 7
 description: Il luogo simbolico dove Pinocchio incontra i due imbroglioni che gli promettono il Campo dei Miracoli. Una delle svolte più importanti della storia, ambientata da Collodi nella zona di Motrone.
-heroImage: https://upload.wikimedia.org/wikipedia/commons/6/6a/Sesto_fiorentino%2C_ikea_%28osmannoro%29.JPG
+heroImage: /images/tappe/tappa-07-1.jpg
+gallery:
+  - image: /images/tappe/tappa-07-1.jpg
+    caption: "Il borgo dell'Osmannoro"
+    alt: "Piazzetta del borgo rurale dell'Osmannoro con case basse a due piani e alcune auto parcheggiate, sotto un cielo sereno"
+  - image: /images/tappe/tappa-07-2.jpg
+    caption: "Angolo di strada nel borgo"
+    alt: "Angolo tra due case coloniche dai muri chiari, con un cartello di strada senza uscita e cielo azzurro"
+  - image: /images/tappe/tappa-07-3.jpg
+    caption: "Una stradina del borgo"
+    alt: "Stradina del borgo dell'Osmannoro fiancheggiata da case rurali, con asfalto ampio e cielo terso"
 podcast:
   episodeTitle: Episodio 7 — L'Incontro con la Volpe e il Gatto
   mp3File: /audio/tappa-07.mp3
@@ -10,28 +20,17 @@ directions:
   address: Via del Motrone, Osmannoro (Sesto Fiorentino)
   coordinates: "43.79934, 11.19983"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+del+Motrone+Osmannoro+Sesto+Fiorentino
-  instructions: >
-    ## Dalla tappa 6 (Piazza Garibaldi, Peretola)
-
-
-    ### In macchina
-
+  byCar: >
     *8–12 minuti.*
 
 
     Via Pistoiese verso Osmannoro → Via Pratese → direzione zona industriale Osmannoro → svolta in Via del Motrone.
-
-
-    ### In bici
-
+  byBike: >
     *Circa 4–5 km, 15–20 minuti, pianeggiante.*
 
 
     Da Piazza Garibaldi verso Via Pistoiese → direzione Osmannoro → Via Pratese → zona industriale dell'Osmannoro → Via del Motrone. Attenzione: Via Pratese può avere traffico intenso e camion, meglio usare tratti laterali quando disponibili.
-
-
-    ### In bus
-
+  byTransit: >
     *15–25 minuti.*
 
 

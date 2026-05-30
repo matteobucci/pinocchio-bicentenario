@@ -86,9 +86,43 @@ Tutte CC BY 3.0 / CC BY-SA 3.0. Autore prevalente: **Sailko**. Crediti pubblicat
 
 Il contenuto è interamente nella nuova pagina `/accessibilita` (3 sezioni: lavori in corso lungo l'itinerario, bagni pubblici, fontanelli, e accessibilità del sito web). Il link nel footer punta a questa pagina.
 
+## Aggiornamento 2026-05-30 — Foto reali e loghi
+
+Ricevuti due materiali nuovi: **`Foto Tappe.zip`** (53 foto, organizzate per nome tappa) e **3 loghi**. I 4 `.docx` e lo zip audio ri-scaricati erano identici a quelli già integrati → nessuna azione.
+
+### Foto integrate (`public/images/tappe/`, campo `gallery`)
+
+Rinominate in `tappa-NN-<descrizione>.<ext>`. Foto disponibili **solo per le tappe 5–12** (per nome cartella); per le **tappe 1–4 nessuna foto** → restano gli hero Wikimedia.
+
+| Tappa | Hero (1ª foto gallery) | N. foto in gallery |
+|---|---|---|
+| 6 — Teatrino di Mangiafoco | `tappa-06-chiesa-peretola.jpg` | 7 (chiesa, statua Garibaldi ×3, tabernacolo ×3) |
+| 7 — Volpe e Gatto | `tappa-07-1.jpg` | 3 (borgo Osmannoro) |
+| 9 — Paese dei Balocchi | `tappa-09-comune.jpg` | 12 (Palazzo Comunale, monumento ai Caduti, murales Pinocchio ×7) |
+| 10 — Teatro del Ciuchino | `tappa-10-piazza-ginori.jpg` | 5 (Piazza Ginori, ex Teatro Niccolini, foto storica, Palazzo Pretorio) |
+| 11 — Osteria Gambero Rosso | `tappa-11-via-porcellane.jpg` | 4 (via Porcellane, cartelli, ingresso osteria) |
+| 12 — Campo dei Miracoli | `tappa-12-1.jpg` | 12 (Villa Gerini, prati, parco, Tumulo Etrusco) |
+
+Le foto "Curiosità"/"Parchetto" sono confluite nella gallery con caption prefissata "Curiosità —" (decisione: tutto in gallery, niente campo schema dedicato). **Tutti gli `alt` sono stati scritti a mano osservando ogni foto.**
+
+### Foto NON pubblicate
+
+- **Tappa 5 (Il Mare)** e **tappa 8 (Isola delle Api)**: le cartelle contenevano **solo screenshot di Google Maps** (no foto reali) → spostate in `content-source/foto-escluse/`, NON pubblicate (anche per copyright). Hero Wikimedia invariato.
+- **Cartella `DUBBI`** (4 foto non assegnate dal cliente): lasciate fuori, da chiarire. Vedi `OPEN-QUESTIONS.md`.
+
+### Loghi (`public/images/`)
+
+| File | Soggetto | Uso |
+|---|---|---|
+| `logo-associazione.png` | AIdel22 — Associazione Italiana delezione del Cromosoma 22 APS | footer "Promosso da" + `site.json` |
+| `partner-radio-aid.svg` | Radio AIdel22 | footer "Promosso da" |
+| `partner-terranova.png` | Terranova (software for sustainable cities) | footer "Promosso da" |
+
+Aggiunta sezione `.footer-partners` in `BaseLayout.astro` (lista loghi su placca bianca per leggibilità sul footer scuro). `site.json` `logo` corretto (puntava a `/images/logo.svg` inesistente).
+
 ## Strategia di sincronizzazione
 
-I `.docx` in `content-source/` sono la **fonte editoriale**, i `.md` in `src/content/stations/` sono la **forma renderizzata**. Se la tua amica manda revisioni, aggiorna il `.docx` corrispondente e riapplica manualmente le modifiche al `.md`.
+I `.docx` in `content-source/` sono la **fonte editoriale**, i `.md` in `src/content/tappe/` sono la **forma renderizzata**. Se arrivano revisioni, aggiorna il `.docx` corrispondente e riapplica manualmente le modifiche al `.md`.
 
 ## Cosa resta da fare
 
@@ -98,6 +132,9 @@ I `.docx` in `content-source/` sono la **fonte editoriale**, i `.md` in `src/con
 | Foto originali Via Bechi e Via Lucchese | Media | Da scattare in loco e rilasciare in CC0/CC BY |
 | Verifica coordinate tappa 11/12 | Media | Coincidenti, da confermare |
 | Durata episodi | Bassa | Funzionalità non bloccante |
-| Foto reali al posto dei monumenti Wikimedia | Bassa | Wikimedia funziona benissimo come fallback |
+| Foto reali tappe 5–12 | ✅ Fatto (2026-05-30) | Gallery integrate. Tappe 5 e 8 escluse (solo mappe) |
+| Foto reali tappe 1–4 | Media | Nessuna foto consegnata → restano hero Wikimedia |
+| Foto reali tappe 5 e 8 | Media | Consegnate solo mappe Google; servono foto dei luoghi |
+| Cartella DUBBI + foto ruotate tappa 6 | Media | Vedi `OPEN-QUESTIONS.md` |
 | Contatti reali dell'associazione | Alta | Sono stati rimossi i finti per non essere fuorvianti |
 | Nomi del team | Media | Idem |

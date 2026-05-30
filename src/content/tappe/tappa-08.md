@@ -10,29 +10,17 @@ directions:
   address: Via Lucchese, Santa Croce all'Osmannoro (Sesto Fiorentino)
   coordinates: "43.80364, 11.18426"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+Lucchese+Santa+Croce+Osmannoro+Sesto+Fiorentino
-  instructions: >
-    ## Dalla tappa 7 (Via del Motrone)
-
-
-    ### In macchina
-
+  byCar: >
     *4–7 minuti senza traffico, fino a 10 minuti nelle ore di punta.*
 
 
     Da Via del Motrone su Via Pratese → direzione Sesto Fiorentino / Osmannoro → sempre dritto su Via Pratese → svolta su Via Lucchese → arrivi nella zona di Santa Croce sull'Osmannoro.
-
-
-    ### In bici
-
+  byBike: >
     *8–12 minuti.*
 
 
     Da Via del Motrone → Via Pratese direzione Sesto Fiorentino → sempre dritto → svolta su Via Lucchese. **Attenzione:** Via Pratese ha traffico pesante (camion e furgoni) e non c'è ciclabile dedicata. Procedere con prudenza.
-
-
-    ### In autobus
-
-
+  byTransit: >
     Dalla fermata su Via Pratese, bus **29** o **30** direzione Sesto Fiorentino / Osmannoro → scendi alle fermate lungo Via Pratese vicino all'incrocio con Via Lucchese → 2–5 minuti a piedi.
 transcript: >
   ## Trascrizione — Episodio 8

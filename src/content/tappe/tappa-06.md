@@ -2,7 +2,29 @@
 title: Il Teatrino di Mangiafoco
 order: 6
 description: Pinocchio entra nel teatro dei burattini e viene riconosciuto dai compagni Arlecchino e Pulcinella. Mangiafoco, severo ma dal cuore buono, lo perdona e gli dona cinque monete d'oro.
-heroImage: https://upload.wikimedia.org/wikipedia/commons/c/c1/Chiesa_di_Santa_Maria_a_Peretola_02.JPG
+heroImage: /images/tappe/tappa-06-chiesa-peretola.jpg
+gallery:
+  - image: /images/tappe/tappa-06-chiesa-peretola.jpg
+    caption: "Chiesa di Santa Maria a Peretola"
+    alt: "Facciata in pietra della Chiesa di Santa Maria a Peretola, con portico ad archi su colonne e campanile a vela"
+  - image: /images/tappe/tappa-06-statua-garibaldi-1.jpg
+    caption: "Monumento a Giuseppe Garibaldi in Piazza Garibaldi"
+    alt: "Statua bronzea di Giuseppe Garibaldi su alto basamento in pietra, ripresa dal basso contro il cielo azzurro"
+  - image: /images/tappe/tappa-06-statua-garibaldi-2.jpg
+    caption: "La statua di Garibaldi vista dalla piazza"
+    alt: "Monumento a Garibaldi al centro di Piazza Garibaldi a Peretola, con edifici e botteghe sullo sfondo"
+  - image: /images/tappe/tappa-06-statua-garibaldi-3.jpg
+    caption: "Particolare del monumento e dell'iscrizione"
+    alt: "Statua di Garibaldi che impugna la sciabola, con l'iscrizione dedicatoria incisa sul basamento"
+  - image: /images/tappe/tappa-06-curiosita-tabernacolo-robbia.jpg
+    caption: "Curiosità — Tabernacolo robbiano nella chiesa"
+    alt: "Tabernacolo in ceramica invetriata di Andrea e Luca della Robbia, con cornice decorata in blu e verde, all'interno della Chiesa di Santa Maria a Peretola"
+  - image: /images/tappe/tappa-06-curiosita-tabernacolo-frontale.jpg
+    caption: "Curiosità — Il tabernacolo, veduta frontale"
+    alt: "Veduta frontale del tabernacolo robbiano con altare e tovaglia in pizzo bianco"
+  - image: /images/tappe/tappa-06-curiosita-chiesa.jpg
+    caption: "Curiosità — Interno della chiesa"
+    alt: "Interno della Chiesa di Santa Maria a Peretola con il tabernacolo robbiano e le panche in legno"
 podcast:
   episodeTitle: Episodio 6 — Il Teatrino di Mangiafoco
   mp3File: /audio/tappa-06.mp3
@@ -10,28 +32,17 @@ directions:
   address: Piazza Garibaldi, Peretola (Firenze)
   coordinates: "43.79711, 11.19683"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Piazza+Garibaldi+Peretola+Firenze
-  instructions: >
-    ## Dalla tappa 5 (Via San Biagio a Petriolo)
-
-
-    ### In auto
-
+  byCar: >
     *5–10 minuti, circa 2 km.*
 
 
     Da Via San Biagio a Petriolo imbocca Via Pistoiese verso Peretola → continua dritto entrando nel centro di Peretola → arrivi in Piazza Garibaldi. Nelle ore di punta Via Pistoiese può rallentare per traffico e semafori.
-
-
-    ### In bici
-
+  byBike: >
     *Circa 2–3 km, 10–15 minuti, quasi tutto pianeggiante.*
 
 
     Da Via San Biagio a Petriolo verso nord-est → raggiungi Via Pistoiese → segui Via Pistoiese verso Peretola → entra nel borgo → Piazza Garibaldi. L'unico punto un po' trafficato è Via Pistoiese, meglio stare sul lato più interno.
-
-
-    ### In bus
-
+  byTransit: >
     *10–20 minuti.*
 
 

@@ -10,52 +10,42 @@ directions:
   address: Via della Pietraia 2, Castello (Firenze)
   coordinates: "43.81423, 11.23009"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+della+Pietraia+2+Castello+Firenze
-  instructions: >
-    ## In treno da Santa Maria Novella
-
-
-    Treno regionale, scendere a Rifredi. Cammina verso Giuliani-Ragazzi del '99, prendi la linea 2, 28 o 80, scendi alla fermata Sestese Crocetta, poi cammina verso Via della Pietraia 40 (16 minuti).
-
-
-    ## In bici da Santa Maria Novella
-
-    *15–18 minuti, pianeggiante.*
+  byBike: >
+    **Da Santa Maria Novella** — *15–18 minuti, pianeggiante.*
 
 
     Dalla Stazione SMN (lato Piazza della Stazione): Via Nazionale → Via Guelfa → Via Santa Caterina d'Alessandria → Via Vittorio Emanuele II (direzione Rifredi) → Via delle Panche → svolta a destra in Via Pietraia fino al numero 2.
 
 
-    ## In macchina da Firenze
+    **Da Sesto Fiorentino** — *25–30 minuti, pianeggiante.*
 
-    *Circa 4,5 km, 12–16 minuti.*
+
+    Stazione di Sesto → Via Antonio Gramsci (direzione Firenze) → Via Vittorio Emanuele II → Via Reginaldo Giuliani (zona nord di Firenze) → Careggi/Rifredi → Via delle Panche → Via Pietraia 2.
+  byCar: >
+    **Da Firenze** — *Circa 4,5 km, 12–16 minuti.*
 
 
     Stazione SMN → Viale Fratelli Rosselli → rotonda Fortezza da Basso → Viale Spartaco Lavagnini → Piazza della Libertà → Via Vittorio Emanuele II verso Rifredi → Via delle Panche → Via Pietraia fino al numero 2.
 
 
-    **Parcheggio gratis** (strisce non blu): zona Castello, Via della Petraia, Via di Castello. A 5–8 minuti di macchina da Via Pietraia. Si consiglia di lasciare l'auto e percorrere le tappe di Castello a piedi.
-
-
-    ## In treno da Sesto Fiorentino
-
-
-    Dalla Stazione di Sesto, 3 minuti a piedi fino alla fermata 2/28 Mazzini/Cairoli. Scendere alla fermata Sestese Undici Agosto. 11 minuti a piedi fino a Via della Pietraia.
-
-
-    ## In bici da Sesto Fiorentino
-
-    *25–30 minuti, pianeggiante.*
-
-
-    Stazione di Sesto → Via Antonio Gramsci (direzione Firenze) → Via Vittorio Emanuele II → Via Reginaldo Giuliani (zona nord di Firenze) → Careggi/Rifredi → Via delle Panche → Via Pietraia 2.
-
-
-    ## In macchina da Sesto
-
-    *Circa 6–7 km, 12–18 minuti.*
+    **Da Sesto** — *Circa 6–7 km, 12–18 minuti.*
 
 
     Stazione di Sesto → Via Antonio Gramsci direzione Firenze → Via Vittorio Emanuele II → Via Reginaldo Giuliani (zona Careggi) → Via delle Panche → Via Pietraia 2.
+
+
+    **Parcheggio gratis** (strisce non blu): zona Castello, Via della Petraia, Via di Castello. A 5–8 minuti di macchina da Via Pietraia. Si consiglia di lasciare l'auto e percorrere le tappe di Castello a piedi.
+  byTransit: >
+    **In treno da Santa Maria Novella**
+
+
+    Treno regionale, scendere a Rifredi. Cammina verso Giuliani-Ragazzi del '99, prendi la linea 2, 28 o 80, scendi alla fermata Sestese Crocetta, poi cammina verso Via della Pietraia 40 (16 minuti).
+
+
+    **In treno da Sesto Fiorentino**
+
+
+    Dalla Stazione di Sesto, 3 minuti a piedi fino alla fermata 2/28 Mazzini/Cairoli. Scendere alla fermata Sestese Undici Agosto. 11 minuti a piedi fino a Via della Pietraia.
 transcript: >
   ## Trascrizione — Episodio 1
 

@@ -1,6 +1,7 @@
 ---
 import SpeedInsights from "@vercel/speed-insights/astro";
 import Analytics from "@vercel/analytics/astro";
+import { ClientRouter } from "astro:transitions";
 
 interface Props {
   title: string;
@@ -22,6 +23,15 @@ const currentPath = Astro.url.pathname;
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- Fonts: Fredoka (rounded, friendly headings) + Atkinson Hyperlegible
+         (body text designed by the Braille Institute for low-vision readers) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Fredoka:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -32,7 +42,11 @@ const currentPath = Astro.url.pathname;
 
     <!-- Preload critical CSS -->
     <link rel="preload" href="/styles/global.css" as="style" />
-    
+
+    <!-- Client-side routing: navigations swap content without a full reload,
+         so the persistent station drawer stays mounted and never rebuilds. -->
+    <ClientRouter />
+
     <Analytics />
   </head>
   <body>
@@ -121,6 +135,52 @@ const currentPath = Astro.url.pathname;
               12 episodi con trascrizione completa, disponibili in ogni tappa del percorso.
             </p>
           </div>
+        </div>
+
+        <div class="footer-partners">
+          <h3 class="footer-subtitle">Promosso da</h3>
+          <ul class="partner-logos" role="list">
+            <li>
+              <a
+                href="https://aidel22.it/"
+                class="partner-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="AIdel22 — Associazione Italiana delezione del Cromosoma 22 APS (si apre in una nuova scheda)"
+              >
+                <img
+                  src="/images/logo-associazione.png"
+                  alt="AIdel22 — Associazione Italiana delezione del Cromosoma 22 APS"
+                  class="partner-logo"
+                  loading="lazy"
+                />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://webradio.aidel22.it/"
+                class="partner-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Radio AIdel22 (si apre in una nuova scheda)"
+              >
+                <img
+                  src="/images/partner-radio-aid.svg"
+                  alt="Radio AIdel22"
+                  class="partner-logo"
+                  loading="lazy"
+                />
+              </a>
+            </li>
+            <li>
+              <img
+                src="/images/partner-terranova.png"
+                alt="Terranova — software for sustainable cities"
+                class="partner-logo"
+                loading="lazy"
+              />
+            </li>
+          </ul>
         </div>
 
         <div class="footer-bottom">
@@ -254,6 +314,50 @@ const currentPath = Astro.url.pathname;
 
       .footer-links a:hover {
         color: white;
+      }
+
+      .footer-partners {
+        border-top: 1px solid var(--color-neutral-700);
+        padding-top: var(--space-6);
+        margin-bottom: var(--space-8);
+        text-align: center;
+      }
+
+      .footer-partners .footer-subtitle {
+        margin-bottom: var(--space-5);
+      }
+
+      .partner-logos {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-8);
+      }
+
+      .partner-link {
+        display: inline-flex;
+        border-radius: var(--border-radius-md);
+        transition: transform var(--transition-fast), opacity var(--transition-fast);
+      }
+
+      .partner-link:hover {
+        transform: translateY(-2px);
+        opacity: 0.9;
+      }
+
+      /* White plate so dark logos stay legible on the dark footer */
+      .partner-logo {
+        height: 56px;
+        width: auto;
+        max-width: 220px;
+        object-fit: contain;
+        background: white;
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--border-radius-md);
       }
 
       .footer-bottom {

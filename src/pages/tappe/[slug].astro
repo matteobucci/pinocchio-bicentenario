@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import StationDrawer from '../../components/StationDrawer.astro';
+import DirectionsSection from '../../components/DirectionsSection.astro';
 import { getCollection, render } from 'astro:content';
 import { marked } from 'marked';
 
@@ -23,8 +24,32 @@ const sortedTappe = allTappe.sort((a, b) => a.data.order - b.data.order);
 
 const { data } = tappa;
 
-// Parse markdown in directions.instructions
-const directionsHtml = data.directions?.instructions ? await marked.parse(data.directions.instructions) : null;
+// Build the previous/current/next points for the directions mini-map.
+const parseCoords = (c?: string): [number, number] | null => {
+  if (!c) return null;
+  const [lat, lng] = c.split(',').map((n) => parseFloat(n.trim()));
+  return Number.isNaN(lat) || Number.isNaN(lng) ? null : [lat, lng];
+};
+
+const toPoint = (t: (typeof sortedTappe)[number]) => {
+  const coords = parseCoords(t.data.directions?.coordinates);
+  if (!coords) return null;
+  return {
+    order: t.data.order,
+    title: t.data.title,
+    slug: t.id.replace(/\.md$/, ''),
+    lat: coords[0],
+    lng: coords[1],
+  };
+};
+
+const currentIndex = sortedTappe.findIndex((t) => t.data.order === data.order);
+const currentPoint = toPoint(tappa);
+const prevPoint = currentIndex > 0 ? toPoint(sortedTappe[currentIndex - 1]) : null;
+const nextPoint =
+  currentIndex >= 0 && currentIndex < sortedTappe.length - 1
+    ? toPoint(sortedTappe[currentIndex + 1])
+    : null;
 
 // Parse markdown in transcript
 const transcriptHtml = data.transcript ? await marked.parse(data.transcript) : null;
@@ -117,15 +142,20 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
     {data.podcast && (
       <section class="podcast-section" aria-labelledby="podcast-heading">
         <div class="container">
-          <h2 id="podcast-heading" class="sr-only">Ascolta il podcast</h2>
           <div class="podcast-player">
-            <div class="podcast-info">
-              {data.podcast.episodeTitle && (
-                <p class="podcast-title">{data.podcast.episodeTitle}</p>
-              )}
-              {data.podcast.duration && (
-                <p class="podcast-duration">Durata: {data.podcast.duration}</p>
-              )}
+            <div class="podcast-header">
+              <span class="podcast-icon" aria-hidden="true">🎧</span>
+              <div class="podcast-header-text">
+                <h2 id="podcast-heading" class="podcast-eyebrow">Ascolta l'episodio</h2>
+                {data.podcast.episodeTitle && (
+                  <p class="podcast-title">{data.podcast.episodeTitle}</p>
+                )}
+                {data.podcast.duration && (
+                  <p class="podcast-duration">
+                    <span aria-hidden="true">⏱️</span> Durata: {data.podcast.duration}
+                  </p>
+                )}
+              </div>
             </div>
 
             {/* Video Player (mp4) */}
@@ -146,6 +176,9 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
             {/* MP3 Player */}
             {!data.podcast.videoFile && data.podcast.mp3File && (
               <div class="audio-player">
+                <p class="audio-hint">
+                  <span aria-hidden="true">▶</span> Premi play per ascoltare la storia di questa tappa
+                </p>
                 <audio
                   controls
                   preload="metadata"
@@ -157,31 +190,33 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
               </div>
             )}
 
-            <div class="podcast-links">
-              <span class="podcast-links-label">Ascolta su:</span>
-              {data.podcast.spotifyUrl && (
-                <a
-                  href={data.podcast.spotifyUrl}
-                  class="podcast-link spotify"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Spotify
-                  <span class="sr-only">(apre in nuova finestra)</span>
-                </a>
-              )}
-              {data.podcast.applePodcastsUrl && (
-                <a
-                  href={data.podcast.applePodcastsUrl}
-                  class="podcast-link apple"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Apple Podcasts
-                  <span class="sr-only">(apre in nuova finestra)</span>
-                </a>
-              )}
-            </div>
+            {(data.podcast.spotifyUrl || data.podcast.applePodcastsUrl) && (
+              <div class="podcast-links">
+                <span class="podcast-links-label">Oppure ascolta su:</span>
+                {data.podcast.spotifyUrl && (
+                  <a
+                    href={data.podcast.spotifyUrl}
+                    class="podcast-link spotify"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span aria-hidden="true">🎵</span> Spotify
+                    <span class="sr-only">(apre in nuova finestra)</span>
+                  </a>
+                )}
+                {data.podcast.applePodcastsUrl && (
+                  <a
+                    href={data.podcast.applePodcastsUrl}
+                    class="podcast-link apple"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span aria-hidden="true"></span> Apple Podcasts
+                    <span class="sr-only">(apre in nuova finestra)</span>
+                  </a>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -223,31 +258,13 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
             <Content />
           </div>
 
-          {data.directions && (
-            <section class="directions-section" aria-labelledby="directions-heading">
-              <h2 id="directions-heading">Come arrivarci</h2>
-              <address class="directions-address">
-                <strong>{data.directions.address}</strong>
-              </address>
-
-              {directionsHtml && (
-                <div class="directions-instructions prose">
-                  <Fragment set:html={directionsHtml} />
-                </div>
-              )}
-
-              {data.directions.mapsUrl && (
-                <a
-                  href={data.directions.mapsUrl}
-                  class="btn btn-secondary"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Apri in Google Maps
-                  <span class="sr-only">(nuova finestra)</span>
-                </a>
-              )}
-            </section>
+          {data.directions && currentPoint && (
+            <DirectionsSection
+              directions={data.directions}
+              current={currentPoint}
+              prev={prevPoint}
+              next={nextPoint}
+            />
           )}
         </div>
 
@@ -340,63 +357,52 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
 </BaseLayout>
 
 <script>
-  // Tab functionality
-  const tabs = document.querySelectorAll('[role="tab"]');
-  const panels = document.querySelectorAll('[role="tabpanel"]');
+  // Tab functionality — scoped per tablist so independent groups (the main
+  // Details/Transcript tabs and the "Come arrivare" mode selector) don't
+  // interfere with each other.
+  function setupTablist(tablist: Element) {
+    const tabs = Array.from(tablist.querySelectorAll<HTMLElement>('[role="tab"]'));
+    if (tabs.length === 0) return;
 
-  function activateTab(tab: Element) {
-    // Deactivate all tabs
-    tabs.forEach((t) => {
-      t.setAttribute('aria-selected', 'false');
-      t.setAttribute('tabindex', '-1');
-      t.classList.remove('active');
+    function activateTab(tab: HTMLElement, setFocus = true) {
+      tabs.forEach((t) => {
+        const selected = t === tab;
+        t.setAttribute('aria-selected', selected ? 'true' : 'false');
+        t.tabIndex = selected ? 0 : -1;
+        t.classList.toggle('active', selected);
+        const panel = document.getElementById(t.getAttribute('aria-controls') || '');
+        if (panel) panel.hidden = !selected;
+      });
+      if (setFocus) tab.focus();
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => activateTab(tab));
+
+      tab.addEventListener('keydown', (e) => {
+        const key = (e as KeyboardEvent).key;
+        let newTab: HTMLElement | null = null;
+        const i = tabs.indexOf(tab);
+
+        if (key === 'ArrowRight' || key === 'ArrowDown') {
+          newTab = tabs[(i + 1) % tabs.length];
+        } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
+          newTab = tabs[(i - 1 + tabs.length) % tabs.length];
+        } else if (key === 'Home') {
+          newTab = tabs[0];
+        } else if (key === 'End') {
+          newTab = tabs[tabs.length - 1];
+        }
+
+        if (newTab) {
+          e.preventDefault();
+          activateTab(newTab);
+        }
+      });
     });
-
-    // Hide all panels
-    panels.forEach((p) => {
-      p.setAttribute('hidden', '');
-    });
-
-    // Activate selected tab
-    tab.setAttribute('aria-selected', 'true');
-    tab.removeAttribute('tabindex');
-    tab.classList.add('active');
-
-    // Show associated panel
-    const panelId = tab.getAttribute('aria-controls');
-    const panel = document.getElementById(panelId!);
-    panel?.removeAttribute('hidden');
-
-    // Focus management
-    (tab as HTMLElement).focus();
   }
 
-  tabs.forEach((tab) => {
-    tab.addEventListener('click', () => activateTab(tab));
-
-    // Keyboard navigation
-    tab.addEventListener('keydown', (e) => {
-      const key = (e as KeyboardEvent).key;
-      let newTab: Element | null = null;
-
-      if (key === 'ArrowRight' || key === 'ArrowDown') {
-        const currentIndex = Array.from(tabs).indexOf(tab);
-        newTab = tabs[(currentIndex + 1) % tabs.length];
-      } else if (key === 'ArrowLeft' || key === 'ArrowUp') {
-        const currentIndex = Array.from(tabs).indexOf(tab);
-        newTab = tabs[(currentIndex - 1 + tabs.length) % tabs.length];
-      } else if (key === 'Home') {
-        newTab = tabs[0];
-      } else if (key === 'End') {
-        newTab = tabs[tabs.length - 1];
-      }
-
-      if (newTab) {
-        e.preventDefault();
-        activateTab(newTab);
-      }
-    });
-  });
+  document.querySelectorAll('[role="tablist"]').forEach(setupTablist);
 
   // Gallery functionality
   const galleryElement = document.querySelector('[data-gallery]');
@@ -537,8 +543,10 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
 
   /* Header */
   .station-header {
-    background: var(--color-neutral-100);
+    background: var(--gradient-warm);
+    padding-top: var(--space-6);
     padding-bottom: var(--space-8);
+    border-bottom: 1px solid var(--color-primary-100);
   }
 
   .hero-image {
@@ -637,61 +645,115 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
   .station-title-section {
     display: flex;
     align-items: center;
-    gap: var(--space-4);
+    gap: var(--space-5);
+    margin-top: var(--space-6);
   }
 
   .station-number {
-    width: 60px;
-    height: 60px;
-    background: var(--color-primary-500);
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, var(--color-primary-400), var(--color-primary-600));
     color: white;
     border-radius: var(--border-radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: var(--font-size-2xl);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-3xl);
     font-weight: var(--font-weight-bold);
     flex-shrink: 0;
+    box-shadow: var(--shadow-primary);
+    border: 3px solid white;
+  }
+
+  .station-title-section h1 {
+    margin-bottom: 0;
   }
 
   /* Podcast section */
   .podcast-section {
-    padding: var(--space-6) 0;
-    background: var(--color-accent-50);
+    padding: var(--space-8) 0;
   }
 
   .podcast-player {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    gap: var(--space-5);
+    background: var(--gradient-podcast);
+    border: 1px solid var(--color-accent-200);
+    border-radius: var(--border-radius-2xl);
+    padding: var(--space-8);
+    box-shadow: var(--shadow-md);
+    max-width: 760px;
+    margin: 0 auto;
   }
 
-  .podcast-info {
+  .podcast-header {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: var(--space-4);
-    align-items: baseline;
   }
 
-  .podcast-title {
+  .podcast-icon {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background: white;
+    border-radius: var(--border-radius-full);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .podcast-header-text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .podcast-eyebrow {
+    font-size: var(--font-size-sm);
     font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     color: var(--color-accent-700);
     margin: 0;
   }
 
+  .podcast-title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-accent-900);
+    margin: 0;
+    line-height: var(--line-height-tight);
+  }
+
   .podcast-duration {
     font-size: var(--font-size-sm);
-    color: var(--color-neutral-600);
+    color: var(--color-accent-700);
     margin: 0;
   }
 
   .audio-player {
     width: 100%;
+    background: white;
+    border-radius: var(--border-radius-lg);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .audio-hint {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-accent-700);
+    margin: 0 0 var(--space-3);
   }
 
   .audio-player audio {
     width: 100%;
-    max-width: 500px;
   }
 
   .video-player {
@@ -700,8 +762,7 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
 
   .video-player video {
     width: 100%;
-    max-width: 720px;
-    border-radius: var(--border-radius-md);
+    border-radius: var(--border-radius-lg);
     background: black;
   }
 
@@ -714,24 +775,28 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
 
   .podcast-links-label {
     font-size: var(--font-size-sm);
-    color: var(--color-neutral-600);
+    color: var(--color-accent-700);
+    font-weight: var(--font-weight-medium);
   }
 
   .podcast-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
     padding: var(--space-2) var(--space-4);
     background: white;
-    border-radius: var(--border-radius-md);
+    border-radius: var(--border-radius-full);
     text-decoration: none;
     font-weight: var(--font-weight-medium);
     font-size: var(--font-size-sm);
     color: var(--color-neutral-700);
     box-shadow: var(--shadow-sm);
-    transition: all var(--transition-fast);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   }
 
   .podcast-link:hover {
     box-shadow: var(--shadow-md);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
   }
 
   /* Tabs */
@@ -739,32 +804,47 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
     padding: var(--space-8) 0;
   }
 
+  /* Segmented pill control — horizontal, big tap targets */
   .tabs {
-    display: flex;
-    gap: var(--space-1);
-    border-bottom: 2px solid var(--color-neutral-200);
-    margin-bottom: var(--space-6);
+    display: inline-flex;
+    flex-direction: row;
+    gap: var(--space-2);
+    padding: var(--space-2);
+    margin-bottom: var(--space-8);
+    background: var(--color-primary-100);
+    border-radius: var(--border-radius-full);
+    max-width: 100%;
   }
 
   .tab-button {
-    padding: var(--space-3) var(--space-6);
+    flex: 1 1 auto;
+    padding: var(--space-3) var(--space-8);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-lg);
     font-weight: var(--font-weight-medium);
-    color: var(--color-neutral-600);
+    color: var(--color-primary-700);
     background: transparent;
     border: none;
-    border-bottom: 2px solid transparent;
-    margin-bottom: -2px;
+    border-radius: var(--border-radius-full);
     cursor: pointer;
-    transition: all var(--transition-fast);
+    white-space: nowrap;
+    transition: background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
   }
 
   .tab-button:hover {
-    color: var(--color-neutral-900);
+    color: var(--color-primary-900);
+    background: rgb(255 255 255 / 0.5);
   }
 
   .tab-button.active {
-    color: var(--color-primary-600);
-    border-bottom-color: var(--color-primary-600);
+    color: var(--color-primary-700);
+    background: white;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tab-button:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: 2px;
   }
 
   .tab-panel {
@@ -774,23 +854,6 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
-  }
-
-  /* Directions */
-  .directions-section {
-    margin-top: var(--space-10);
-    padding-top: var(--space-8);
-    border-top: 1px solid var(--color-neutral-200);
-  }
-
-  .directions-address {
-    font-style: normal;
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--space-4);
-  }
-
-  .directions-instructions {
-    margin-bottom: var(--space-4);
   }
 
   /* Transcript */

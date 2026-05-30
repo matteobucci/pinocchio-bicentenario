@@ -1,0 +1,28 @@
+{
+  "points": [
+    {
+      "type": "bagno",
+      "name": "Bagno accessibile (esempio)",
+      "coordinates": "43.81684, 11.22590",
+      "description": "Servizi igienici accessibili con accesso a livello. Sostituisci o elimina questo punto dal CMS."
+    },
+    {
+      "type": "acqua",
+      "name": "Punto acqua (esempio)",
+      "coordinates": "43.81342, 11.23110",
+      "description": "Fontanella pubblica. Sostituisci o elimina questo punto dal CMS."
+    },
+    {
+      "type": "sosta",
+      "name": "Area sosta (esempio)",
+      "coordinates": "43.79934, 11.19983",
+      "description": "Panchine e zona ombreggiata per riposare. Sostituisci o elimina questo punto dal CMS."
+    },
+    {
+      "type": "parcheggio",
+      "name": "Parcheggio accessibile (esempio)",
+      "coordinates": "43.80364, 11.18426",
+      "description": "Posti riservati nelle vicinanze del percorso. Sostituisci o elimina questo punto dal CMS."
+    }
+  ]
+}

@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import TourMap from '../../components/TourMap.astro';
 import { getCollection } from 'astro:content';
+import mapPoints from '../../content/settings/map-points.json';
 
 const tappe = await getCollection('tappe', ({ data }) => data.published);
 const sortedTappe = tappe.sort((a, b) => a.data.order - b.data.order);
@@ -25,7 +26,7 @@ const sortedTappe = tappe.sort((a, b) => a.data.order - b.data.order);
   <section class="map-section" aria-labelledby="map-heading">
     <div class="container">
       <h2 id="map-heading" class="sr-only">Mappa del percorso</h2>
-      <TourMap stations={sortedTappe} height="350px" />
+      <TourMap stations={sortedTappe} points={mapPoints.points} height="350px" />
     </div>
   </section>
 
@@ -113,14 +114,14 @@ const sortedTappe = tappe.sort((a, b) => a.data.order - b.data.order);
 
 <style>
   .page-header {
-    background: var(--color-primary-50);
+    background: var(--gradient-hero);
     padding: var(--space-12) 0;
     text-align: center;
   }
 
   .map-section {
     padding: var(--space-8) 0;
-    background: var(--color-neutral-100);
+    background: var(--surface-mint);
   }
 
   .page-intro {

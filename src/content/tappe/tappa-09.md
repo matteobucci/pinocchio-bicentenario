@@ -2,7 +2,44 @@
 title: Il Paese dei Balocchi
 order: 9
 description: Il luogo dove non ci sono compiti né scuola e tutto è divertimento. Pinocchio ci arriva con l'amico Lucignolo e scopre, troppo tardi, che chi pensa solo a giocare si trasforma in un asinello.
-heroImage: https://upload.wikimedia.org/wikipedia/commons/7/7c/Sesto%2C_comune_in_piazza_vittorio_veneto_01.JPG
+heroImage: /images/tappe/tappa-09-comune.jpg
+gallery:
+  - image: /images/tappe/tappa-09-comune.jpg
+    caption: "Il Palazzo Comunale di Sesto Fiorentino"
+    alt: "Facciata del Palazzo Comunale di Sesto Fiorentino, edificio ottocentesco color ocra con doppio loggiato ad archi, e auto parcheggiate nella piazza antistante"
+  - image: /images/tappe/tappa-09-1.jpg
+    caption: "Monumento ai Caduti in Piazza Vittorio Veneto"
+    alt: "Monumento ai Caduti con figura alata bronzea, circondato da grandi cedri, in Piazza Vittorio Veneto al crepuscolo"
+  - image: /images/tappe/tappa-09-2.jpg
+    caption: "Piazza Vittorio Veneto al tramonto"
+    alt: "Ampia veduta di Piazza Vittorio Veneto con il monumento ai Caduti sulla destra e il filare di alberi, al tramonto"
+  - image: /images/tappe/tappa-09-statua-1.jpg
+    caption: "Il monumento ai Caduti"
+    alt: "Monumento ai Caduti per la Patria con figura allegorica alata in cima al basamento, cielo azzurro sullo sfondo"
+  - image: /images/tappe/tappa-09-statua-2.jpg
+    caption: "Il monumento, altra veduta"
+    alt: "Veduta laterale del monumento ai Caduti con la figura alata e gli edifici della piazza sullo sfondo"
+  - image: /images/tappe/tappa-09-curiosita-murales-1.jpg
+    caption: "Curiosità — Murale dedicato a Pinocchio"
+    alt: "Murale lungo un muretto in Piazza del Mercato con scene dipinte della storia di Pinocchio, fra cui la Fata Turchina e il burattino"
+  - image: /images/tappe/tappa-09-curiosita-murales-2.jpg
+    caption: "Curiosità — Il murale Sestreet 2020"
+    alt: "Parete dipinta con pannelli ad arco che raffigurano personaggi di Pinocchio e la scritta Sestreet 2020"
+  - image: /images/tappe/tappa-09-curiosita-murales-3.jpg
+    caption: "Curiosità — Pannello del murale"
+    alt: "Pannello dipinto del murale dedicato a Pinocchio in Piazza del Mercato a Sesto Fiorentino"
+  - image: /images/tappe/tappa-09-curiosita-murales-4.jpg
+    caption: "Curiosità — Pannello del murale"
+    alt: "Pannello dipinto del murale dedicato a Pinocchio in Piazza del Mercato a Sesto Fiorentino"
+  - image: /images/tappe/tappa-09-curiosita-murales-5.jpg
+    caption: "Curiosità — Pannello del murale"
+    alt: "Pannello dipinto del murale dedicato a Pinocchio in Piazza del Mercato a Sesto Fiorentino"
+  - image: /images/tappe/tappa-09-curiosita-murales-6.jpg
+    caption: "Curiosità — Pannello del murale"
+    alt: "Pannello dipinto del murale dedicato a Pinocchio in Piazza del Mercato a Sesto Fiorentino"
+  - image: /images/tappe/tappa-09-curiosita-murales-7.jpg
+    caption: "Curiosità — Pannello del murale"
+    alt: "Pannello dipinto del murale dedicato a Pinocchio in Piazza del Mercato a Sesto Fiorentino"
 podcast:
   episodeTitle: Episodio 9 — Il Paese dei Balocchi
   mp3File: /audio/tappa-09.mp3
@@ -10,29 +47,17 @@ directions:
   address: Piazza Vittorio Veneto, Sesto Fiorentino
   coordinates: "43.83186, 11.19918"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Piazza+Vittorio+Veneto+Sesto+Fiorentino
-  instructions: >
-    ## Dalla tappa 8 (Via Lucchese)
-
-
-    ### In macchina
-
+  byCar: >
     *10–15 minuti, fino a 20 minuti nelle ore di punta.*
 
 
     Da Via Lucchese direzione Sesto Fiorentino → Via Pratese → sempre dritto seguendo le indicazioni per Sesto centro → Via del Termine / Via Gramsci → Piazza Vittorio Veneto.
-
-
-    ### In bici
-
+  byBike: >
     *15–20 minuti.*
 
 
     Da Via Lucchese → Via Pratese direzione Sesto Fiorentino → indicazioni per Sesto centro → zona urbana → Piazza Vittorio Veneto.
-
-
-    ### In autobus
-
-
+  byTransit: >
     Fermata su Via Pratese (zona Osmannoro) → bus **29** o **30** direzione Sesto Fiorentino → scendi in una delle fermate del centro (Sesto FS / Piazza Galvani o vicine al centro storico) → 5–10 minuti a piedi fino a Piazza Vittorio Veneto.
 transcript: >
   ## Trascrizione — Episodio 9

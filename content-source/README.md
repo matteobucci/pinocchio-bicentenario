@@ -22,6 +22,20 @@ I file audio del podcast sono in `public/audio/` in formato `tappa-NN.{mp3,mp4}`
 
 Sorgente: zip WeTransfer ricevuto, originariamente con nomi `1 tappa.mp3` … `12 tappa.mp4`.
 
+## Foto delle tappe
+
+Ricevute il 2026-05-30 (`Foto Tappe.zip`). Importate in `public/images/tappe/` come `tappa-NN-*` e collegate al campo `gallery` delle tappe **5–12** (le 1–4 non avevano foto). Dettaglio in `INTEGRATION.md`.
+
+- `foto-escluse/` — screenshot di Google Maps (tappe 5 e 8) **non pubblicati**: non sono foto reali e pongono problemi di copyright.
+
+## Loghi
+
+In `public/images/`: `logo-associazione.png` (AIdel22), `partner-radio-aid.svg` (Radio AIdel22), `partner-terranova.png` (sponsor). Mostrati nel footer ("Promosso da").
+
+## Domande aperte
+
+Vedi `OPEN-QUESTIONS.md` — punti da chiarire con il cliente.
+
 ## Strategia di sincronizzazione
 
 I `.docx` qui dentro sono la **fonte editoriale**, i `.md` in `src/content/tappe/` sono la **forma renderizzata**. Se arrivano revisioni, aggiorna il `.docx` corrispondente e riapplica manualmente al `.md`.

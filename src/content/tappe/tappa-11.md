@@ -2,7 +2,20 @@
 title: L'Osteria del Gambero Rosso
 order: 11
 description: "Un'osteria accogliente piena di profumi, dove Pinocchio si ferma a riposare. Ma anche qui c'è una lezione: bisogna sapere quando è il momento di rimettersi in cammino."
-heroImage: https://upload.wikimedia.org/wikipedia/commons/3/30/Museo_della_Porcellana_di_Doccia%2C_sesto_fiorentino%2C_Richard-Ginori.JPG
+heroImage: /images/tappe/tappa-11-via-porcellane.jpg
+gallery:
+  - image: /images/tappe/tappa-11-via-porcellane.jpg
+    caption: "Via delle Porcellane angolo via Giotto a Colonnata"
+    alt: "Incrocio fra via delle Porcellane e via Giotto a Colonnata, con una casa gialla con persiane verdi e la targa stradale"
+  - image: /images/tappe/tappa-11-cartello-via-giotto.png
+    caption: "Cartello in via Giotto 70"
+    alt: "Edificio all'angolo di via Giotto 70 a Colonnata, con strisce pedonali in primo piano"
+  - image: /images/tappe/tappa-11-cartello-tappe.jpg
+    caption: "Cartello «Sulle tracce di Pinocchio» — L'osteria del Gambero Rosso"
+    alt: "Cartello informativo del percorso Sulle tracce di Pinocchio dedicato all'osteria del Gambero Rosso a Colonnata, con citazione di Collodi e mappa delle tappe"
+  - image: /images/tappe/tappa-11-curiosita-ingresso-osteria.jpg
+    caption: "Curiosità — L'ingresso originale dell'osteria"
+    alt: "Cortile con muri gialli e pavimentazione in pietra, dove si trovava l'ingresso originale dell'osteria, contrassegnato dal civico 8"
 podcast:
   episodeTitle: Episodio 11 — L'Osteria del Gambero Rosso
   videoFile: /audio/tappa-11.mp4
@@ -10,29 +23,17 @@ directions:
   address: Via delle Porcellane, Sesto Fiorentino
   coordinates: "43.83717, 11.21374"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+delle+Porcellane+Sesto+Fiorentino
-  instructions: >
-    ## Dalla tappa 10 (Piazza Ginori)
-
-
-    ### In macchina
-
+  byCar: >
     *5–10 minuti.*
 
 
     Da Piazza Ginori → Via Gramsci direzione nord → indicazioni per la zona industriale / Osmannoro–Quinto Basso → Via Lucchese o strade parallele locali → Via delle Porcellane.
-
-
-    ### In bici
-
+  byBike: >
     *8–12 minuti.*
 
 
     Da Piazza Ginori → Via Gramsci direzione nord → zona industriale (Quinto Basso / Osmannoro) → Via Lucchese → Via delle Porcellane.
-
-
-    ### In autobus
-
-
+  byTransit: >
     Da Piazza Ginori cammina fino alle fermate su Via Gramsci → bus **57** o **64** (in base alla tratta attiva) direzione Quinto Basso / Osmannoro → scendi alla fermata più vicina a Via Lucchese / Via delle Porcellane → 2–5 minuti a piedi.
 transcript: >
   ## Trascrizione — Episodio 11

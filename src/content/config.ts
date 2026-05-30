@@ -24,6 +24,13 @@ const tappeCollection = defineCollection({
     directions: z.object({
       address: z.string(),
       coordinates: z.string().optional(),
+      // Per-mode directions (markdown). The detail page builds a segmented
+      // selector from whichever of these are present.
+      byFoot: z.string().optional(),     // A piedi 🚶
+      byBike: z.string().optional(),     // In bici 🚴
+      byCar: z.string().optional(),      // In auto 🚗
+      byTransit: z.string().optional(),  // Mezzi pubblici (bus/treno) 🚌
+      // Legacy single blob — kept as a fallback for content not yet split.
       instructions: z.string().optional(),
       mapsUrl: z.string().optional(),
     }).optional(),

@@ -38,7 +38,7 @@ body {
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
   color: var(--color-neutral-900);
-  background-color: var(--color-neutral-50);
+  background-color: var(--surface-warm);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -73,9 +73,10 @@ button {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-family-heading);
-  font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
-  color: var(--color-neutral-900);
+  letter-spacing: -0.01em;
+  color: var(--color-primary-800);
 }
 
 h1 {
@@ -197,12 +198,13 @@ a:hover {
   justify-content: center;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-6);
+  font-family: var(--font-family-heading);
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  line-height: 1;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.1;
   text-decoration: none;
-  border-radius: var(--border-radius-md);
-  transition: all var(--transition-fast);
+  border-radius: var(--border-radius-full);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
   cursor: pointer;
   border: var(--border-width-2) solid transparent;
 }
@@ -212,9 +214,18 @@ a:hover {
   outline-offset: var(--focus-ring-offset);
 }
 
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
 .btn-primary {
   background-color: var(--color-primary-600);
   color: white;
+  box-shadow: var(--shadow-primary);
 }
 
 .btn-primary:hover {
@@ -224,6 +235,7 @@ a:hover {
 .btn-secondary {
   background-color: var(--color-secondary-500);
   color: white;
+  box-shadow: 0 8px 20px -6px rgb(61 125 102 / 0.4);
 }
 
 .btn-secondary:hover {
@@ -231,14 +243,14 @@ a:hover {
 }
 
 .btn-outline {
-  background-color: transparent;
-  border-color: var(--color-neutral-300);
-  color: var(--color-neutral-700);
+  background-color: white;
+  border-color: var(--color-primary-200);
+  color: var(--color-primary-700);
 }
 
 .btn-outline:hover {
-  background-color: var(--color-neutral-100);
-  border-color: var(--color-neutral-400);
+  background-color: var(--color-primary-50);
+  border-color: var(--color-primary-300);
 }
 
 /* ===================
@@ -247,8 +259,9 @@ a:hover {
 
 .card {
   background: white;
-  border-radius: var(--border-radius-lg);
+  border-radius: var(--border-radius-xl);
   box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-primary-100);
   overflow: hidden;
 }
 
@@ -260,47 +273,49 @@ a:hover {
    TABS (Accessible)
    =================== */
 
-.tabs {
-  display: flex;
-  flex-direction: column;
-}
-
-.tab-list {
-  display: flex;
-  gap: var(--space-1);
-  border-bottom: var(--border-width-2) solid var(--color-neutral-200);
+/* Segmented pill control — always horizontal, large tap targets */
+.tab-list,
+.tabs[role="tablist"] {
+  display: inline-flex;
+  flex-direction: row;
+  gap: var(--space-2);
+  padding: var(--space-2);
+  margin: 0 0 var(--space-6);
   list-style: none;
-}
-
-.tab-list[role="tablist"] {
-  padding: 0;
-  margin: 0;
+  background: var(--color-primary-100);
+  border-radius: var(--border-radius-full);
 }
 
 .tab-button {
-  padding: var(--space-3) var(--space-5);
+  flex: 1 1 auto;
+  padding: var(--space-3) var(--space-6);
+  font-family: var(--font-family-heading);
+  font-size: var(--font-size-lg);
   font-weight: var(--font-weight-medium);
-  color: var(--color-neutral-600);
+  color: var(--color-primary-700);
   background: transparent;
   border: none;
-  border-bottom: var(--border-width-2) solid transparent;
-  margin-bottom: calc(var(--border-width-2) * -1);
+  border-radius: var(--border-radius-full);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  white-space: nowrap;
+  transition: background-color var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .tab-button:hover {
-  color: var(--color-neutral-900);
+  color: var(--color-primary-900);
+  background: rgb(255 255 255 / 0.5);
 }
 
-.tab-button[aria-selected="true"] {
-  color: var(--color-primary-600);
-  border-bottom-color: var(--color-primary-600);
+.tab-button[aria-selected="true"],
+.tab-button.active {
+  color: var(--color-primary-700);
+  background: white;
+  box-shadow: var(--shadow-sm);
 }
 
 .tab-button:focus-visible {
   outline: var(--focus-ring-width) solid var(--focus-ring-color);
-  outline-offset: calc(var(--focus-ring-offset) * -1);
+  outline-offset: 2px;
 }
 
 .tab-panel {
@@ -496,17 +511,8 @@ a:hover {
     padding-right: var(--space-4);
   }
 
-  .tab-list {
-    flex-direction: column;
-  }
-
   .tab-button {
-    border-bottom: none;
-    border-left: var(--border-width-2) solid transparent;
-  }
-
-  .tab-button[aria-selected="true"] {
-    border-bottom-color: transparent;
-    border-left-color: var(--color-primary-600);
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-base);
   }
 }

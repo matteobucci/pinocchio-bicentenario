@@ -2,7 +2,23 @@
 title: Il Teatro del Ciuchino Pinocchio
 order: 10
 description: Un teatro dove bambini e animali si muovono sul palco recitando e cantando — ma molti dei piccoli attori sono già diventati ciuchini. Un'altra trappola del Paese dei Balocchi.
-heroImage: https://upload.wikimedia.org/wikipedia/commons/f/f7/Sesto%2C_palazzo_pretorio_01.JPG
+heroImage: /images/tappe/tappa-10-piazza-ginori.jpg
+gallery:
+  - image: /images/tappe/tappa-10-piazza-ginori.jpg
+    caption: "Piazza Ginori a Sesto Fiorentino"
+    alt: "Veduta di Piazza Ginori a Sesto Fiorentino, lastricata in pietra e fiancheggiata da palazzi storici con portici"
+  - image: /images/tappe/tappa-10-banca-ex-teatro.jpg
+    caption: "L'edificio dove sorgeva il Teatro Niccolini"
+    alt: "Palazzo moderno che ospita una banca, costruito dove un tempo sorgeva il Teatro Niccolini, all'angolo della piazza"
+  - image: /images/tappe/tappa-10-foto-storica-piazza-ginori.jpg
+    caption: "Foto storica di Piazza Ginori"
+    alt: "Fotografia storica in bianco e nero di Piazza Ginori gremita di tavolini, esposta sopra la vetrina di un locale"
+  - image: /images/tappe/tappa-10-bar-gran-caffe.jpg
+    caption: "Il Gran Caffè in piazza"
+    alt: "Il Gran Caffè con i tavolini all'aperto sotto i lampioni, fra i palazzi storici della piazza"
+  - image: /images/tappe/tappa-10-curiosita-palazzo-pretorio.jpg
+    caption: "Curiosità — Il Palazzo Pretorio"
+    alt: "Facciata del Palazzo Pretorio di Sesto Fiorentino, intonacata di bianco e decorata da numerosi stemmi araldici in pietra, con portale ligneo e campana"
 podcast:
   episodeTitle: Episodio 10 — Il Teatro del Ciuchino Pinocchio
   videoFile: /audio/tappa-10.mp4
@@ -10,19 +26,9 @@ directions:
   address: Piazza Ginori, Sesto Fiorentino
   coordinates: "43.83339, 11.20190"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Piazza+Ginori+Sesto+Fiorentino
-  instructions: >
-    ## Dalla tappa 9 (Piazza Vittorio Veneto)
-
-
-    ### In macchina
-
-
+  byCar: >
     Da Piazza Vittorio Veneto → Via Dante Alighieri o Via Gramsci verso il centro storico → indicazioni per Via Cavallotti → centro di Sesto Fiorentino → Piazza Ginori.
-
-
-    ### In bici
-
-
+  byBike: >
     Da Piazza Vittorio Veneto → Via Gramsci o Via Dante Alighieri verso il centro storico → indicazioni per il municipio / centro → Piazza Ginori.
 transcript: >
   ## Trascrizione — Episodio 10

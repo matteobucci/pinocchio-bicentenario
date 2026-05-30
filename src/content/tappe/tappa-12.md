@@ -2,7 +2,44 @@
 title: Il Campo dei Miracoli
 order: 12
 description: "La tappa finale. Non il luogo dove crescono monete dal terreno, ma il vero campo dei miracoli: quello dove la pazienza, la cura e l'impegno fanno crescere ciò che si semina."
-heroImage: https://upload.wikimedia.org/wikipedia/commons/f/f2/Villa_colonnata_facade_2018.jpg
+heroImage: /images/tappe/tappa-12-1.jpg
+gallery:
+  - image: /images/tappe/tappa-12-1.jpg
+    caption: "Ingresso del Campo dei Miracoli, area di Villa Gerini"
+    alt: "Ingresso dell'area verde di Villa Gerini con un grande albero, cancello e muro di cinta, le colline sullo sfondo"
+  - image: /images/tappe/tappa-12-2.jpg
+    caption: "Il prato del Campo dei Miracoli"
+    alt: "Ampio prato fiorito recintato con un cipresso e, sullo sfondo, le colline di Sesto e gli alberi spogli"
+  - image: /images/tappe/tappa-12-5.jpg
+    caption: "Veduta del campo verso le colline"
+    alt: "Prato del Campo dei Miracoli visto attraverso una recinzione, con cipresso e alberi e le colline boscose sullo sfondo"
+  - image: /images/tappe/tappa-12-3.jpg
+    caption: "Il campo e le colline di Sesto"
+    alt: "Distesa di prato verde con le colline di Sesto Fiorentino sullo sfondo, sotto un cielo nuvoloso"
+  - image: /images/tappe/tappa-12-4.jpg
+    caption: "Il viale lungo il muro di Villa Gerini"
+    alt: "Viale alberato con strisce pedonali che costeggia il lungo muro di cinta di Villa Gerini, con lo stemma sul muro"
+  - image: /images/tappe/tappa-12-villa-gerini.jpg
+    caption: "La targa di Villa Gerini"
+    alt: "Targa smaltata con la scritta Villa Gerini e lo stemma araldico, fissata su un muro intonacato di rosso"
+  - image: /images/tappe/tappa-12-cartello-tappe.jpg
+    caption: "Cartello «Sulle tracce di Pinocchio» — Il Campo dei miracoli"
+    alt: "Cartello informativo del percorso Sulle tracce di Pinocchio dedicato al Campo dei miracoli, con citazione di Collodi e mappa delle tappe"
+  - image: /images/tappe/tappa-12-parco-1.jpg
+    caption: "Il parco pubblico con giochi per bambini"
+    alt: "Parco pubblico con altalene e giochi per bambini, alberi in fiore e le colline sullo sfondo"
+  - image: /images/tappe/tappa-12-parco-2.jpg
+    caption: "Il parco pubblico"
+    alt: "Area giochi del parco pubblico accanto al Campo dei Miracoli, con prato e alberi"
+  - image: /images/tappe/tappa-12-parco-via-ugo-bassi.jpg
+    caption: "La pista ciclabile in via Ugo Bassi"
+    alt: "Pista ciclabile pavimentata in rosso che attraversa il parco di via Ugo Bassi, con rastrelliere per biciclette e le colline sullo sfondo"
+  - image: /images/tappe/tappa-12-curiosita-tomba-etrusca.jpg
+    caption: "Curiosità — Il Tumulo Etrusco della Montagnola"
+    alt: "Cartello blu all'ingresso del Tumulo Etrusco della Montagnola, VII–VI secolo a.C., con le informazioni per la visita"
+  - image: /images/tappe/tappa-12-curiosita-tumulo-etrusco.jpg
+    caption: "Curiosità — L'area della Montagnola"
+    alt: "Area verde con uliveto e muretto in pietra nei pressi del Tumulo Etrusco della Montagnola, con le colline sullo sfondo"
 podcast:
   episodeTitle: Episodio 12 — Il Campo dei Miracoli
   videoFile: /audio/tappa-12.mp4
@@ -10,27 +47,14 @@ directions:
   address: Villa Gerini, Colonnata (Sesto Fiorentino)
   coordinates: "43.83720, 11.21340"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Villa+Gerini+Sesto+Fiorentino
-  instructions: >
-    ## Dalla tappa 11 (Via delle Porcellane)
-
-
-    ### In macchina
-
-
+  byCar: >
     Da Via delle Porcellane → Via Lucchese verso Sesto Fiorentino → Via Gramsci → indicazioni per il centro di Sesto → Villa Gerini (zona Via XX Settembre / area verde storica).
-
-
-    ### In bici
-
+  byBike: >
     *Circa 15–20 minuti.*
 
 
     Da Via delle Porcellane → Via Lucchese direzione Sesto Fiorentino → ingresso urbano → Via Gramsci → indicazioni per il parco / zona storica → Villa Gerini.
-
-
-    ### In autobus
-
-
+  byTransit: >
     Fermata su Via Lucchese → bus **57** o **64** direzione Sesto Fiorentino centro → scendi in zona Via Gramsci / Piazza Vittorio Veneto → 5–10 minuti a piedi fino a Villa Gerini.
 transcript: >
   ## Trascrizione — Episodio 12

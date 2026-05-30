@@ -10,20 +10,12 @@ directions:
   address: Via Reginaldo Giuliani (tra i numeri 364–372), Firenze
   coordinates: "43.81342, 11.23110"
   mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+Reginaldo+Giuliani+364+Firenze
-  instructions: >
-    ## Dalla tappa 2 (Via della Querciola)
-
-
-    ### A piedi
-
+  byFoot: >
     *5 minuti.*
 
 
     Procedi verso Via di Castello, svolta a sinistra e prendi Via Reginaldo Giuliani. La destinazione è sulla destra.
-
-
-    ### In bici
-
+  byBike: >
     *Circa 700 m – 1 km, 3–4 minuti, pianeggiante.*
 
 
