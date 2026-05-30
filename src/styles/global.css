@@ -26,10 +26,19 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Reduced motion: disable smooth scroll */
+/* Reduced motion: disable smooth scroll and the ClientRouter's page
+   transitions. The --transition-* tokens are zeroed in design-tokens.css, but
+   Astro injects its own animations on the ::view-transition-* pseudo-elements,
+   which those tokens don't reach — so disable them explicitly here. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }
 

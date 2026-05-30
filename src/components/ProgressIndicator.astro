@@ -37,28 +37,28 @@ const totalStations = sortedStations.length;
     <span class="progress-total"> di {totalStations}</span>
   </div>
 
-  <div
+  <ul
     class="progress-dots"
-    role="list"
     aria-label="Vai a una tappa specifica"
   >
     {sortedStations.map((station) => {
       const isCurrent = station.data.order === currentStation;
       const slug = station.id.replace(/\.md$/, '');
       return (
-        <a
-          href={`/tappe/${slug}`}
-          class:list={["progress-dot", { current: isCurrent }]}
-          role="listitem"
-          aria-label={`Vai alla tappa ${station.data.order}: ${station.data.title}`}
-          aria-current={isCurrent ? "step" : undefined}
-          data-order={station.data.order}
-        >
-          <span class="dot-number">{station.data.order}</span>
-        </a>
+        <li>
+          <a
+            href={`/tappe/${slug}`}
+            class:list={["progress-dot", { current: isCurrent }]}
+            aria-label={`Vai alla tappa ${station.data.order}: ${station.data.title}`}
+            aria-current={isCurrent ? "step" : undefined}
+            data-order={station.data.order}
+          >
+            <span class="dot-number">{station.data.order}</span>
+          </a>
+        </li>
       );
     })}
-  </div>
+  </ul>
 </nav>
 
 <style>
@@ -92,6 +92,13 @@ const totalStations = sortedStations.length;
     gap: var(--space-2);
     flex-wrap: wrap;
     justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .progress-dots li {
+    display: flex;
   }
 
   .progress-dot {

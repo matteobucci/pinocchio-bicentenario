@@ -415,6 +415,30 @@ const items = [...stations]
 
     const isOpen = () => drawer.classList.contains("is-open");
 
+    // While the dialog is open, make the rest of the page inert so AT and the
+    // keyboard can't reach background content (the companion to aria-modal).
+    // The drawer renders inside <main>, so we inert header/footer plus main's
+    // children except the drawer's own nodes — not <main> itself.
+    let inerted: HTMLElement[] = [];
+    const DRAWER_IDS = ["station-drawer", "station-drawer-backdrop", "drawer-peek"];
+
+    function setBackgroundInert(on: boolean) {
+      if (on) {
+        inerted = [];
+        document.querySelectorAll<HTMLElement>(".skip-link, header, footer").forEach((el) => inerted.push(el));
+        const main = document.getElementById("main-content");
+        if (main) {
+          Array.from(main.children).forEach((child) => {
+            if (!DRAWER_IDS.includes(child.id)) inerted.push(child as HTMLElement);
+          });
+        }
+        inerted.forEach((el) => el.setAttribute("inert", ""));
+      } else {
+        inerted.forEach((el) => el.removeAttribute("inert"));
+        inerted = [];
+      }
+    }
+
     function openDrawer() {
       lastFocused = document.activeElement as HTMLElement;
       drawer.classList.add("is-open");
@@ -425,6 +449,7 @@ const items = [...stations]
       peek.setAttribute("aria-expanded", "true");
       document.body.classList.add("drawer-open");
       document.body.style.overflow = "hidden";
+      setBackgroundInert(true);
       closeBtn?.focus();
     }
 
@@ -435,6 +460,7 @@ const items = [...stations]
       peek.setAttribute("aria-expanded", "false");
       document.body.classList.remove("drawer-open");
       document.body.style.overflow = "";
+      setBackgroundInert(false);
       window.setTimeout(() => {
         if (!isOpen()) backdrop.setAttribute("hidden", "");
       }, 300);
