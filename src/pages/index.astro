@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TourMap from '../components/TourMap.astro';
 import { getCollection } from 'astro:content';
-import mapPoints from '../content/settings/map-points.json';
+import mapPoints from '../data/settings/map-points.json';
 
 // Get all published tappe sorted by order
 const tappe = await getCollection('tappe', ({ data }) => data.published);
