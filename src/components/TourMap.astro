@@ -491,10 +491,15 @@ const avgLng = hasCoordinates
     });
 
     // Fit map to show all markers with padding
-    if (markers.length > 0) {
-      const group = L.featureGroup(markers);
-      map.fitBounds(group.getBounds().pad(0.1));
+    function fit() {
+      if (markers.length > 0) {
+        map.fitBounds(L.featureGroup(markers).getBounds().pad(0.1), { maxZoom: 17 });
+      }
     }
+    fit();
+    // astro:page-load can fire before the container has its final size, which
+    // makes fitBounds zoom all the way out. Recompute once layout has settled.
+    requestAnimationFrame(() => { map.invalidateSize(); fit(); });
 
     // Enable scroll wheel zoom when map is focused
     mapElement.addEventListener('focus', () => {

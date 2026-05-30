@@ -223,11 +223,17 @@ const mapPoints = [
       markers.push(marker);
     });
 
-    if (markers.length === 1) {
-      map.setView(markers[0].getLatLng(), 16);
-    } else {
-      map.fitBounds(L.featureGroup(markers).getBounds().pad(0.25));
+    function fit() {
+      if (markers.length === 1) {
+        map.setView(markers[0].getLatLng(), 16);
+      } else if (markers.length > 1) {
+        map.fitBounds(L.featureGroup(markers).getBounds().pad(0.25), { maxZoom: 17 });
+      }
     }
+    fit();
+    // astro:page-load can fire before the container has its final size, which
+    // makes fitBounds zoom all the way out. Recompute once layout has settled.
+    requestAnimationFrame(() => { map.invalidateSize(); fit(); });
 
     // Only allow wheel-zoom while the map is focused, matching TourMap.
     el.addEventListener('focus', () => map.scrollWheelZoom.enable());
