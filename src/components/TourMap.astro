@@ -371,6 +371,11 @@ const avgLng = hasCoordinates
       scrollWheelZoom: false  // Prevent accidental zoom while scrolling
     });
 
+    // The #tour-map node is destroyed (not persisted) on the next client-side
+    // navigation. Tear the Leaflet instance down first, otherwise its window
+    // resize listener and tile references leak — one zombie map per navigation.
+    document.addEventListener('astro:before-swap', () => map.remove(), { once: true });
+
     // Add CARTO Positron tiles — clean, light base so the route and markers stand out
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',

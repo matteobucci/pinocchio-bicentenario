@@ -402,14 +402,14 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
     });
   }
 
-  document.querySelectorAll('[role="tablist"]').forEach(setupTablist);
-
-  // Gallery functionality
-  const galleryElement = document.querySelector('[data-gallery]');
-  const galleryData = galleryElement
-    ? JSON.parse(galleryElement.getAttribute('data-gallery') || '[]')
-    : [];
+  // ---- Gallery + lightbox state ----
+  // Module-scope so the single, persistent keydown handler below always reads
+  // the current page's data. The page <script> module executes only once, but
+  // setupStationPage() re-runs on every navigation via astro:page-load.
+  let galleryData: any[] = [];
   let currentImageIndex = 0;
+  let lightbox: HTMLElement | null = null;
+  let lightboxTrigger: Element | null = null;
 
   function updateGallery(index: number, updateLightbox = false) {
     const mainImage = document.getElementById('gallery-main-image') as HTMLImageElement;
@@ -449,32 +449,6 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
     }
   }
 
-  // Gallery navigation buttons
-  document.querySelectorAll('.gallery-btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const direction = btn.getAttribute('data-direction');
-      const total = galleryData.length;
-
-      if (direction === 'next') {
-        updateGallery((currentImageIndex + 1) % total);
-      } else {
-        updateGallery((currentImageIndex - 1 + total) % total);
-      }
-    });
-  });
-
-  // Gallery thumbnails
-  document.querySelectorAll('.gallery-thumb').forEach((thumb) => {
-    thumb.addEventListener('click', () => {
-      const index = parseInt(thumb.getAttribute('data-index') || '0', 10);
-      updateGallery(index);
-    });
-  });
-
-  // Lightbox functionality
-  const lightbox = document.getElementById('lightbox');
-  const lightboxTrigger = document.querySelector('.gallery-fullscreen-trigger');
-
   function openLightbox() {
     if (lightbox) {
       lightbox.removeAttribute('hidden');
@@ -495,45 +469,82 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
     }
   }
 
-  // Open lightbox when clicking on main image
-  lightboxTrigger?.addEventListener('click', openLightbox);
+  // Wire up the page that just loaded. Re-runs on every client-side navigation;
+  // every target is a fresh DOM node, so element listeners never accumulate.
+  function setupStationPage() {
+    // A previous page may have left the body scroll-locked (e.g. the lightbox
+    // was open when the user navigated away via the drawer).
+    document.body.style.overflow = '';
 
-  // Close lightbox
-  document.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
-  document.querySelector('.lightbox-backdrop')?.addEventListener('click', closeLightbox);
+    document.querySelectorAll('[role="tablist"]').forEach(setupTablist);
 
-  // Lightbox navigation
-  document.querySelectorAll('.lightbox-nav').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const direction = btn.getAttribute('data-direction');
-      const total = galleryData.length;
+    const galleryElement = document.querySelector('[data-gallery]');
+    galleryData = galleryElement
+      ? JSON.parse(galleryElement.getAttribute('data-gallery') || '[]')
+      : [];
+    currentImageIndex = 0;
 
-      if (direction === 'next') {
-        currentImageIndex = (currentImageIndex + 1) % total;
-      } else {
-        currentImageIndex = (currentImageIndex - 1 + total) % total;
-      }
-      updateGallery(currentImageIndex);
-      updateLightboxImage(currentImageIndex);
+    // Gallery navigation buttons
+    document.querySelectorAll('.gallery-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const total = galleryData.length;
+        if (!total) return;
+        const direction = btn.getAttribute('data-direction');
+        updateGallery(direction === 'next'
+          ? (currentImageIndex + 1) % total
+          : (currentImageIndex - 1 + total) % total);
+      });
     });
-  });
 
-  // Keyboard navigation for lightbox
+    // Gallery thumbnails
+    document.querySelectorAll('.gallery-thumb').forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const index = parseInt(thumb.getAttribute('data-index') || '0', 10);
+        updateGallery(index);
+      });
+    });
+
+    // Lightbox controls
+    lightbox = document.getElementById('lightbox');
+    lightboxTrigger = document.querySelector('.gallery-fullscreen-trigger');
+    lightboxTrigger?.addEventListener('click', openLightbox);
+    document.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
+    document.querySelector('.lightbox-backdrop')?.addEventListener('click', closeLightbox);
+
+    document.querySelectorAll('.lightbox-nav').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const total = galleryData.length;
+        if (!total) return;
+        const direction = btn.getAttribute('data-direction');
+        currentImageIndex = direction === 'next'
+          ? (currentImageIndex + 1) % total
+          : (currentImageIndex - 1 + total) % total;
+        updateGallery(currentImageIndex);
+        updateLightboxImage(currentImageIndex);
+      });
+    });
+  }
+
+  // Lightbox keyboard nav — registered once on document (which survives
+  // navigations) and reads the module-scope state above, so it neither goes
+  // stale nor accumulates duplicate handlers across navigations.
   document.addEventListener('keydown', (e) => {
     if (!lightbox || lightbox.hasAttribute('hidden')) return;
-
+    const total = galleryData.length;
     if (e.key === 'Escape') {
       closeLightbox();
-    } else if (e.key === 'ArrowRight') {
-      currentImageIndex = (currentImageIndex + 1) % galleryData.length;
+    } else if (e.key === 'ArrowRight' && total) {
+      currentImageIndex = (currentImageIndex + 1) % total;
       updateGallery(currentImageIndex);
       updateLightboxImage(currentImageIndex);
-    } else if (e.key === 'ArrowLeft') {
-      currentImageIndex = (currentImageIndex - 1 + galleryData.length) % galleryData.length;
+    } else if (e.key === 'ArrowLeft' && total) {
+      currentImageIndex = (currentImageIndex - 1 + total) % total;
       updateGallery(currentImageIndex);
       updateLightboxImage(currentImageIndex);
     }
   });
+
+  document.addEventListener('astro:page-load', setupStationPage);
 </script>
 
 <style>

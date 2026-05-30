@@ -167,8 +167,12 @@ const totalStations = sortedStations.length;
 </style>
 
 <script>
-  // Keyboard navigation for progress dots
-  document.addEventListener('DOMContentLoaded', () => {
+  // Keyboard navigation for progress dots. Runs on first load and after every
+  // client-side navigation — DOMContentLoaded fires only once under the
+  // ClientRouter, so the dots on soft-navigated pages would otherwise get no
+  // keyboard handler. The dots are fresh nodes each navigation, so re-binding
+  // never accumulates listeners.
+  function setupProgressDots() {
     const dots = document.querySelectorAll('.progress-dot');
 
     dots.forEach((dot, index) => {
@@ -202,5 +206,7 @@ const totalStations = sortedStations.length;
         (dots[targetIndex] as HTMLElement).focus();
       });
     });
-  });
+  }
+
+  document.addEventListener('astro:page-load', setupProgressDots);
 </script>

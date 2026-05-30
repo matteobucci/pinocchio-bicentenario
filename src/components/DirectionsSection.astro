@@ -170,6 +170,11 @@ const mapPoints = [
 
     const map = L.map(el, { zoomControl: true, scrollWheelZoom: false });
 
+    // #route-mini-map is destroyed (not persisted) on the next client-side
+    // navigation; remove the Leaflet instance first so its window resize
+    // listener and tiles don't leak — one zombie map per navigation otherwise.
+    document.addEventListener('astro:before-swap', () => map.remove(), { once: true });
+
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',

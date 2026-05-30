@@ -455,9 +455,13 @@ const items = [...stations]
       if (e.key === "Escape" && isOpen()) closeDrawer();
     });
 
-    // Selecting a tappa: let the view transition navigate, then close smoothly.
-    drawer.querySelectorAll(".drawer__item").forEach((link) => {
-      link.addEventListener("click", () => closeDrawer());
+    // Selecting a tappa: keep the sheet open *through* the view transition so
+    // the persisted element doesn't change state mid-flight (which makes the
+    // browser morph it across the screen — the "flies to the corner" bug).
+    // Once the new page has loaded, slide it closed cleanly. Registered here in
+    // the once-bound block, so it's attached a single time.
+    document.addEventListener("astro:page-load", () => {
+      if (isOpen()) closeDrawer();
     });
 
     // ---- Unified pointer drag (mouse + touch) ----

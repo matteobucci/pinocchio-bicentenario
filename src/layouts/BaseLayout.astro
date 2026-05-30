@@ -411,22 +411,29 @@ const currentPath = Astro.url.pathname;
       }
     </style>
 
-    <!-- Mobile menu toggle script -->
+    <!-- Mobile menu toggle script. The header is re-rendered on every
+         client-side navigation (it isn't transition:persist), so binding must
+         run on astro:page-load — a one-time bind would go stale after the first
+         soft navigation and the menu button would stop responding. -->
     <script>
-      const navToggle = document.querySelector('.nav-toggle');
-      const navMenu = document.querySelector('.nav-menu');
+      function setupNavToggle() {
+        const navToggle = document.querySelector('.nav-toggle');
+        const navMenu = document.querySelector('.nav-menu');
 
-      navToggle?.addEventListener('click', () => {
-        const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
-        navToggle.setAttribute('aria-expanded', (!isExpanded).toString());
-        navMenu?.classList.toggle('open');
+        navToggle?.addEventListener('click', () => {
+          const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+          navToggle.setAttribute('aria-expanded', (!isExpanded).toString());
+          navMenu?.classList.toggle('open');
 
-        // Update aria-label
-        navToggle.setAttribute(
-          'aria-label',
-          isExpanded ? 'Apri menu di navigazione' : 'Chiudi menu di navigazione'
-        );
-      });
+          // Update aria-label
+          navToggle.setAttribute(
+            'aria-label',
+            isExpanded ? 'Apri menu di navigazione' : 'Chiudi menu di navigazione'
+          );
+        });
+      }
+
+      document.addEventListener('astro:page-load', setupNavToggle);
     </script>
 
     <SpeedInsights />
