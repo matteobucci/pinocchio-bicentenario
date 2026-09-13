@@ -15,6 +15,7 @@
  * on the detail page wires up its keyboard interaction.
  */
 import { marked } from 'marked';
+import routeGeometry from '../data/route-geometry.json';
 
 interface Point {
   order: number;
@@ -68,6 +69,24 @@ const contextLabel = prev
   ? `Dalla Tappa ${prev.order}: ${prev.title}`
   : 'Punto di partenza del percorso';
 
+// Real street geometry for the two legs shown here, from the same generated
+// file the main map uses (`npm run build:route`). Empty if either leg is
+// missing, and the client falls back to the straight prev → current → next line.
+interface RouteSegment {
+  from: number;
+  to: number;
+  coordinates: [number, number][];
+}
+
+const routeSegments = (routeGeometry.segments ?? []) as RouteSegment[];
+const legCoords = (from?: number, to?: number) =>
+  routeSegments.find((s) => s.from === from && s.to === to)?.coordinates ?? [];
+
+const miniRouteCoords = [
+  ...(prev ? legCoords(prev.order, current.order) : []),
+  ...(next ? legCoords(current.order, next.order) : []),
+];
+
 // Points to plot on the mini-map (prev → current → next), preserving order.
 const mapPoints = [
   prev && { ...prev, role: 'prev' },
@@ -91,6 +110,7 @@ const mapPoints = [
     aria-label={`Mappa del percorso: ${contextLabel} fino a ${current.title}`}
     tabindex="0"
     data-points={JSON.stringify(mapPoints)}
+    data-route={JSON.stringify(miniRouteCoords)}
   ></div>
 
   {(modes.length > 0 || legacyHtml) && (
@@ -183,11 +203,16 @@ const mapPoints = [
       maxZoom: 19,
     }).addTo(map);
 
-    // Route line (prev → current → next), styled like the main TourMap.
-    const path = points.map((p: any) => [p.lat, p.lng]);
+    // Route line (prev → current → next), styled like the main TourMap. Uses the
+    // generated street geometry when available, the straight line otherwise.
+    let routeLine: any = null;
+    const straight = points.map((p: any) => [p.lat, p.lng]);
+    const routeCoords = JSON.parse(el.getAttribute('data-route') || '[]');
+    const path = routeCoords.length > 1 ? routeCoords : straight;
     if (path.length > 1) {
       L.polyline(path, { color: '#ffffff', weight: 12, opacity: 1, lineCap: 'round', lineJoin: 'round' }).addTo(map);
       const route = L.polyline(path, { color: '#3d7d66', weight: 7, opacity: 0.95, lineCap: 'round', lineJoin: 'round' }).addTo(map);
+      routeLine = route;
       if (L.polylineDecorator) {
         L.polylineDecorator(route, {
           patterns: [{
@@ -228,7 +253,10 @@ const mapPoints = [
       if (markers.length === 1) {
         map.setView(markers[0].getLatLng(), 16);
       } else if (markers.length > 1) {
-        map.fitBounds(L.featureGroup(markers).getBounds().pad(0.25), { maxZoom: 17 });
+        // Include the routed line: between two nearby tappe it can still loop
+        // wide, and fitting the markers alone would clip it.
+        const layers = routeLine ? [...markers, routeLine] : markers;
+        map.fitBounds(L.featureGroup(layers).getBounds().pad(0.25), { maxZoom: 17 });
       }
     }
     fit();

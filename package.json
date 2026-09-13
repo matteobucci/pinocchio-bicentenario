@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "build:route": "node scripts/build-route.mjs"
   },
   "dependencies": {
     "@astrojs/vercel": "^9.0.4",

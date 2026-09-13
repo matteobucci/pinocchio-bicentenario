@@ -40,10 +40,12 @@ const OUT_FILE = path.join(ROOT, 'src/data/route-geometry.json');
 const CACHE_FILE = path.join(ROOT, 'scripts/.cache/streets.json');
 
 const UA = 'pinocchio-bicentenario/1.0 (build-route script)';
+// overpass.osm.ch is deliberately absent: it answers 200 with an empty element
+// list for queries the others resolve fine, which would read as "street not
+// found" and quietly drop waypoints.
 const OVERPASS_MIRRORS = [
   'https://overpass-api.de/api/interpreter',
   'https://overpass.kumi.systems/api/interpreter',
-  'https://overpass.osm.ch/api/interpreter',
 ];
 const VALHALLA_URL = 'https://valhalla1.openstreetmap.de/route';
 
@@ -95,9 +97,12 @@ async function readTappe() {
       title: data.title,
       lat,
       lon,
-      // byBike is the only field written tappa-to-tappa for the whole route;
-      // byFoot exists for tappe 2–4 only, so it can't drive the geometry alone.
-      directions: data.directions?.byBike ?? '',
+      // This is a walking trail, so the pedestrian directions are the right
+      // source where they exist (tappe 2–4). byBike covers the rest: it's the
+      // only other field written tappa-to-tappa, but it describes a bike
+      // detour along the big roads, so it needs the backtrack guard below.
+      directions: data.directions?.byFoot || data.directions?.byBike || '',
+      mode: data.directions?.byFoot ? 'foot' : 'bike',
     });
   }
 
@@ -171,15 +176,41 @@ function haversine(a, b) {
   return 2 * R * Math.asin(Math.sqrt(h));
 }
 
-/** Distance from p to the segment a–b, so we can pick the right stretch of a long street. */
-function distanceToSegment(p, a, b) {
-  const x = p.lon - a.lon;
-  const y = p.lat - a.lat;
-  const dx = b.lon - a.lon;
-  const dy = b.lat - a.lat;
-  const len = dx * dx + dy * dy;
-  const t = len === 0 ? 0 : Math.max(0, Math.min(1, (x * dx + y * dy) / len));
-  return haversine(p, { lat: a.lat + t * dy, lon: a.lon + t * dx });
+/**
+ * How far along the a→b axis p falls, in metres: negative means behind a,
+ * greater than the a–b distance means past b.
+ */
+function projectionAlong(p, a, b) {
+  const mPerLat = 111320;
+  const mPerLon = 111320 * Math.cos((((a.lat + b.lat) / 2) * Math.PI) / 180);
+  const ax = 0;
+  const ay = 0;
+  const bx = (b.lon - a.lon) * mPerLon;
+  const by = (b.lat - a.lat) * mPerLat;
+  const px = (p.lon - a.lon) * mPerLon;
+  const py = (p.lat - a.lat) * mPerLat;
+  const len = Math.hypot(bx - ax, by - ay);
+  if (len === 0) return 0;
+  return (px * bx + py * by) / len;
+}
+
+/**
+ * Of all the nodes of a street, the one that costs the least extra walking to
+ * pass through: the minimum of |a→p| + |p→b|.
+ *
+ * Picking the node merely closest to the straight line looks equivalent but
+ * isn't, on a long road: on tappa 2 → 3 it chose a point on Via Reginaldo
+ * Giuliani past the destination, so the route overshot the tappa and doubled
+ * back — 1158 m for 476 m of walking.
+ */
+function leastDetourNode(candidates, a, b) {
+  let best = null;
+  for (const [lat, lon] of candidates) {
+    const p = { lat, lon };
+    const cost = haversine(a, p) + haversine(p, b);
+    if (!best || cost < best.cost) best = { cost, p };
+  }
+  return best?.p ?? null;
 }
 
 /** Valhalla returns an encoded polyline at precision 6. */
@@ -233,61 +264,125 @@ async function saveCache(cache) {
 }
 
 /**
- * Finds the point on `name` closest to the a–b corridor.
+ * Resolves every street of one leg to the point on it closest to the a–b
+ * corridor, in a single Overpass call.
  *
  * Plain geocoding is not good enough here: asking Nominatim for
  * "Via della Querciola" returns a same-named street about 4 km away, which as
  * a waypoint would send the route right across town. Searching OSM ways near
  * the corridor and taking the nearest node avoids that.
+ *
+ * One query per leg rather than per street keeps us to 11 requests for the
+ * whole trail — Overpass is a shared free service and rate-limits accordingly.
  */
-async function findStreet(name, a, b, cache) {
-  const radius = Math.max(1500, Math.ceil(haversine(a, b) * 1.5));
-  const mid = { lat: (a.lat + b.lat) / 2, lon: (a.lon + b.lon) / 2 };
-  const key = `${name}|${mid.lat.toFixed(4)},${mid.lon.toFixed(4)}|${radius}`;
-  if (cache[key] !== undefined) return cache[key];
+async function findStreets(names, a, b, cache) {
+  // Search box: the two tappe plus a margin, so a street that swings wide of
+  // the direct line is still found. A global [bbox:] beats a per-clause
+  // `around:` by a wide margin on the public servers — same results, measured
+  // at 7.8s against 49.8s for the leg below.
+  const margin = Math.max(2000, Math.ceil(haversine(a, b) * 0.8));
+  const dLat = margin / 111320;
+  const dLon = margin / (111320 * Math.cos((((a.lat + b.lat) / 2) * Math.PI) / 180));
+  const bbox = [
+    (Math.min(a.lat, b.lat) - dLat).toFixed(4),
+    (Math.min(a.lon, b.lon) - dLon).toFixed(4),
+    (Math.max(a.lat, b.lat) + dLat).toFixed(4),
+    (Math.max(a.lon, b.lon) + dLon).toFixed(4),
+  ].join(',');
+  const at = bbox;
 
-  const escaped = name.replace(/"/g, '\\"');
-  const query = `[out:json][timeout:60];
-    way(around:${radius},${mid.lat},${mid.lon})["name"="${escaped}"]["highway"];
-    out geom;`;
+  // v5: versioned so that changing the search strategy re-tries the names an
+  // earlier run cached as misses, instead of trusting a stale null. The cache
+  // holds every candidate node of the street, not the chosen one, so the
+  // selection rule below can change without re-querying Overpass.
+  const keyFor = (name) => `v5|${name}|${at}`;
+  const result = new Map();
+  const todo = names.filter((name) => {
+    if (cache[keyFor(name)] !== undefined) {
+      result.set(name, cache[keyFor(name)]);
+      return false;
+    }
+    return true;
+  });
+  if (todo.length === 0) return result;
 
+  const clauses = todo
+    .map((name) => {
+      const escaped = name.replace(/"/g, '\\"');
+      // The text writes street names shorter than OSM does: it drops articles
+      // ("Via Pietraia" for Via della Petraia) and forenames ("Via Gramsci"
+      // for Via Antonio Gramsci, "Piazza Garibaldi" for Piazza Giuseppe
+      // Garibaldi). Allow anything between the type word and the rest of the
+      // name, then confirm the match properly in JS below.
+      // Plain spaces, not \s: Overpass QL reads a backslash in a quoted string
+      // as an escape, so the shorthand wouldn't survive the trip.
+      const [type, ...rest] = escaped.split(/\s+/);
+      const loose = `${type} (.* )?${rest.join(' ')}`;
+      return (
+        `way["name"="${escaped}"]["highway"];` +
+        `way["name"~"^${loose}$",i]["highway"];`
+      );
+    })
+    .join('');
+
+  const query = `[out:json][timeout:90][bbox:${bbox}];(${clauses});out geom;`;
+
+  let elements = null;
   for (const mirror of OVERPASS_MIRRORS) {
-    for (let attempt = 0; attempt < 2; attempt++) {
+    for (let attempt = 0; attempt < 2 && elements === null; attempt++) {
       try {
         const res = await fetch(mirror, {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'User-Agent': UA },
           body: new URLSearchParams({ data: query }),
-          signal: AbortSignal.timeout(90000),
+          signal: AbortSignal.timeout(120000),
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
         const json = await res.json();
-        let best = null;
-        for (const el of json.elements ?? []) {
-          for (const node of el.geometry ?? []) {
-            const p = { lat: node.lat, lon: node.lon };
-            const d = distanceToSegment(p, a, b);
-            if (!best || d < best.d) best = { d, p };
-          }
-        }
-
-        const value = best ? best.p : null;
-        cache[key] = value;
-        await saveCache(cache);
-        await sleep(1500); // Overpass asks for gentle use
-        return value;
+        // An empty answer is more often a tired mirror than a genuinely absent
+        // street, so treat it as a failure and let another mirror weigh in.
+        if (!json.elements?.length) throw new Error('nessun elemento');
+        elements = json.elements;
       } catch (err) {
-        process.stdout.write(` [${err.name ?? 'err'}]`);
-        await sleep(4000);
+        process.stdout.write(` [${err.message}]`);
+        await sleep(5000);
       }
     }
+    if (elements) break;
   }
 
-  // Cache the miss too — retrying a street OSM doesn't have just burns time.
-  cache[key] = null;
+  /** Significant words of a street name: no articles, no punctuation. */
+  const keywords = (value) =>
+    value
+      .toLowerCase()
+      .replace(/[^a-zà-ÿ0-9\s]/g, ' ')
+      .split(/\s+/)
+      .filter((w) => w && !/^(della|dello|del|dei|degli|delle|di|da|d|a|al|alla|e|il|la|lo)$/.test(w));
+
+  for (const name of todo) {
+    const candidates = [];
+    const wanted = keywords(name);
+    for (const el of elements ?? []) {
+      const osmWords = keywords(el.tags?.name ?? '');
+      // One name may be shorter than the other — "Via Gramsci" against
+      // "Via Antonio Gramsci" — so accept when either side's words are all
+      // present in the other. The nearest-to-corridor pick below then decides
+      // between several streets that qualify.
+      const subset = (small, big) => small.every((w) => big.includes(w));
+      if (!osmWords.length || !(subset(wanted, osmWords) || subset(osmWords, wanted))) continue;
+      for (const node of el.geometry ?? []) candidates.push([node.lat, node.lon]);
+    }
+
+    const value = candidates.length ? candidates : null;
+    result.set(name, value);
+    // Only remember a miss once a mirror actually answered; caching a network
+    // failure would make the gap permanent.
+    if (elements) cache[keyFor(name)] = value;
+  }
+
   await saveCache(cache);
-  return null;
+  await sleep(2000); // Overpass asks for gentle use
+  return result;
 }
 
 /**
@@ -353,25 +448,66 @@ async function main() {
     const streets = parseStreets(to.directions);
     const declared = parseDeclaredDistance(to.directions);
 
-    process.stdout.write(`Tappa ${from.order} → ${to.order}: ${streets.length} vie`);
+    process.stdout.write(
+      `Tappa ${from.order} → ${to.order} [${to.mode === 'foot' ? 'a piedi' : 'bici'}]: ${streets.length} vie`
+    );
 
+    const located = await findStreets(streets, from, to, cache);
     const waypoints = [];
     const resolved = [];
     const missing = [];
+    const backtracks = [];
+
+    // A street that projects behind the start or past the destination is being
+    // named for orientation, not as somewhere to walk through. Forcing it makes
+    // the route go out and come back: on tappa 1 → 2 "Via delle Panche" turned
+    // 476 m of walking into 1286 m, passing the start a second time.
+    const legLength = haversine(from, to);
+    const SLACK = 250;
+
     for (const name of streets) {
-      const point = await findStreet(name, from, to, cache);
-      if (point) {
-        waypoints.push(point);
-        resolved.push(name);
-      } else {
+      const candidates = located.get(name);
+      if (!candidates?.length) {
         missing.push(name);
+        continue;
       }
+      const point = leastDetourNode(candidates, from, to);
+      const along = projectionAlong(point, from, to);
+      if (along < -SLACK || along > legLength + SLACK) {
+        backtracks.push(name);
+        continue;
+      }
+      waypoints.push(point);
+      resolved.push(name);
     }
     process.stdout.write(` → ${resolved.length} risolte`);
 
     let result;
+    let dropped = [];
     try {
-      result = await route([from, ...waypoints, to]);
+      // Follow the description, but not past the point of absurdity. Forcing
+      // every named street can send the route on a loop the router would never
+      // choose and nobody would walk: on tappa 2 → 3 the "Via di Castello"
+      // waypoint looked cheap as the crow flies but cost 1158 m of walking
+      // against 640 m for the free route. So measure the free route first and
+      // give up waypoints — dearest first — until the forced one fits.
+      const free = await route([from, to]);
+      result = waypoints.length ? await route([from, ...waypoints, to]) : free;
+
+      let budget = Math.max(free.distance * 1.6, free.distance + 300);
+      // A leg whose text states a longer distance is *meant* to go the long way.
+      if (declared) budget = Math.max(budget, declared.max * 1.2);
+
+      const costs = waypoints.map((p) => haversine(from, p) + haversine(p, to));
+      while (result.distance > budget && waypoints.length) {
+        const worst = costs.indexOf(Math.max(...costs));
+        dropped.push(resolved[worst]);
+        waypoints.splice(worst, 1);
+        costs.splice(worst, 1);
+        resolved.splice(worst, 1);
+        result = waypoints.length ? await route([from, ...waypoints, to]) : free;
+        await sleep(500);
+      }
     } catch (err) {
       warnings.push(`Tappa ${from.order}→${to.order}: routing fallito (${err.message}), linea dritta`);
       console.log('  ✗ routing fallito');
@@ -407,6 +543,16 @@ async function main() {
     if (missing.length) {
       warnings.push(`Tappa ${from.order}→${to.order}: vie non trovate — ${missing.join(', ')}`);
     }
+    if (backtracks.length) {
+      warnings.push(
+        `Tappa ${from.order}→${to.order}: scartate perché fuori direzione — ${backtracks.join(', ')}`
+      );
+    }
+    if (dropped.length) {
+      warnings.push(
+        `Tappa ${from.order}→${to.order}: scartate perché allungavano troppo — ${dropped.join(', ')}`
+      );
+    }
 
     console.log(`  ${result.distance} m${status}`);
 
@@ -414,8 +560,11 @@ async function main() {
       from: from.order,
       to: to.order,
       distance: result.distance,
+      mode: to.mode,
       via: resolved,
       missing,
+      backtracks,
+      dropped,
       coordinates: result.coordinates,
     });
 
