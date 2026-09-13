@@ -231,9 +231,18 @@ a:hover {
   transform: translateY(0);
 }
 
+/* Buttons keep their own text colour on every state: the global `a:hover`
+   rule is more specific than a single class and would otherwise repaint
+   link-buttons with the accent colour. */
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  color: white;
+}
+
 .btn-primary {
   background-color: var(--color-primary-600);
-  color: white;
   box-shadow: var(--shadow-primary);
 }
 
@@ -241,9 +250,15 @@ a:hover {
   background-color: var(--color-primary-700);
 }
 
+.btn-secondary,
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  color: white;
+}
+
 .btn-secondary {
   background-color: var(--color-secondary-500);
-  color: white;
   box-shadow: 0 8px 20px -6px rgb(61 125 102 / 0.4);
 }
 
@@ -251,10 +266,16 @@ a:hover {
   background-color: var(--color-secondary-600);
 }
 
+.btn-outline,
+.btn-outline:hover,
+.btn-outline:focus,
+.btn-outline:active {
+  color: var(--color-primary-700);
+}
+
 .btn-outline {
   background-color: white;
   border-color: var(--color-primary-200);
-  color: var(--color-primary-700);
 }
 
 .btn-outline:hover {
