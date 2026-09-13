@@ -62,9 +62,11 @@ A tutti coloro che hanno creduto in questa iniziativa e ne hanno sostenuto la re
 
 ## Fonti dei contenuti
 
-I testi del podcast *Sulle tracce di Pinocchio* e le informazioni sui luoghi del percorso si basano in larga parte su **Carlo Collodi Lorenzini. Un comunicatore nel XIX secolo — Pinocchio in casa sua. Da Firenze a Sesto Fiorentino. Realtà e fantasia di Pinocchio** di **Filippo Canali** e **Nicola Rilli** (Apice Libri, collana Sextus, 2016), il volume che ricostruisce i luoghi reali tra Firenze e Sesto Fiorentino in cui Collodi ambientò le avventure del burattino, a partire dalle testimonianze raccolte da Rilli tra gli amici più stretti dello scrittore.
+Il riferimento di partenza è naturalmente **Le avventure di Pinocchio. Storia di un burattino** di **Carlo Collodi**, pubblicato a puntate sul *Giornale per i bambini* tra il 1881 e il 1883. L'opera è di pubblico dominio e si può leggere integralmente e gratuitamente su [Wikisource](https://it.wikisource.org/wiki/Le_avventure_di_Pinocchio), nell'edizione illustrata da Carlo Chiostri.
 
-Il libro è disponibile [su Amazon](https://www.amazon.it/dp/8899176256) e [su IBS](https://www.ibs.it/carlo-collodi-lorenzini-comunicatore-nel-libro-filippo-canali-nicola-rilli/e/9788899176259) (ISBN 978-88-99176-25-9).
+Per il legame tra il romanzo e i luoghi del territorio, i testi del podcast *Sulle tracce di Pinocchio* si basano in larga parte su **Carlo Collodi Lorenzini. Un comunicatore nel XIX secolo — Pinocchio in casa sua. Da Firenze a Sesto Fiorentino. Realtà e fantasia di Pinocchio** di **Filippo Canali** e **Nicola Rilli** (Apice Libri, collana Sextus, 2016), il volume che ricostruisce i luoghi reali tra Firenze e Sesto Fiorentino in cui Collodi ambientò le avventure del burattino, a partire dalle testimonianze raccolte da Rilli tra gli amici più stretti dello scrittore.
+
+Il volume di Canali e Rilli è disponibile [su Amazon](https://www.amazon.it/dp/8899176256) e [su IBS](https://www.ibs.it/carlo-collodi-lorenzini-comunicatore-nel-libro-filippo-canali-nicola-rilli/e/9788899176259) (ISBN 978-88-99176-25-9).
 
 ## Crediti immagini
 
