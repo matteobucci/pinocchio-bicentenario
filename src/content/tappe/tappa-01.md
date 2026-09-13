@@ -5,51 +5,51 @@ description: La bottega del falegname Antonio Segoni — il Maestro Ciliegia di 
 heroImage: /images/tappe/tappa-01-bottega-mastro-ciliegia.jpg
 gallery:
   - image: /images/tappe/tappa-01-bottega-mastro-ciliegia.jpg
-    caption: "La casa al civico 2 di Via della Pietraia, dove aveva bottega il falegname Antonio Segoni"
-    alt: "Facciata di una casa a due piani dai muri gialli in Via della Pietraia, con porta in legno chiaro, il numero civico 2 e persiane verdi"
+    caption: "La casa al civico 2 di Via della Petraia, dove aveva bottega il falegname Antonio Segoni"
+    alt: "Facciata di una casa a due piani dai muri gialli in Via della Petraia, con porta in legno chiaro, il numero civico 2 e persiane verdi"
 podcast:
   episodeTitle: Episodio 1 — La Bottega di Maestro Ciliegia
   mp3File: /audio/tappa-01.mp3
 directions:
-  address: Via della Pietraia 2, Castello (Firenze)
+  address: Via della Petraia 2, Castello (Firenze)
   coordinates: "43.81423, 11.23009"
-  mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+della+Pietraia+2+Castello+Firenze
+  mapsUrl: https://www.google.com/maps/search/?api=1&query=Via+della+Petraia+2+Castello+Firenze
   byBike: >
     **Da Santa Maria Novella** — *15–18 minuti, pianeggiante.*
 
 
-    Dalla Stazione SMN (lato Piazza della Stazione): Via Nazionale → Via Guelfa → Via Santa Caterina d'Alessandria → Via Vittorio Emanuele II (direzione Rifredi) → Via delle Panche → svolta a destra in Via Pietraia fino al numero 2.
+    Dalla Stazione SMN (lato Piazza della Stazione): Via Nazionale → Via Guelfa → Via Santa Caterina d'Alessandria → Via Vittorio Emanuele II (direzione Rifredi) → Via delle Panche → svolta a destra in Via della Petraia fino al numero 2.
 
 
     **Da Sesto Fiorentino** — *25–30 minuti, pianeggiante.*
 
 
-    Stazione di Sesto → Via Antonio Gramsci (direzione Firenze) → Via Vittorio Emanuele II → Via Reginaldo Giuliani (zona nord di Firenze) → Careggi/Rifredi → Via delle Panche → Via Pietraia 2.
+    Stazione di Sesto → Via Antonio Gramsci (direzione Firenze) → Via Vittorio Emanuele II → Via Reginaldo Giuliani (zona nord di Firenze) → Careggi/Rifredi → Via delle Panche → Via della Petraia 2.
   byCar: >
     **Da Firenze** — *Circa 4,5 km, 12–16 minuti.*
 
 
-    Stazione SMN → Viale Fratelli Rosselli → rotonda Fortezza da Basso → Viale Spartaco Lavagnini → Piazza della Libertà → Via Vittorio Emanuele II verso Rifredi → Via delle Panche → Via Pietraia fino al numero 2.
+    Stazione SMN → Viale Fratelli Rosselli → rotonda Fortezza da Basso → Viale Spartaco Lavagnini → Piazza della Libertà → Via Vittorio Emanuele II verso Rifredi → Via delle Panche → Via della Petraia fino al numero 2.
 
 
     **Da Sesto** — *Circa 6–7 km, 12–18 minuti.*
 
 
-    Stazione di Sesto → Via Antonio Gramsci direzione Firenze → Via Vittorio Emanuele II → Via Reginaldo Giuliani (zona Careggi) → Via delle Panche → Via Pietraia 2.
+    Stazione di Sesto → Via Antonio Gramsci direzione Firenze → Via Vittorio Emanuele II → Via Reginaldo Giuliani (zona Careggi) → Via delle Panche → Via della Petraia 2.
 
 
-    **Parcheggio gratis** (strisce non blu): zona Castello, Via della Petraia, Via di Castello. A 5–8 minuti di macchina da Via Pietraia. Si consiglia di lasciare l'auto e percorrere le tappe di Castello a piedi.
+    **Parcheggio gratis** (strisce non blu): zona Castello, Via della Petraia, Via di Castello. A 5–8 minuti di macchina da Via della Petraia. Si consiglia di lasciare l'auto e percorrere le tappe di Castello a piedi.
   byTransit: >
     **In treno da Santa Maria Novella**
 
 
-    Treno regionale, scendere a Rifredi. Cammina verso Giuliani-Ragazzi del '99, prendi la linea 2, 28 o 80, scendi alla fermata Sestese Crocetta, poi cammina verso Via della Pietraia 40 (16 minuti).
+    Treno regionale, scendere a Rifredi. Cammina verso Giuliani-Ragazzi del '99, prendi la linea 2, 28 o 80, scendi alla fermata Sestese Crocetta, poi cammina verso Via della Petraia 40 (16 minuti).
 
 
     **In treno da Sesto Fiorentino**
 
 
-    Dalla Stazione di Sesto, 3 minuti a piedi fino alla fermata 2/28 Mazzini/Cairoli. Scendere alla fermata Sestese Undici Agosto. 11 minuti a piedi fino a Via della Pietraia.
+    Dalla Stazione di Sesto, 3 minuti a piedi fino alla fermata 2/28 Mazzini/Cairoli. Scendere alla fermata Sestese Undici Agosto. 11 minuti a piedi fino a Via della Petraia.
 transcript: >
   ## Trascrizione — Episodio 1
 
@@ -96,7 +96,7 @@ published: true
 
 ## La bottega reale
 
-Siamo nella prima tappa del nostro percorso. La bottega di Mastro Ciliegia esisteva davvero: il falegname si chiamava **Antonio Segoni** e abitava in una casetta bassa bassa con la bottega che è ancora oggi quella di allora, in **Via della Pietraia** a Castello, poco distante dalla strada maestra che da Firenze portava a Sesto Fiorentino.
+Siamo nella prima tappa del nostro percorso. La bottega di Mastro Ciliegia esisteva davvero: il falegname si chiamava **Antonio Segoni** e abitava in una casetta bassa bassa con la bottega che è ancora oggi quella di allora, in **Via della Petraia** a Castello, poco distante dalla strada maestra che da Firenze portava a Sesto Fiorentino.
 
 ## Il personaggio di Geppetto
 

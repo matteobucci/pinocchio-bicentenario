@@ -23,7 +23,7 @@ directions:
     *Circa 3–3,5 km, 10–12 minuti, pianeggiante.*
 
 
-    Da Via Pietraia 2: Via delle Panche → Via Reginaldo Giuliani (verso nord) → direzione Castello / Sesto Fiorentino → Via della Querciola fino al numero 44.
+    Da Via della Petraia 2: Via delle Panche → Via Reginaldo Giuliani (verso nord) → direzione Castello / Sesto Fiorentino → Via della Querciola fino al numero 44.
 transcript: >
   ## Trascrizione — Episodio 2
 
@@ -68,7 +68,7 @@ La fatina era in realtà **Giovanna Ragionieri**: quando diventò fatina abitava
 ## Cosa vedere nei dintorni
 
 - **Villa Corsini** — visitabile venerdì e sabato 14:00–17:00, domenica 9:00–14:00
-- **Villa Medicea della Pietraia** — visitabile da martedì a domenica, 8:30–16:30
+- **Villa Medicea della Petraia** — visitabile da martedì a domenica, 8:30–16:30
 - **Villa la Quiete** — 8 marzo–12 luglio e 5 settembre–31 ottobre, giardino aperto al pubblico 10:00–17:30 con ingresso gratuito senza prenotazione
 
 ## Curiosità

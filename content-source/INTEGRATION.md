@@ -42,7 +42,7 @@ Tutte e 12 le tappe hanno ora:
 
 | # | Tappa | Indirizzo | Coordinate (lat, lng) |
 |---|---|---|---|
-| 1 | Bottega di Maestro Ciliegia | Via della Pietraia 2, Castello (Firenze) | 43.81423, 11.23009 |
+| 1 | Bottega di Maestro Ciliegia | Via della Petraia 2, Castello (Firenze) | 43.81423, 11.23009 |
 | 2 | La Quercia Grande | Via della Querciola 44, Castello (Firenze) | 43.81766, 11.23165 |
 | 3 | La Strada del Paese | Via Reginaldo Giuliani (n. 364–372), Firenze | 43.81342, 11.23110 |
 | 4 | La Scuola | Via Giulio Bechi 2/D, Firenze | 43.81684, 11.22590 |

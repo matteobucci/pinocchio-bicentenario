@@ -8,7 +8,7 @@ Le cartelle foto coprono solo le tappe **5–12**. Le tappe **1–4** non hanno 
 
 | Tappa | Luogo | Stato |
 |---|---|---|
-| 1 — La Bottega di Maestro Ciliegia | Via della Pietraia, Castello | hero Wikimedia |
+| 1 — La Bottega di Maestro Ciliegia | Via della Petraia, Castello | hero Wikimedia |
 | 2 — La Quercia Grande | Via della Querciola, Castello | hero Wikimedia |
 | 3 — La Strada del Paese | Via Reginaldo Giuliani | hero Wikimedia |
 | 4 — La Scuola | Via Giulio Bechi | hero Wikimedia |
