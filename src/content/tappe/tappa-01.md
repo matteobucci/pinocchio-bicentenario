@@ -2,7 +2,11 @@
 title: La Bottega di Maestro Ciliegia
 order: 1
 description: La bottega del falegname Antonio Segoni — il Maestro Ciliegia di Collodi — dove un pezzo di legno che parla incontra Geppetto e dove comincia la storia di Pinocchio.
-heroImage: https://upload.wikimedia.org/wikipedia/commons/d/d5/Castello%2C_via_della_petraia.JPG
+heroImage: /images/tappe/tappa-01-bottega-mastro-ciliegia.jpg
+gallery:
+  - image: /images/tappe/tappa-01-bottega-mastro-ciliegia.jpg
+    caption: "La casa al civico 2 di Via della Pietraia, dove aveva bottega il falegname Antonio Segoni"
+    alt: "Facciata di una casa a due piani dai muri gialli in Via della Pietraia, con porta in legno chiaro, il numero civico 2 e persiane verdi"
 podcast:
   episodeTitle: Episodio 1 — La Bottega di Maestro Ciliegia
   mp3File: /audio/tappa-01.mp3

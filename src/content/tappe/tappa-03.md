@@ -2,7 +2,11 @@
 title: La Strada del Paese
 order: 3
 description: La strada maestra che da Firenze portava a Sesto Fiorentino, oggi Via Reginaldo Giuliani. Era il cuore della vita quotidiana del borgo di Castello.
-heroImage: https://upload.wikimedia.org/wikipedia/commons/a/a6/Tabernacolo_dell%27olmo.JPG
+heroImage: /images/tappe/tappa-03-strada-del-paese.jpg
+gallery:
+  - image: /images/tappe/tappa-03-strada-del-paese.jpg
+    caption: "Via Reginaldo Giuliani, l'antica strada maestra del paese"
+    alt: "Via Reginaldo Giuliani in una giornata di sole: marciapiede sulla sinistra, auto parcheggiate, case gialle con persiane verdi e due grandi alberi spogli"
 podcast:
   episodeTitle: Episodio 3 — La Strada del Paese
   mp3File: /audio/tappa-03.mp3

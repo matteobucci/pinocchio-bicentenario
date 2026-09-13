@@ -2,7 +2,11 @@
 title: La Scuola
 order: 4
 description: La scuola comunale che ospitava le elementari per i bambini di Quarto, Castello e Quinto. È qui che Pinocchio, con il libro nuovo sotto il braccio, parte pieno di buone intenzioni.
-heroImage: https://upload.wikimedia.org/wikipedia/commons/9/9e/La_petraia%2C_veduta_02.JPG
+heroImage: /images/tappe/tappa-04-scuola.jpg
+gallery:
+  - image: /images/tappe/tappa-04-scuola.jpg
+    caption: "Il cartello del percorso davanti all'ex scuola elementare di Castello"
+    alt: "Cartello del percorso Sulle tracce di Pinocchio su un palo davanti a un muro giallo, sotto le fronde di un corbezzolo e di un ulivo, con il tetto di un edificio sullo sfondo"
 podcast:
   episodeTitle: Episodio 4 — La Scuola
   mp3File: /audio/tappa-04.mp3

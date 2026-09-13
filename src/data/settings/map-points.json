@@ -2,27 +2,69 @@
   "points": [
     {
       "type": "bagno",
-      "name": "Bagno accessibile (esempio)",
-      "coordinates": "43.81684, 11.22590",
-      "description": "Servizi igienici accessibili con accesso a livello. Sostituisci o elimina questo punto dal CMS."
+      "name": "Bagni pubblici — Giardino della Villa Medicea di Castello",
+      "coordinates": "43.81973, 11.22828",
+      "description": "Servizi igienici all'interno del giardino della Villa Medicea di Castello (Firenze), aperti negli orari di apertura del giardino."
+    },
+    {
+      "type": "bagno",
+      "name": "WC pubblico — Via della Mula 1",
+      "coordinates": "43.82996, 11.21467",
+      "description": "Bagno pubblico a Sesto Fiorentino, in Via della Mula 1."
+    },
+    {
+      "type": "bagno",
+      "name": "Bagni pubblici — Peretola",
+      "coordinates": "43.79467, 11.20420",
+      "description": "Bagno pubblico in Via de' Vespucci 71 (Firenze). Posizione sulla mappa approssimativa: da verificare sul posto."
+    },
+    {
+      "type": "bagno",
+      "name": "Bagni pubblici — Osmannoro",
+      "coordinates": "43.80844, 11.18067",
+      "description": "Bagno pubblico in Via Tommaso Alva Edison 1 (Sesto Fiorentino). In alternativa, i servizi di Tecnomat e IKEA sono a pochi minuti."
     },
     {
       "type": "acqua",
-      "name": "Punto acqua (esempio)",
-      "coordinates": "43.81342, 11.23110",
-      "description": "Fontanella pubblica. Sostituisci o elimina questo punto dal CMS."
+      "name": "Fontanello — Via delle Panche 189",
+      "coordinates": "43.81014, 11.23545",
+      "description": "Fontanello pubblico a Castello (Firenze). Un secondo fontanello è poco più avanti, al civico 234."
     },
     {
-      "type": "sosta",
-      "name": "Area sosta (esempio)",
-      "coordinates": "43.79934, 11.19983",
-      "description": "Panchine e zona ombreggiata per riposare. Sostituisci o elimina questo punto dal CMS."
+      "type": "acqua",
+      "name": "Fontanello — Via delle Panche 234",
+      "coordinates": "43.81133, 11.23418",
+      "description": "Fontanello pubblico a Castello (Firenze)."
     },
     {
-      "type": "parcheggio",
-      "name": "Parcheggio accessibile (esempio)",
-      "coordinates": "43.80364, 11.18426",
-      "description": "Posti riservati nelle vicinanze del percorso. Sostituisci o elimina questo punto dal CMS."
+      "type": "acqua",
+      "name": "Fontanello — Via della Mula 1",
+      "coordinates": "43.82996, 11.21467",
+      "description": "Fontanello pubblico a Sesto Fiorentino, accanto al WC pubblico."
+    },
+    {
+      "type": "acqua",
+      "name": "Fontanello — Piazza IV Novembre",
+      "coordinates": "43.83330, 11.19927",
+      "description": "Fontanello pubblico nel centro di Sesto Fiorentino."
+    },
+    {
+      "type": "acqua",
+      "name": "Fontanelli — Parco dell'Oliveta",
+      "coordinates": "43.83625, 11.20626",
+      "description": "Due fontanelli pubblici all'interno del Parco dell'Oliveta (Sesto Fiorentino)."
+    },
+    {
+      "type": "acqua",
+      "name": "Casa dell'acqua — Piazza Garibaldi 10",
+      "coordinates": "43.79727, 11.19700",
+      "description": "Fontanello di alta qualità (acqua naturale e frizzante) a Peretola (Firenze)."
+    },
+    {
+      "type": "acqua",
+      "name": "Fontanello — Via di Peretola 140",
+      "coordinates": "43.79668, 11.19519",
+      "description": "Fontanello pubblico in Via di Peretola 140-150 (Firenze)."
     }
   ]
 }

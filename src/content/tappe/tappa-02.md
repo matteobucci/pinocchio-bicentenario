@@ -2,7 +2,11 @@
 title: La Quercia Grande
 order: 2
 description: L'unico luogo reale citato esplicitamente da Collodi nel romanzo. Una grande quercia in Via della Querciola dove avviene uno degli episodi più drammatici della storia di Pinocchio.
-heroImage: https://upload.wikimedia.org/wikipedia/commons/b/b3/Villa_il_Bel_Riposo.JPG
+heroImage: /images/tappe/tappa-02-quercia-grande.jpg
+gallery:
+  - image: /images/tappe/tappa-02-quercia-grande.jpg
+    caption: "Cartello «Sulle tracce di Pinocchio» — La Quercia grande, in Via della Querciola"
+    alt: "Cartello informativo del percorso Sulle tracce di Pinocchio dedicato alla Quercia grande, fissato a un palo davanti a un vecchio muro intonacato, con alberi sopra il muro"
 podcast:
   episodeTitle: Episodio 2 — La Quercia Grande
   mp3File: /audio/tappa-02.mp3
