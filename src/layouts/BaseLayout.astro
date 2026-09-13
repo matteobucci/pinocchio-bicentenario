@@ -2,6 +2,10 @@
 import SpeedInsights from "@vercel/speed-insights/astro";
 import Analytics from "@vercel/analytics/astro";
 import { ClientRouter } from "astro:transitions";
+// Imported here rather than @import-ed from a <style is:global> block: Vite
+// tracks a frontmatter import as a real dependency, so edits to the global
+// stylesheet hot-reload instead of going stale in dev.
+import "../styles/global.css";
 
 interface Props {
   title: string;
@@ -39,9 +43,6 @@ const currentPath = Astro.url.pathname;
     <meta property="og:locale" content="it_IT" />
 
     <title>{title} | Pinocchio Bicentenario</title>
-
-    <!-- Preload critical CSS -->
-    <link rel="preload" href="/styles/global.css" as="style" />
 
     <!-- Leaflet (maps). Loaded once here — not per-component — so the library
          persists across client-side navigations and is guaranteed available
@@ -253,10 +254,6 @@ const currentPath = Astro.url.pathname;
         </div>
       </div>
     </footer>
-
-    <style is:global>
-      @import '../styles/global.css';
-    </style>
 
     <style>
       /* Header */
