@@ -376,11 +376,12 @@ const avgLng = hasCoordinates
     // resize listener and tile references leak — one zombie map per navigation.
     document.addEventListener('astro:before-swap', () => map.remove(), { once: true });
 
-    // Add CARTO Positron tiles — clean, light base so the route and markers stand out
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 20
+    // OpenStreetMap standard tiles. CARTO Positron was cleaner, but CARTO now
+    // stamps "API KEY REQUIRED" across unauthenticated basemap tiles, and we
+    // don't want the site to depend on a key someone has to keep alive.
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19
     }).addTo(map);
 
     // Create custom icon for each station

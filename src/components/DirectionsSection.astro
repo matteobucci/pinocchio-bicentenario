@@ -175,11 +175,12 @@ const mapPoints = [
     // listener and tiles don't leak — one zombie map per navigation otherwise.
     document.addEventListener('astro:before-swap', () => map.remove(), { once: true });
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    // See TourMap: CARTO now watermarks keyless basemap tiles, so both maps use
+    // the keyless OpenStreetMap tiles instead.
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-      subdomains: 'abcd',
-      maxZoom: 20,
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      maxZoom: 19,
     }).addTo(map);
 
     // Route line (prev → current → next), styled like the main TourMap.
