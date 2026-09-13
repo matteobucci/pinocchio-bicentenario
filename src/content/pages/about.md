@@ -38,6 +38,8 @@ Il percorso è pensato per essere il più accessibile possibile. Trovi tutte le 
 
 <img src="/images/partner-comune-sesto.png" alt="Stemma del Comune di Sesto Fiorentino" style="max-width:140px;height:auto;margin:1rem 0;" />
 
+<img src="/images/partner-proloco-sesto.png" alt="Pro Sesto APS — Pro Loco Sesto Fiorentino" style="max-width:240px;height:auto;margin:1rem 0;" />
+
 Un sentito ringraziamento va al **[Comune di Sesto Fiorentino](https://www.comune.sesto-fiorentino.fi.it/)** per il contributo e l'attenzione dedicati al progetto, e alla **[Pro Loco di Sesto Fiorentino](https://www.prolocosestofiorentino.it/)**, che ha seguito con continuità e disponibilità tutte le fasi di sviluppo dell'iniziativa, offrendo supporto organizzativo e collaborazione costante nella valorizzazione del territorio.
 
 <img src="/images/logo-associazione.png" alt="AIdel22 — Associazione Italiana Delezione del Cromosoma 22 APS" style="max-width:280px;height:auto;margin:1rem 0;" />
