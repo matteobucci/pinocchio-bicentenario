@@ -50,6 +50,20 @@ const OVERPASS_MIRRORS = [
 const VALHALLA_URL = 'https://valhalla1.openstreetmap.de/route';
 
 const FRESH = process.argv.includes('--fresh');
+/**
+ * Whether the cycling directions may steer the drawn route.
+ *
+ * They may not, and the numbers say why: forcing them cost +5.4 km on tappa
+ * 4 -> 5 (through central Florence for two points 3.5 km apart) and +1.7 km on
+ * 6 -> 7, against the plain pedestrian route. This is a walking trail, so where
+ * no walking directions exist the honest line is the one a walker would take.
+ * The whole trail came to 23.7 km forced against 15.3 km walked.
+ *
+ * Flip to true, or better, add byFoot to the remaining tappe: legs that have it
+ * already match the free pedestrian route to within 25 m, so the forcing
+ * machinery pays off exactly when the directions describe walking.
+ */
+const FORCE_FROM_BIKE = false;
 /** Parse the directions and print what we'd send, without touching the network. */
 const DRY = process.argv.includes('--dry');
 
@@ -445,11 +459,12 @@ async function main() {
     const from = tappe[i];
     const to = tappe[i + 1];
     // The directions live on the *arrival* tappa: they describe how to get there.
-    const streets = parseStreets(to.directions);
-    const declared = parseDeclaredDistance(to.directions);
+    const useText = to.mode === 'foot' || FORCE_FROM_BIKE;
+    const streets = useText ? parseStreets(to.directions) : [];
+    const declared = useText ? parseDeclaredDistance(to.directions) : null;
 
     process.stdout.write(
-      `Tappa ${from.order} → ${to.order} [${to.mode === 'foot' ? 'a piedi' : 'bici'}]: ${streets.length} vie`
+      `Tappa ${from.order} → ${to.order} [${useText ? 'dal testo a piedi' : 'pedonale libero'}]: ${streets.length} vie`
     );
 
     const located = await findStreets(streets, from, to, cache);
@@ -560,7 +575,7 @@ async function main() {
       from: from.order,
       to: to.order,
       distance: result.distance,
-      mode: to.mode,
+      mode: useText ? 'testo-a-piedi' : 'pedonale-libero',
       via: resolved,
       missing,
       backtracks,
