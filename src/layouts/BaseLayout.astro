@@ -155,6 +155,22 @@ const currentPath = Astro.url.pathname;
           <h3 class="footer-subtitle">Promosso da</h3>
           <ul class="partner-logos" role="list">
             <li>
+              <a
+                href="https://www.comune.sesto-fiorentino.fi.it/"
+                class="partner-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Comune di Sesto Fiorentino (si apre in una nuova scheda)"
+              >
+                <img
+                  src="/images/partner-comune-sesto.png"
+                  alt="Stemma del Comune di Sesto Fiorentino"
+                  class="partner-logo partner-logo--crest"
+                  loading="lazy"
+                />
+              </a>
+            </li>
+            <li>
               <img
                 src="/images/partner-convoi.png"
                 alt="Cooperativa ConVoi — Educa ConVoi al lavoro"
@@ -195,12 +211,20 @@ const currentPath = Astro.url.pathname;
               </a>
             </li>
             <li>
-              <img
-                src="/images/partner-terranova.png"
-                alt="Terranova — software for sustainable cities"
-                class="partner-logo"
-                loading="lazy"
-              />
+              <a
+                href="https://www.terranovasoftware.eu/"
+                class="partner-link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Terranova Software (si apre in una nuova scheda)"
+              >
+                <img
+                  src="/images/partner-terranova.png"
+                  alt="Terranova — software for sustainable cities"
+                  class="partner-logo"
+                  loading="lazy"
+                />
+              </a>
             </li>
           </ul>
         </div>
@@ -380,6 +404,12 @@ const currentPath = Astro.url.pathname;
         background: white;
         padding: var(--space-2) var(--space-3);
         border-radius: var(--border-radius-md);
+      }
+
+      /* A coat of arms is taller than wide: match the others' visual weight */
+      .partner-logo--crest {
+        height: 68px;
+        max-width: 90px;
       }
 
       .footer-bottom {
