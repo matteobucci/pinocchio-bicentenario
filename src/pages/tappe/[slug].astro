@@ -51,6 +51,13 @@ const nextPoint =
     ? toPoint(sortedTappe[currentIndex + 1])
     : null;
 
+// Next tappa for the footer navigation (independent from the map, which needs coordinates).
+const nextTappa =
+  currentIndex >= 0 && currentIndex < sortedTappe.length - 1
+    ? sortedTappe[currentIndex + 1]
+    : null;
+const nextTappaSlug = nextTappa ? nextTappa.id.replace(/\.md$/, '') : null;
+
 // Parse markdown in transcript
 const transcriptHtml = data.transcript ? await marked.parse(data.transcript) : null;
 
@@ -300,12 +307,29 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
       </div>
     </div>
 
-    <!-- Back to all stations -->
+    <!-- Back to all stations / next station -->
     <footer class="station-footer">
       <div class="container">
-        <a href="/tappe" class="btn btn-outline">
-          &#8592; Tutte le tappe
-        </a>
+        <nav class="station-footer-nav" aria-label="Navigazione tra le tappe">
+          <a href="/tappe" class="btn btn-outline">
+            &#8592; Tutte le tappe
+          </a>
+          {nextTappa && (
+            <a
+              href={`/tappe/${nextTappaSlug}`}
+              class="btn btn-primary station-next"
+              aria-label={`Prossima tappa: ${nextTappa.data.order}. ${nextTappa.data.title}`}
+            >
+              <span class="station-next-text">
+                <span class="station-next-label">Prossima tappa</span>
+                <span class="station-next-title">
+                  {nextTappa.data.order}. {nextTappa.data.title}
+                </span>
+              </span>
+              <span aria-hidden="true">&#8594;</span>
+            </a>
+          )}
+        </nav>
       </div>
     </footer>
   </article>
@@ -948,6 +972,45 @@ const galleryJson = data.gallery ? JSON.stringify(data.gallery) : '[]';
     padding-top: var(--space-8);
     border-top: 1px solid var(--color-neutral-200);
     margin-top: var(--space-8);
+  }
+
+  .station-footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .station-next {
+    text-align: left;
+  }
+
+  .station-next-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .station-next-label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-normal);
+    opacity: 0.85;
+  }
+
+  .station-next-title {
+    font-weight: var(--font-weight-bold);
+  }
+
+  @media (max-width: 640px) {
+    .station-footer-nav {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .station-footer-nav .btn {
+      width: 100%;
+    }
   }
 
   /* Fullscreen trigger */
